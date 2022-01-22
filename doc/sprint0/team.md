@@ -1,3 +1,5 @@
+| Full Name | UTORID | Student ID | Email | Best Way to Contact |Discord Username | 
+|-----------|--------|------------|-------|---------------------|------------------| 
 | Saiem Irfan | Irfansa4 | 1005991456 | saiem.irfan@mail.utoronto.ca | Phone - 437 345 9802 | Epickduckz1#3548 |
 | Brooklyn Guo | guobrook | 1006075523 | brooklyn.guo@mail.utoronto.ca | Phone - 647 684 4848 | broproguo#7899 |
 | Burhan Mirza | mirzabur | 1006102469 | burhan.mirza@mail.utoronto.ca | Phone - 905 463 8377 | burnyhammers#9111 |
