@@ -7,3 +7,5 @@
 | Ramzi Abu-Zeineh | zeinehra | 1006122740 | ramzi.abuzeineh@mail.utoronto.ca | Phone - 647 202 1757 | allow\_moto#6800 |
 | Axel Visan | visanaxe | 1005929453 | axel.visan@mail.utoronto.ca | 416-616-3500 |ax8l#6721 |
 | Danyal Ilyas | ilyasdan | 1006309996 | danyal.ilyas@mail.utoronto.ca | 647-391-9983|danny87#3574 |
+
+**Discord Invite Link** [https://discord.gg/GnDatsbZUB]
