@@ -2,7 +2,7 @@
 
 TimeShare is a webapp designed to help UofT students share their time-tables with one another
 
-[Figma](https://www.figma.com/proto/1bvtWX8yQhMnk1paH0t6c9/TimeShare-UI?node-id=57%3A771&scaling=min-zoom&page-id=13%3A110&starting-point-node-id=57%3A771)
+You can view the user interface/user experience on our [Figma](https://www.figma.com/proto/1bvtWX8yQhMnk1paH0t6c9/TimeShare-UI?node-id=57%3A771&scaling=min-zoom&page-id=13%3A110&starting-point-node-id=57%3A771)
 ## Motivation
 
 Students share timetables all the time. It's how they plan out their semesters so that they are able to spend time with friends in class, have leisure time out of class, and stay focused for the duration of the term. It gets a bit hard to keep track of all these timetables when sharing among friends which is where TimeShare comes in. 
