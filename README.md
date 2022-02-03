@@ -20,7 +20,7 @@ Check the frontend and backend README's to run the web-app
 Yes, we use gitflow. The official release is found on the 'main' branch while the current development is on the 'dev' branch.
 
 ### How do you name your branches?
-The notation for feature-branch naming is \<jira ticket number>/\<ticket-description> where ticket description describes the ticket and spaces are seperated by hyphens. If you intend to make a change to the docs or refactor something, name the branch docs/\<description> and refactor/\<description> respectively. Sprint documentation such as RPM's and other logistical files should be put under a logistcs/\<sprint_n> branch where n represents the sprint number.
+The notation for feature-branch naming is \<jira ticket number>/\<ticket-description> where ticket description describes the ticket and spaces are seperated by hyphens. If you intend to make a change to the docs or refactor something, name the branch docs/\<description> and refactor/\<description> respectively. Sprint documentation such as RPM's and other logistical files should be put under a logistics/\<sprint_n> branch where n represents the sprint number.
 
 ### Where can I find active tickets
 All tickets can be foud on jira
