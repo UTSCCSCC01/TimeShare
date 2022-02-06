@@ -2,8 +2,6 @@
 // import { useSelector, useDispatch } from 'react-redux';
 // import styles from './Timetable.module.css';
 
-
-
 class Timetable {
     constructor(name, day, start_time) {
         this.courses = [];
@@ -48,8 +46,4 @@ class Tutorial extends Course {
 }
 
 
-function Timetable() {
-
-
-    return 1;
-}
+console.log("Hi");
