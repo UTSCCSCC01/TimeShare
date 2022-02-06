@@ -46,12 +46,6 @@ class Course {
     }
 }
 
-class Lecture extends Course {
-    constructor(name, start_time, end_time, day, lec_id) {
-        super(name, start_time, end_time, day)
-        this.lec_id = lec_id;
-    }
-}
 
 var fs = require("fs");
 const { ConnectionCheckOutStartedEvent } = require("mongodb");
@@ -108,12 +102,6 @@ function convert_day(day_num) {
 createCourseObjects();
 console.log("Hi");
 
-
-// var stdinBuffer = fs.readFileSync(0); // 
-// console.log(stdinBuffer.toString());
-
-
-
 process.stdin.on('data', function(data) {
     temp = data.toString().split(" ");
     console.log(temp[0]);
@@ -133,10 +121,6 @@ process.stdin.on('data', function(data) {
         temp[1] = temp[1].replace(/(\r\n|\n|\r)/gm,"");
         timetable.remove_course(temp[1]);
     }
-
-    // Add
-    // display
-    // remove
     
 
 });
