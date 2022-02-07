@@ -1,11 +1,18 @@
 const { MongoClient } = require("mongodb");
-const Db = process.env.ATLAS_URI;
+const Db = 'mongodb+srv://TimeShare:3NRiikZNdo9xm6ci@cluster0.4kjn4.mongodb.net/dev-pub-data?retryWrites=true&w=majority';
+const mongoose = require('mongoose');
 const client = new MongoClient(Db, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
- 
-var _db;
+
+mongoose.connect(Db, {useNewUrlParser: true, useUnifiedTopology: true});
+
+//Get the default connection
+var _db = mongoose.connection;
+
+//Bind connection to error event (to get notification of connection errors)
+_db.on('error', console.error.bind(console, 'MongoDB connection error:'));
  
 module.exports = {
   connectToServer: function (callback) {
