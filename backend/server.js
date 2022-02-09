@@ -12,8 +12,8 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 
+app.use("/api/Profiles", require("./routes/profileRoutes"))
 app.use("/api/User", require("./routes/userRoutes"))
-
 
 // custom error handler
 app.use(errorHandler)

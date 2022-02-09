@@ -22,7 +22,7 @@ const UserSchema = mongoose.Schema({
     salt: String,
 });
 
-UserSchema.methods.setPassword = function(password) {
+UserSchema.methods.setPassword = async (password) => {
     this.salt = crypto.randomBytes(16).toString('hex'); //random salt for each user
     this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
 };
@@ -32,4 +32,8 @@ UserSchema.methods.validPassword = function(password) {
     return this.hash == hash;
 };
 
-mongoose.model('User', UserSchema);
+const User = mongoose.model('User', UserSchema);
+
+module.exports = {
+    User
+}

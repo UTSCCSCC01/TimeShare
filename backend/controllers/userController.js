@@ -16,35 +16,25 @@ const createUser = asyncHandler(async (req, res) => {
     newUser.setPassword(password)
     newUser.save(function(err) {
         if (err) {
-            return new Error(`Error while saving to DB`);
+            throw new Error(`Error while saving to DB`);
         }
     })
 
     res.status(200).send('sucessfully created user')
 })
 
-// exports.create_user = async function(req, res) {
-//     var userName = req.body.username;
-//     var userEmail = req.body.email;
-//     var password = req.body.password;
+const getUsers = asyncHandler(async (req, res) => {
+    let users = await User.find({})
 
-
-//     let existingUser = await User.findOne({email: userEmail});
-//     if (existingUser) {
-//         return res.status(400).send('That user already exists');
-//     }
-
-//     var newUser = new User({username: userName, email: userEmail});
-//     newUser.setPassword(password);
-//     newUser.save(function(err) {
-//         if (err) {
-//             return new Error(`Error while saving to DB`);
-//         }
-//     });
-    
-//     res.status(200).send('sucessfully created user');
-// }
+    if (users){
+        res.status(200).json(users)
+    }
+    else{
+        throw new Error('Error getting users')
+    }
+})
 
 module.exports = {
-    createUser
+    createUser,
+    getUsers
 }
