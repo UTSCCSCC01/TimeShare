@@ -18,12 +18,13 @@ const TimetableSchema = mongoose.Schema({
         sparse: true,
     },
     // Send help
-    courses: {
-        // type: [CourseSchema],
-        unique: false,
-        array_of_courses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }],
-    },
-    lectures: {
+    // courses: {
+    //     // type: [CourseSchema],
+    //     unique: false,
+    //     array_of_courses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }],
+    // },
+    courses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }],
+    lectures: { 
         unique: false,
         array_of_lectures: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Lecture' }],
         // type: [LectureSchema],
