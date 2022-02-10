@@ -1,7 +1,4 @@
 const mongoose = require('mongoose');
-// var TutorialSchema = mongoose.model('Tutorial');
-// var LectureSchema = mongoose.model('Lecture')
-// var CourseSchema = mongoose.model('Course');
 var crypto = require('crypto');
 
 
@@ -24,19 +21,8 @@ const TimetableSchema = mongoose.Schema({
     //     array_of_courses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }],
     // },
     courses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }],
-    lectures: { 
-        unique: false,
-        array_of_lectures: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Lecture' }],
-        // type: [LectureSchema],
-    },
-
-    tutorials: {
-        unique: false,
-        array_of_tutorials: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tutorial' }],
-        // type: [TutorialSchema],
-    },
-
-
+    lectures: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Lecture' }], 
+    tutorials: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tutorial' }],
 });
 
 

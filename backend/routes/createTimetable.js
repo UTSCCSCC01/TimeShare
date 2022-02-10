@@ -5,5 +5,6 @@ var TimetableController = require('../controllers/TimetableController');
 router.post('/createTimetable', TimetableController.create_timetable);
 router.post('/addCourse', TimetableController.add_course);
 router.post('/removeCourse', TimetableController.remove_course);
+router.get('/getCourses', TimetableController.get_courses);
 
 module.exports = router;
