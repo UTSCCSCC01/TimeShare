@@ -35,16 +35,16 @@ const getUsers = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) =>{
     const user = await User.findOne({username: req.body.username});
     if(!user) {
-        res.status(400).send('username or password was incorrect');
+        return res.status(400).send('username or password was incorrect');
     }
 
     let passwordCorrect = await user.validPassword(req.body.password);
 
     if(!passwordCorrect) {
-        res.status(400).send('username or password was incorrect');
+        return res.status(400).send('username or password was incorrect');
     }
 
-    res.status(200).send(`sucessfully logged in as ${user.username}!`);
+    return res.status(200).send(`sucessfully logged in as ${user.username}!`);
 })
 
 module.exports = {

@@ -66,6 +66,10 @@ exports.add_course = async function (req, res) {
     let timetable_we_want = await Timetable.findOne({
       timetable_id: timetable_id,
     });
+
+    if (!timetable_we_want) {
+        return res.status(404).send("Timetable doesn't exist");
+    }
    
     let courses = timetable_we_want.courses;
     for(let i = 0; i < courses.length; i++) {
