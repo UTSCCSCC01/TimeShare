@@ -14,6 +14,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use("/api/Profiles", require("./routes/profileRoutes"))
 app.use("/api/User", require("./routes/userRoutes"))
 app.use(require("./routes/createTimetable"))
+app.use(require("./routes/compareTimetables"))
 
 // custom error handler
 app.use(errorHandler)
