@@ -1,19 +1,22 @@
-const express = require("express");
-const app = express();
-const cors = require("cors");
-require("dotenv").config({ path: "./config.env" });
-const port = process.env.PORT || 5000;
-app.use(cors());
-app.use(express.json());
-app.use(require("./routes/basic"));
-// get driver connection
-const dbo = require("./db/conn");
+const express = require("express")
+const { errorHandler } = require('./middleware/errorMiddleware')
+const connectDB = require('./db/conn')
+const dotenv = require("dotenv").config({ path: "./config.env" })
+const port = process.env.PORT || 5000
+
+connectDB()
+
+const app = express()
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+
+
+app.use("/api/Profiles", require("./routes/profileRoutes"))
+app.use("/api/User", require("./routes/userRoutes"))
+app.use(require("./routes/createTimetable"))
+app.use(require("./routes/compareTimetables"))
+
+// custom error handler
+app.use(errorHandler)
  
-app.listen(port, () => {
-  // perform a database connection when server starts
-  dbo.connectToServer(function (err) {
-    if (err) console.error(err);
- 
-  });
-  console.log(`Server is running on port: ${port}`);
-});
+app.listen(port, () => { console.log(`Server is running on port: ${port}`); })
