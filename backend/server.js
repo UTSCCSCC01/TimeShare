@@ -14,9 +14,9 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use("/api/Profiles", require("./routes/profileRoutes"))
 app.use("/api/User", require("./routes/userRoutes"))
+app.use(require("./routes/createTimetable"))
 
 // custom error handler
 app.use(errorHandler)
-
  
 app.listen(port, () => { console.log(`Server is running on port: ${port}`); })
