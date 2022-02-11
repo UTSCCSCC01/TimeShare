@@ -22,14 +22,15 @@ const UserSchema = mongoose.Schema({
     salt: String,
 });
 
-UserSchema.methods.setPassword = async (password) => {
-    this.salt = crypto.randomBytes(16).toString('hex'); //random salt for each user
-    this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
-};
 
-UserSchema.methods.validPassword = function(password) {
+UserSchema.methods.validPassword = async function(password) {
     var hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
     return this.hash == hash;
+};
+
+UserSchema.methods.setPassword = function (password) {
+    this.salt = crypto.randomBytes(16).toString('hex'); //random salt for each user
+    this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
 };
 
 const User = mongoose.model('User', UserSchema);

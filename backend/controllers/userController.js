@@ -3,20 +3,19 @@ const asyncHandler = require('express-async-handler')
 require('../models/User');
 var User = mongoose.model('User');
 
-const createUser = asyncHandler(async (req, res) => {
-    const { userName, userEmail, password } = req.body
-    
-    let existingUser = await User.findOne({email: userEmail})
+const createUser = asyncHandler(async function(req, res){
+    const { username, useremail, password } = req.body
+    let existingUser = await User.findOne({email: useremail})
     if (existingUser) {
         res.status(400)
         throw new Error("That user already exists")
     }
 
-    var newUser = new User({username: userName, email: userEmail})
+    var newUser = new User({username: username, email: useremail})
     newUser.setPassword(password)
     newUser.save(function(err) {
         if (err) {
-            throw new Error(`Error while saving to DB`);
+            return new Error(`Error while saving to DB`);
         }
     })
 
@@ -25,7 +24,6 @@ const createUser = asyncHandler(async (req, res) => {
 
 const getUsers = asyncHandler(async (req, res) => {
     let users = await User.find({})
-
     if (users){
         res.status(200).json(users)
     }
@@ -34,7 +32,23 @@ const getUsers = asyncHandler(async (req, res) => {
     }
 })
 
+const loginUser = asyncHandler(async (req, res) =>{
+    const user = await User.findOne({username: req.body.username});
+    if(!user) {
+        res.status(400).send('username or password was incorrect');
+    }
+
+    let passwordCorrect = await user.validPassword(req.body.password);
+
+    if(!passwordCorrect) {
+        res.status(400).send('username or password was incorrect');
+    }
+
+    res.status(200).send(`sucessfully logged in as ${user.username}!`);
+})
+
 module.exports = {
     createUser,
-    getUsers
+    getUsers,
+    loginUser,
 }
