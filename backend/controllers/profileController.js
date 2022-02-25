@@ -5,7 +5,7 @@ require('../models/Profile');
 var Profile =  mongoose.model('Profile');
 
 const createProfile = asyncHandler(async (req, res, next) => {
-    const { uid, name, phone, desc } = req.body
+    const { uid, first_name, last_name, program, year_of_study, phone, desc } = req.body
     Profile.findOne({user: uid}).exec().then(function (dupUser){
         if(dupUser){
             throw new Error("A user can only have one Profile!")
@@ -15,7 +15,7 @@ const createProfile = asyncHandler(async (req, res, next) => {
         }
     })
     .then(function (bool) {
-        return Profile.create({user: uid, name: name, phone: phone, description: desc} )
+        return Profile.create({user: uid, first_name, last_name, program, year_of_study, phone, description: desc} )
     })
     .then(function (newUser) {
         console.log(newUser)
@@ -27,8 +27,8 @@ const createProfile = asyncHandler(async (req, res, next) => {
 })
 
 const getProfiles = asyncHandler(async (req, res, next) => {
-    let query = Profile.find({}).populate({path: "user", select: 'username email'})
-    // var query =  Profile.find({}).populate('User')
+    let query = Profile.find({})
+    // var query =  Profile.find({}).populate({path: "user", select: 'username email'})
     query.exec().then(function (profiles){
         profiles = req.params.userName ? profiles.find(profile => profile.user.username == req.params.userName) : profiles
         res.status(200).json(profiles)
