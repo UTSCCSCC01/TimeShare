@@ -55,15 +55,24 @@ const createProfile = asyncHandler(async (req, res, next) => {
 })
 
 const getProfiles = asyncHandler(async (req, res, next) => {
-    let query = Profile.find({})
-    // var query =  Profile.find({}).populate({path: "user", select: 'username email'})
-    query.exec().then(function (profiles){
-        profiles = req.params.userName ? profiles.find(profile => profile.user.username == req.params.userName) : profiles
-        res.status(200).json(profiles)
-     }).catch(function (err){
-        next(err)
-     })
-    })
+    let errors = {}
+    if(!req.query.pid){
+        errors["profile"] = ["Profile id not provided!"]
+        res.status(400).json(errors)
+        return
+    }
+
+
+    let profile = await Profile.findOne({_id: req.query.pid})
+
+    if(!profile){
+        errors["profile"] = ["Profile with given ID doesn't exist!"]
+        res.status(404).json(errors)
+    }
+    else{
+        res.status(200).json(profile)
+    }
+})
 
 const deleteProfiles = asyncHandler( async (req, res, next) => {
     let query = req.params.profileId ? Profile.deleteOne({_id: req.params.profileId}) : Profile.deleteMany() 
@@ -80,7 +89,7 @@ const updateProfile = asyncHandler( async (req, res, next) => {
     let profile = await Profile.findOne({_id: pid})
 
     let errors = {}
-    if(!profile){
+    if(!pid || !profile){
         errors["profile"] = ["Profile with given ID does not exist"]
         res.status(404).json(errors)
         return
