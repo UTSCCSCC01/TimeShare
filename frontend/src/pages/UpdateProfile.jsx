@@ -1,12 +1,11 @@
 import React from "react";
 import { BasicForm } from "../components/form";
 
-class UpdateProfileForm extends React.Component {
+class UpdateProfileForm extends BasicForm {
     constructor(props) {
         super(props);
         this.state = {
-            loading: true,
-            has_loaded: false,
+            ...this.state,
             data: {
                 "first_name": "",
                 "last_name": "",
@@ -33,11 +32,10 @@ class UpdateProfileForm extends React.Component {
             },
             inputtype: {
                 "year_of_study": "number"
-            }
+            },
+            formError: "profile"
 
         }
-        this.handleFieldChange = this.handleFieldChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
     };
 
     async componentDidMount () {
@@ -52,11 +50,8 @@ class UpdateProfileForm extends React.Component {
         this.setState({ loading: false })
     }
 
-    async onSubmit(e) {
-        e.preventDefault()
-        this.setState({ loading: true, has_loaded: false })
+    async onSubmit() {
         let body = {pid: this.props.pid, ...this.state.data}
-        console.log(body)
         let resp = await fetch(
             "http://localhost:5000/api/Profiles/",{
             method: "PUT",
@@ -67,8 +62,15 @@ class UpdateProfileForm extends React.Component {
             body: JSON.stringify(body),
         })
         if(resp.status >= 400){
-            let errors = await resp.json()
-            this.setState({errors})
+            let response = await resp.json()
+            let errors = response.errors
+            let errs = this.state.errors
+            console.log(errors)
+            Object.keys(errors).forEach(key => {
+                errs[key] = response.errors[key]
+            })
+
+            this.setState({errors: errs})
             
         }
         else{
@@ -82,29 +84,6 @@ class UpdateProfileForm extends React.Component {
             }})
             // redirect, nothing for now
         }
-        this.setState({ loading: false, has_loaded: true })
-    }
-
-    handleFieldChange(event) {
-        this.setState({data: {...this.state.data, [event.target.name]: event.target.value}});  
-    }
-
-    render () {
-        if(this.state.loading){
-            return <div>Loading</div>
-        }
-        else{
-        return (
-            <BasicForm 
-                data={this.state.data}
-                errors={this.state.errors}
-                inputtype={this.state.inputtype}
-                labels={this.state.labels}
-                handleFieldChange={this.handleFieldChange}
-                handleSubmit={this.onSubmit}
-                formError={"profile"}
-            />
-        )}
     }
 }
 
