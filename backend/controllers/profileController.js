@@ -16,7 +16,7 @@ const createProfile = asyncHandler(async (req, res, next) => {
     correspondingUser = await User.findOne({_id: uid})
     if(!correspondingUser){
         errors["user"] = ["User with given ID does not exist!"]
-        res.status(404).json({validationErrors: errors})
+        res.status(404).json({errors: errors})
         return
     }
 
@@ -46,7 +46,7 @@ const createProfile = asyncHandler(async (req, res, next) => {
     }
 
     if(Object.keys(errors).length > 0){
-        res.status(400).json({validationErrors: errors})
+        res.status(400).json({errors: errors})
     }
     else{
         profile = await profile.save()
@@ -114,7 +114,7 @@ const updateProfile = asyncHandler( async (req, res, next) => {
     }
 
     if(Object.keys(errors).length > 0){
-        res.status(400).json({validationErrors: errors})
+        res.status(400).json({errors: errors})
     }
     else{
         profile = await profile.save()
