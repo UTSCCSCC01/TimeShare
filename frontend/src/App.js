@@ -1,14 +1,16 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import { CreateUser } from './pages/CreateUser';
+import { CreateTimetable } from './pages/CreateTimetable';
+import { App2 } from './pages/CreateTimetable';
 
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/createUser" element={<CreateUser/>} />
+        <Route path="/createTimetable" element={<App2/>} />
+        
       </Routes>
     </Router>
   );
