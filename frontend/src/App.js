@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import { CreateUser } from './pages/CreateUser';
+import { SignUp } from './pages/SignUp';
 
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/createUser" element={<CreateUser/>} />
+        <Route path="/signup" element={<SignUp/>} />
       </Routes>
     </Router>
   );
