@@ -47,86 +47,192 @@ export const SignUp = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
-  const [usernameError, setUsernameError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [emailError, setEmailError] = useState("");
 
-  const validatePassword = async () => {
-    if (!password) {
-      await setPasswordError('Field is required')
-    }
-    else if (password !== passwordConfirm) {
-      await setPasswordError('Passwords must match');
-    }
-    else {
-      await setPasswordError('');
-    }
-  }
+  const [errors, setErrors] = useState({
+    username: '',
+    email: '',
+    password: '',
+    passwordConfirm: ''
+  })
 
   const emailRegex = /.+@.+\.[A-Za-z]+$/;
 
+  const validateForm = () => {
+    let formIsValid = true
+    const allErrors = {}
+    if (!username) {
+      formIsValid = false
+      allErrors['username'] = "Cannot be empty"
+    }
+    else {
+      allErrors['username'] = ''
+    }
 
-  const validateEmail = () => {
     if (!email) {
-      setEmailError('Field is required');
+      formIsValid = false
+      allErrors['email'] = "Cannot be empty"
     }
     else if (!emailRegex.test(email)) {
-      setEmailError('Email must be in a valid format e.g. name@email.ca');
-    } else {
-      setEmailError('');
+      allErrors['email'] = "Email must be in a valid format e.g. name@email.ca"
     }
-  };
+    else {
+      allErrors['email'] = ''
+    }
 
-  const validateUsername = () => {
-    if (!username) {
-      setUsernameError('Field is required')
+    if (!password) {
+      formIsValid = false
+      allErrors['password'] = "Cannot be empty"
     }
     else {
-      setUsernameError('')
+      allErrors['password'] = ''
     }
-  }
-  const validateForm = async () => {
-    console.log(passwordError, "1")
-    await validatePassword()
-    validateEmail()
-    console.log(passwordError, "2")
-    if (passwordError || emailError) {
-      console.log(passwordError, "3")
-      return false
+
+    if (!passwordConfirm) {
+      formIsValid = false
+      allErrors['passwordConfirm'] = "Cannot be empty"
     }
     else {
-      return true
+      allErrors['passwordConfirm'] = ''
     }
+
+    if (password && passwordConfirm) {
+      if (!(password === passwordConfirm)) {
+        formIsValid = false
+        allErrors['password'] = 'Passwords must match';
+        allErrors['passwordConfirm'] = 'Passwords must match';
+      }
+      else {
+        allErrors['password'] = '';
+        allErrors['passwordConfirm'] = '';
+      }
+    }
+
+
+    setErrors(allErrors)
+    return formIsValid
   }
+
+
+  // const [usernameError, setUsernameError] = useState("");
+  // const [passwordError, setPasswordError] = useState("");
+  // const [emailError, setEmailError] = useState("");
+
+  // const validatePassword = () => {
+  //   // if (!password) {
+  //   //   setPasswordError('Field is required')
+  //   // }
+  // if (!(password === passwordConfirm)) {
+  //   console.log('password dont match bro')
+  //   setPasswordError('Passwords must match');
+  // }
+  //   else {
+  //     console.log('password dont match bro')
+  //     setPasswordError('');
+  //   }
+  // }
+
+
+  // React.useEffect(() => {
+  //   validatePassword()
+  // }, [password, passwordConfirm])
+
+  // const emailRegex = /.+@.+\.[A-Za-z]+$/;
+
+
+  // const validateEmail = () => {
+  //   if (!email) {
+  //     setEmailError('Field is required');
+  //   }
+  //   else if (!emailRegex.test(email)) {
+  //     setEmailError('Email must be in a valid format e.g. name@email.ca');
+  //   } else {
+  //     setEmailError('');
+  //   }
+  // };
+
+  // const validateUsername = () => {
+  //   if (!username) {
+  //     setUsernameError('Field is required')
+  //   }
+  //   else {
+  //     setUsernameError('')
+  //   }
+  // }
+  // const validateForm = () => {
+  //   console.log(passwordError, "1")
+  //   validatePassword()
+  //   validateEmail()
+  //   console.log(passwordError, "2")
+  //   console.log(passwordError == true)
+  //   console.log(passwordError == false)
+  //   console.log(passwordError !== '')
+  //   const errorPassword = passwordError
+  //   console.log('password error: ', errorPassword)
+  //   console.log('loooool', errorPassword == true)
+  //   if (errorPassword || emailError !== '') {
+  //     console.log(passwordError, "3")
+  //     return false
+  //   }
+  //   else {
+  //     console.log('returning true')
+  //     return true
+  //   }
+  // }
 
   const register = () => {
+    console.log(errors)
     if (!validateForm()) {
-      console.log('not valid!')
       return
     }
+    // allErrors = Object.keys(errors)
+    // allErrors.forEach(key, () => {
+    //   if(allErrors[key])
+    // })
+
     const data = {
       username: username,
       useremail: email,
       password: password
     }
 
-    Axios.post("api/api/User/create", data)
+    Axios.post("http://localhost:5000/api/User/create", data)
       .then((res) => {
         console.log(res)
-        if(res.data.err) {
-            if (res.data.err.keyPattern && res.data.err.keyPattern.username) {
-            setUsernameError('Username is taken')
+
+        if (res.data.err) {
+          const resErrors = {
+            username: '',
+            email: '',
+            password: '',
+            passwordConfirm: ''
           }
-          if(res.data.err.errors && res.data.err.errors.email) {
-            setEmailError(res.data.err.errors.email.message)
+          if (res.data.err.keyPattern && res.data.err.keyPattern.username) {
+            // setErrors({
+            //   username: 'Username is taken',
+            //   email: '',
+            //   password: '',
+            //   passwordConfirm: ''
+            // })
+            resErrors['username'] = 'Username is taken'
           }
+          if (res.data.err.errors && res.data.err.errors.email) {
+            // setErrors({
+            //   username: '',
+            //   email: 'Email must be in a valid format e.g. name@email.ca',
+            //   password: '',
+            //   passwordConfirm: ''
+            // })
+            resErrors['email'] = 'Email must be in a valid format e.g. name@email.ca'
+          }
+
+          setErrors(resErrors)
         }
         else {
           //no errors
           //do something cool!
-            // setUsernameError('')
-            // setEmailError('')
-            // setPasswordError('')
+          // setUsernameError('')
+          // setEmailError('')
+          // setPasswordError('')
         }
       })
       .catch((error) => {
@@ -164,8 +270,10 @@ export const SignUp = () => {
                 id="userName"
                 label="Username"
                 autoFocus
-                error={usernameError !== ''}
-                helperText={usernameError !== '' ? usernameError : ''}
+                error={errors.username !== ''}
+                helperText={errors.username}
+                // error={usernameError !== ''}
+                // helperText={usernameError !== '' ? usernameError : ''}
                 onChange={(e) => {
                   setUsername(e.target.value);
                 }}
@@ -180,8 +288,10 @@ export const SignUp = () => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                error={emailError !== ''}
-                helperText={emailError !== '' ? emailError : ''}
+                error={errors.email !== ''}
+                helperText={errors.email}
+                // error={emailError !== ''}
+                // helperText={emailError !== '' ? emailError : ''}
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
@@ -197,8 +307,10 @@ export const SignUp = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                error={passwordError !== ''}
-                helperText={passwordError !== '' ? passwordError : ''}
+                error={errors.password !== ''}
+                helperText={errors.password}
+                // error={passwordError !== ''}
+                // helperText={passwordError !== '' ? passwordError : ''}
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
@@ -214,8 +326,10 @@ export const SignUp = () => {
                 type="password"
                 id="passwordConfirm"
                 autoComplete="current-password"
-                error={passwordError !== ''}
-                helperText={passwordError !== '' ? passwordError : ''}
+                error={errors.passwordConfirm !== ''}
+                helperText={errors.passwordConfirm}
+                // error={passwordError !== ''}
+                // helperText={passwordError !== '' ? passwordError : ''}
                 onChange={(e) => {
                   setPasswordConfirm(e.target.value);
                 }}
