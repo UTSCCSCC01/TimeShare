@@ -17,6 +17,7 @@ const UserSchema = mongoose.Schema({
         match: [/\S+@\S+\.\S+/, 'Email must be in a valid format e.g. name@email.ca']},
     hash: {
         type: String,
+        required: [true, "Password cannot be blank"],
     },
     salt: String,
 });
