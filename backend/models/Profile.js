@@ -22,7 +22,7 @@ const ProfileSchema = mongoose.Schema({
     },
     year_of_study: {
         type: Number,
-        min: 0,
+        min: 1,
         max: 10,
         required: false
     },
