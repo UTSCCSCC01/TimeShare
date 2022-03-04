@@ -40,15 +40,17 @@ const loginUser = asyncHandler(async (req, res) =>{
     const user = await User.findOne({username});
 
     if(!user) {
-        res.status(400)
-        throw new Error('User with such username does not exist!');
+        return res.json({
+            "Error" : 'User with such username does not exist!'
+        });
     }
 
     let passwordCorrect = await user.validPassword(password);
 
     if(!passwordCorrect) {
-        res.status(400)
-        throw new Error('Username or password was incorrect');
+        return res.json({
+            "Error" : 'Username or password was incorrect'
+        });
     }
 
     res.json({
@@ -60,7 +62,7 @@ const loginUser = asyncHandler(async (req, res) =>{
 
 const generateJWT = (userId) => {
     return jwt.sign({userId}, jwtSecret, {
-        expiresIn: '1d',
+        expiresIn: '1d'
     })
 }
 
