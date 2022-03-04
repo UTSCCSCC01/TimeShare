@@ -112,83 +112,12 @@ export const SignUp = () => {
     return formIsValid
   }
 
-
-  // const [usernameError, setUsernameError] = useState("");
-  // const [passwordError, setPasswordError] = useState("");
-  // const [emailError, setEmailError] = useState("");
-
-  // const validatePassword = () => {
-  //   // if (!password) {
-  //   //   setPasswordError('Field is required')
-  //   // }
-  // if (!(password === passwordConfirm)) {
-  //   console.log('password dont match bro')
-  //   setPasswordError('Passwords must match');
-  // }
-  //   else {
-  //     console.log('password dont match bro')
-  //     setPasswordError('');
-  //   }
-  // }
-
-
-  // React.useEffect(() => {
-  //   validatePassword()
-  // }, [password, passwordConfirm])
-
-  // const emailRegex = /.+@.+\.[A-Za-z]+$/;
-
-
-  // const validateEmail = () => {
-  //   if (!email) {
-  //     setEmailError('Field is required');
-  //   }
-  //   else if (!emailRegex.test(email)) {
-  //     setEmailError('Email must be in a valid format e.g. name@email.ca');
-  //   } else {
-  //     setEmailError('');
-  //   }
-  // };
-
-  // const validateUsername = () => {
-  //   if (!username) {
-  //     setUsernameError('Field is required')
-  //   }
-  //   else {
-  //     setUsernameError('')
-  //   }
-  // }
-  // const validateForm = () => {
-  //   console.log(passwordError, "1")
-  //   validatePassword()
-  //   validateEmail()
-  //   console.log(passwordError, "2")
-  //   console.log(passwordError == true)
-  //   console.log(passwordError == false)
-  //   console.log(passwordError !== '')
-  //   const errorPassword = passwordError
-  //   console.log('password error: ', errorPassword)
-  //   console.log('loooool', errorPassword == true)
-  //   if (errorPassword || emailError !== '') {
-  //     console.log(passwordError, "3")
-  //     return false
-  //   }
-  //   else {
-  //     console.log('returning true')
-  //     return true
-  //   }
-  // }
-
   const register = () => {
     console.log(errors)
     if (!validateForm()) {
       return
     }
-    // allErrors = Object.keys(errors)
-    // allErrors.forEach(key, () => {
-    //   if(allErrors[key])
-    // })
-
+  
     const data = {
       username: username,
       useremail: email,
@@ -198,7 +127,6 @@ export const SignUp = () => {
     Axios.post("http://localhost:5000/api/User/create", data)
       .then((res) => {
         console.log(res)
-
         if (res.data.err) {
           const resErrors = {
             username: '',
@@ -207,22 +135,13 @@ export const SignUp = () => {
             passwordConfirm: ''
           }
           if (res.data.err.keyPattern && res.data.err.keyPattern.username) {
-            // setErrors({
-            //   username: 'Username is taken',
-            //   email: '',
-            //   password: '',
-            //   passwordConfirm: ''
-            // })
             resErrors['username'] = 'Username is taken'
           }
           if (res.data.err.errors && res.data.err.errors.email) {
-            // setErrors({
-            //   username: '',
-            //   email: 'Email must be in a valid format e.g. name@email.ca',
-            //   password: '',
-            //   passwordConfirm: ''
-            // })
-            resErrors['email'] = 'Email must be in a valid format e.g. name@email.ca'
+            resErrors['email'] = res.data.err.errors.email.message
+          }
+          if (res.data.err.errors && res.data.err.errors.username) {
+            resErrors['username'] = res.data.err.errors.message
           }
 
           setErrors(resErrors)
@@ -230,9 +149,6 @@ export const SignUp = () => {
         else {
           //no errors
           //do something cool!
-          // setUsernameError('')
-          // setEmailError('')
-          // setPasswordError('')
         }
       })
       .catch((error) => {
@@ -272,8 +188,6 @@ export const SignUp = () => {
                 autoFocus
                 error={errors.username !== ''}
                 helperText={errors.username}
-                // error={usernameError !== ''}
-                // helperText={usernameError !== '' ? usernameError : ''}
                 onChange={(e) => {
                   setUsername(e.target.value);
                 }}
@@ -290,8 +204,6 @@ export const SignUp = () => {
                 autoComplete="email"
                 error={errors.email !== ''}
                 helperText={errors.email}
-                // error={emailError !== ''}
-                // helperText={emailError !== '' ? emailError : ''}
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
@@ -309,8 +221,6 @@ export const SignUp = () => {
                 autoComplete="current-password"
                 error={errors.password !== ''}
                 helperText={errors.password}
-                // error={passwordError !== ''}
-                // helperText={passwordError !== '' ? passwordError : ''}
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
@@ -328,8 +238,6 @@ export const SignUp = () => {
                 autoComplete="current-password"
                 error={errors.passwordConfirm !== ''}
                 helperText={errors.passwordConfirm}
-                // error={passwordError !== ''}
-                // helperText={passwordError !== '' ? passwordError : ''}
                 onChange={(e) => {
                   setPasswordConfirm(e.target.value);
                 }}
