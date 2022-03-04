@@ -1,7 +1,10 @@
 var mongoose = require('mongoose');
 const asyncHandler = require('express-async-handler')
+const jwt = require('jsonwebtoken')
+const jwtSecret = 'd545f45cc4b0259fb891b9857c1eea26fef114dafc397a4a73b1f5d655da2ead'
 require('../models/User');
 var User = mongoose.model('User');
+
 
 const createUser = asyncHandler(async function(req, res){
     const { username, useremail, password } = req.body
@@ -19,7 +22,7 @@ const createUser = asyncHandler(async function(req, res){
         }
     })
 
-    res.status(200).send('sucessfully created user')
+    res.status(200).send('successfully created user')
 })
 
 const getUsers = asyncHandler(async (req, res) => {
@@ -33,19 +36,33 @@ const getUsers = asyncHandler(async (req, res) => {
 })
 
 const loginUser = asyncHandler(async (req, res) =>{
-    const user = await User.findOne({username: req.body.username});
+    const {username, password} = req.body
+    const user = await User.findOne({username});
+
     if(!user) {
-        return res.status(400).send('username or password was incorrect');
+        res.status(400)
+        throw new Error('User with such username does not exist!');
     }
 
-    let passwordCorrect = await user.validPassword(req.body.password);
+    let passwordCorrect = await user.validPassword(password);
 
     if(!passwordCorrect) {
-        return res.status(400).send('username or password was incorrect');
+        res.status(400)
+        throw new Error('Username or password was incorrect');
     }
 
-    return res.status(200).send(`sucessfully logged in as ${user.username}!`);
+    res.json({
+        _id: user._id,
+        username: user.username,
+        token: generateJWT(user._id)
+    })
 })
+
+const generateJWT = (userId) => {
+    return jwt.sign({userId}, jwtSecret, {
+        expiresIn: '1d',
+    })
+}
 
 module.exports = {
     createUser,

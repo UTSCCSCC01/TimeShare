@@ -18,6 +18,7 @@ const UserSchema = mongoose.Schema({
         match: [/\S+@\S+\.\S+/, 'is invalid'], index: true},
     hash: {
         type: String,
+        required: [true, "Password cannot be blank"],
     },
     salt: String,
 });
