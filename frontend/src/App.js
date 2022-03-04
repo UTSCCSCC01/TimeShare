@@ -5,6 +5,7 @@ import { CreateTimetable } from './pages/CreateTimetable';
 import { App2 } from './pages/CreateTimetable';
 // import { CreateUser } from './pages/CreateUser';
 import { UpdateProfile } from './pages/UpdateProfile';
+import { ProfileViewMe } from './pages/ViewProfile';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/createTimetable" element={<CreateTimetable/>} />
         {/* <Route path="/createUser" element={<CreateUser/>} /> */}
         <Route path="/updateProfile" element={<UpdateProfile/>} />
+        <Route path="/profile/me/" element={<ProfileViewMe/>} />
       </Routes>
     </Router>
   );

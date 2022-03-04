@@ -26,6 +26,15 @@
   color: rgb(112, 76, 182);
 }
 
+.profile-view-container{
+  padding-left: 100px;
+  padding-right: 100px;
+  display: grid;
+  grid-template-rows: auto auto auto auto auto;
+  grid-template-columns: 340px auto auto auto auto ;
+  margin-top: 10vh;
+}
+
 @keyframes App-logo-float {
   0% {
     transform: translateY(0);
