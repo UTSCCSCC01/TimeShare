@@ -9,7 +9,7 @@ const CourseSchema = mongoose.Schema({
     },
     course_id: {
         type: String,
-        lowercase: false,
+        uppercase: false,
         unique: true, // Ex CSC301H5
         required: [true, "can't be blank"],
         // double check later on

@@ -17,7 +17,6 @@ exports.create_timetable = async function (req, res) {
 
   // Create an empty timtable
   let existingTable = await Timetable.findOne({ timetable_id: id });
-
  
   if (existingTable) {
     return res.status(400).send("That timetable already exists");
@@ -25,9 +24,9 @@ exports.create_timetable = async function (req, res) {
 
   var newTimetable = new Timetable({
     timetable_name: name,
-    courses: [],
-    lectures: [],
-    tutorials: [],
+    // courses: [],
+    // lectures: [],
+    // tutorials: [],
     timetable_id: id,
   });
   
@@ -73,13 +72,12 @@ exports.add_course = async function (req, res) {
    
     let courses = timetable_we_want.courses;
     for(let i = 0; i < courses.length; i++) {
-        let course = await Course.findOne({ "_id": courses[i]})
-        if (course.course_id == existingCourse.course_id) {
+        if (courses[i] == existingCourse.course_id) {
             return res.status(404).send("Course already exists in Timetable");
         }
     }
 
-    timetable_we_want.courses.push(existingCourse);
+    timetable_we_want.courses.push(existingCourse.course_id);
     timetable_we_want.lectures.push(existingLecture);
     timetable_we_want.tutorials.push(existingTutorial);
     
@@ -122,15 +120,13 @@ exports.remove_course = async function (req, res) {
     // If we found the timetable
     if (timetable_we_want) {
 
-      const course_index = timetable_we_want.courses.indexOf(existingCourse._id); // error check here
+      const course_index = timetable_we_want.courses.indexOf(course_id); // error check here
 
-
-      let course = await Course.findOne({ course_id: existingCourse.course_id });
       // Lecture deletion
       for (let i = 0; i < timetable_we_want.lectures.length; i++) {
         let lecture = await Lecture.findOne({ _id: timetable_we_want.lectures[i] });
         
-        if (course.course_id == lecture.course_id) {
+        if (course_id == lecture.course_id) {
           timetable_we_want.lectures.splice(i, 1);
           break;
         }
@@ -140,7 +136,7 @@ exports.remove_course = async function (req, res) {
       for (let i = 0; i < timetable_we_want.tutorials.length; i++) {
         let tutorial = await Tutorial.findOne({ _id: timetable_we_want.tutorials[i] });
 
-        if (course.course_id == tutorial.course_id) {
+        if (course_id == tutorial.course_id) {
           timetable_we_want.tutorials.splice(i, 1);
           break;
         }
