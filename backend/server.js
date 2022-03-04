@@ -10,12 +10,7 @@ connectDB()
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-<<<<<<< HEAD
-app.use(cors());
-
-=======
 app.use(cors())
->>>>>>> 69e0f65793f96eacaf0cc793aa676655f4e7d88f
 
 
 app.use("/api/Profiles", require("./routes/profileRoutes"))
