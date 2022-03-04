@@ -46,7 +46,7 @@
     {
          "errors" : {
              "_id": "6219747368ac5a8823eb92e4",
-             "timetable": ["User with given ID does not exist!"]
+             "timetable": ["Timetable already exists!"]
          }
     }
     ```
@@ -79,7 +79,7 @@
 
    **Optional:**
  
-   `turorial_id=[String]`
+   `tutorial_id=[String]`
 
 * **Success Response:**
   
@@ -87,42 +87,40 @@
   * **Code:** 200 <br />
     **Content:** 
     ```
-    { 
-        "_id": "6219747368ac5a8823eb92e4",
-        "name": "",
+    {
+        "_id": "62212b5baddec98a271ff2b4",
+        "timetable_id": 314,
+        "timetable_name": "timetabssdasd",
+        "courses": [
+            "CSC148H5F"
+        ],
+        "lectures": [
+            "62212bdb47e6537407f5d5a3"
+        ],
+        "tutorials": [
+            "62218b3cb9521a496553aba6"
+        ],
+        "__v": 2
     }
     ```
  
 * **Error Response:**
 
-    Profile ID does not correspond
+    Timetable ID, course id, lec id, tut id does not correspond
 
   * **Code:** 404 NOT FOUND <br />
     **Content:** 
     ```
     {
          "errors" : {
-             "profile": ["Profile with given ID does not exist"]
+             "timetable": ["Timetbable with given ID does not exist"],
+             "course_id": ["Course doesn't exist!"],
+             "lecture_id": ["Lecture doesn't exist!"],
+             "tutorial_id": ["Tutorial doesn't exist!"]
          }
     }
     ```
-  
-  The endpoint may also face validation errors:
-  - Phone number not in correct format
-  - User ID is invalid format
-  - User ID is already in use for another profile
-  - Description too long
-  - Year of study too high or too low
 
-  * **Code:** 400 BAD REQUEST <br />
-    **Content:** 
-    ```
-    { "errors" : {
-            "phone" : ["Bad phone format!"]
-            "description" : ["Description too long!"]
-        } 
-    }
-    ```
 
 **Remove Course**
 ----
@@ -140,7 +138,8 @@
 
    **Required:**
    
-   `pid=[objectID]`
+   `course_id=[String]`
+   `timetable_id=[ObjectID]`
 
 * **Data Params**
 
@@ -152,39 +151,28 @@
   * **Code:** 200 <br />
     **Content:** 
     ```
-    { 
-        "_id": "6219747368ac5a8823eb92e4",
-        "user": "6205b3ed031c87d276fa2410",
-        "first_name": "im a user",
-        "last_name": "With this last name",
-        "program": "computer science",
-        "year_of_study": 3,
-        "phone": "4373459802",
-        "description": "I'm a third year cs student!"
+    {
+        "_id": "62068f431286035443ce6efc",
+        "timetable_id": 1,
+        "timetable_name": "Nivy's Timetable 1",
+        "courses": [],
+        "lectures": [],
+        "tutorials": [],
+        "__v": 1
     }
     ```
  
 * **Error Response:**
-
-  PID not provided
-
-  * **Code:** 400 BAD REQUEST <br />
-    **Content:** 
-    ```
-    {
-         "errors" : {
-             "profile": ["Profile id not provided!"]
-         }
-    }
-    ```
   
-  PID does not correspond to a user
+  Course, lecture, tutorial does not exist
 
   * **Code:** 404 NOT FOUND <br />
     **Content:** 
     ```
     { "errors" : {
-            "profile" : ["Profile with given ID doesn't exist!"]
+            "course" : ["Course not found!"],
+            "lecture" : ["Lecture not found!"],
+            "tutorial" : ["Tutorial not found!"]
         } 
     }
     ```
@@ -206,7 +194,7 @@
 
    **Required:**
    
-   `pid=[objectID]`
+   `tid=[objectID]`
 
 * **Data Params**
 
@@ -218,40 +206,43 @@
   * **Code:** 200 <br />
     **Content:** 
     ```
-    { 
-        "_id": "6219747368ac5a8823eb92e4",
-        "user": "6205b3ed031c87d276fa2410",
-        "first_name": "im a user",
-        "last_name": "With this last name",
-        "program": "computer science",
-        "year_of_study": 3,
-        "phone": "4373459802",
-        "description": "I'm a third year cs student!"
+    {
+        {
+            "_id": "62212bdb47e6537407f5d5a3",
+            "course_id": "CSC148H5F",
+            "lecture_id": "101",
+            "time": [
+                [
+                    "Monday",
+                    "13",
+                    "15"
+                ]
+            ]
+        },
+        {
+            "_id": "62218b3cb9521a496553aba6",
+            "course_id": "CSC148H5F",
+            "tutorial_id": "101",
+            "time": [
+                "Tuesday",
+                "12",
+                "13"
+            ]
+        }
     }
     ```
  
 * **Error Response:**
 
-  PID not provided
+  tid not provided
 
   * **Code:** 400 BAD REQUEST <br />
     **Content:** 
     ```
     {
          "errors" : {
-             "profile": ["Profile id not provided!"]
+             "timetable": ["Timetable id not provided!"]
          }
-    }
-    ```
-  
-  PID does not correspond to a user
-
-  * **Code:** 404 NOT FOUND <br />
-    **Content:** 
-    ```
-    { "errors" : {
-            "profile" : ["Profile with given ID doesn't exist!"]
-        } 
     }
     ```
 
@@ -271,7 +262,8 @@
 
    **Required:**
    
-   `pid=[objectID]`
+   `tid1=[objectID]`
+   `tid2=[objectID]`
 
 * **Data Params**
 
@@ -283,40 +275,38 @@
   * **Code:** 200 <br />
     **Content:** 
     ```
-    { 
-        "_id": "6219747368ac5a8823eb92e4",
-        "user": "6205b3ed031c87d276fa2410",
-        "first_name": "im a user",
-        "last_name": "With this last name",
-        "program": "computer science",
-        "year_of_study": 3,
-        "phone": "4373459802",
-        "description": "I'm a third year cs student!"
-    }
+    You have 2 shared courses
+
+    The following courses are shared:
+    CSC207H5S
+        LEC9101
+        TUT9101
+    CSC148H5S
+        TUT9101
     ```
  
 * **Error Response:**
 
-  PID not provided
+  tid1 not provided
 
   * **Code:** 400 BAD REQUEST <br />
     **Content:** 
     ```
     {
          "errors" : {
-             "profile": ["Profile id not provided!"]
+             "tid1": ["timetable id 1 not provided!"]
          }
     }
     ```
-  
-  PID does not correspond to a user
+  tid2 not provided
 
-  * **Code:** 404 NOT FOUND <br />
+  * **Code:** 400 BAD REQUEST <br />
     **Content:** 
     ```
-    { "errors" : {
-            "profile" : ["Profile with given ID doesn't exist!"]
-        } 
+    {
+         "errors" : {
+             "tid2": ["timetable id 2 not provided!"]
+         }
     }
     ```
 
