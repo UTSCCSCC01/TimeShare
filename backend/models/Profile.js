@@ -8,14 +8,27 @@ const ProfileSchema = mongoose.Schema({
         ref: "User",
         required: [true, "A user ID is required to create a profile!"]
     },
-    name: {
+    first_name: {
         type: String,
-        required: [true, "Name cannot be blank!"],
-        match: [/^[a-zA-Z]+ ([a-zA-Z]+ )*/, "Name format is wrong"]
+        required: false
+    },
+    last_name: {
+        type: String,
+        required: false
+    },
+    program: {
+        type: String,
+        required: false
+    },
+    year_of_study: {
+        type: Number,
+        min: 0,
+        max: 10,
+        required: false
     },
     phone: {
-        type: String
-        // match: [/^(+\d{1,2}\s)?(?\d{3})?[\s.-]\d{3}[\s.-]\d{4}$/, "Phone number format is wrong"]
+        type: String,
+        match: [/^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/, "Phone number format is wrong"]
     },
     description: {
         type: String,
