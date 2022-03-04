@@ -32,6 +32,7 @@
   display: grid;
   grid-template-rows: auto auto auto auto auto;
   grid-template-columns: 340px auto auto auto auto ;
+  margin-top: 10vh;
 }
 
 @keyframes App-logo-float {
