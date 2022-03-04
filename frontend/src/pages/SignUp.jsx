@@ -12,6 +12,7 @@ import AlertTitle from '@mui/material/AlertTitle';
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Axios from 'axios';
+import  { useNavigate  } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   "@global": {
@@ -54,6 +55,8 @@ export const SignUp = () => {
     password: '',
     passwordConfirm: ''
   })
+
+  let navigate = useNavigate();
 
   const emailRegex = /.+@.+\.[A-Za-z]+$/;
 
@@ -149,6 +152,7 @@ export const SignUp = () => {
         else {
           //no errors
           //do something cool!
+          navigate('/login');
         }
       })
       .catch((error) => {
