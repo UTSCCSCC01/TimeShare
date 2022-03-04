@@ -1,6 +1,6 @@
 # Release Planning Meeting
 
-At 6 PM on Feb 3, Axel Visan, Brooklyn Guo, Burhan Mirza, Danyal Ilyas, Ramzi Abu-Zeineh, Saiem Irfan, Stanislav Kalynych had their Release Planning Meeting on Discord.
+At 6 PM on March 1, Axel Visan, Brooklyn Guo, Burhan Mirza, Danyal Ilyas, Ramzi Abu-Zeineh, Saiem Irfan, Stanislav Kalynych had their Release Planning Meeting on Discord.
 
 The release goal is to complete all sprint epics (and corresponding subtasks), and ensure that we can visualize the next steps for sprint2 clearly.
 
@@ -8,7 +8,7 @@ The release goal is to complete all sprint epics (and corresponding subtasks), a
 Developers setup the frontend (React), backend (Node.js), and Database (MongoDB).
 - WAV-27 Setup Database
 
-## Accounts
+## Release Stories: Accounts
 Users can create and login to their accounts, and access their saved timetables. 
 - WAV-29 Account User Input
 - WAV-28 Connect Application to DB	
@@ -16,7 +16,7 @@ Users can create and login to their accounts, and access their saved timetables.
 - WAV-31 Simplified Authentication Process
 
 
-## Timetable Planning
+## Release Stories: Timetable Planning
 Students can create and compare their timetables with one another.
 - WAV-32 	
 Determine Data Structure / Design of how timetables will be stored
