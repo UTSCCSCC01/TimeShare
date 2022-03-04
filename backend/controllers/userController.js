@@ -5,21 +5,21 @@ var User = mongoose.model('User');
 
 const createUser = asyncHandler(async function(req, res){
     const { username, useremail, password } = req.body
-    let existingUser = await User.findOne({email: useremail})
-    if (existingUser) {
-        res.status(400)
-        throw new Error("That user already exists")
-    }
-
+    
     var newUser = new User({username: username, email: useremail})
     newUser.setPassword(password)
     newUser.save(function(err) {
         if (err) {
-            return new Error(`Error while saving to DB`);
+            return res.json({
+                err
+            })
+        }
+        else {
+            return res.send('sucessfully created user')
         }
     })
 
-    res.status(200).send('sucessfully created user')
+    // return res.send('sucessfully created user')
 })
 
 const getUsers = asyncHandler(async (req, res) => {
