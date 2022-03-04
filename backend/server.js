@@ -14,8 +14,8 @@ app.use(cors())
 
 app.use("/api/Profiles", require("./routes/profileRoutes"))
 app.use("/api/User", require("./routes/userRoutes"))
-app.use(require("./routes/createTimetable"))
-app.use(require("./routes/compareTimetables"))
+app.use("/api/Timetable", require("./routes/createTimetable"))
+app.use("/api/Timetable", require("./routes/compareTimetables"))
 
 // custom error handler
 app.use(errorHandler)

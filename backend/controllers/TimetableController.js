@@ -17,7 +17,6 @@ exports.create_timetable = async function (req, res) {
 
   // Create an empty timtable
   let existingTable = await Timetable.findOne({ timetable_id: id });
-
  
   if (existingTable) {
     return res.status(400).send("That timetable already exists");
@@ -25,9 +24,9 @@ exports.create_timetable = async function (req, res) {
 
   var newTimetable = new Timetable({
     timetable_name: name,
-    courses: [],
-    lectures: [],
-    tutorials: [],
+    // courses: [],
+    // lectures: [],
+    // tutorials: [],
     timetable_id: id,
   });
   
@@ -40,7 +39,7 @@ exports.create_timetable = async function (req, res) {
   });
 
  
-  res.status(200).send(name);
+  res.status(200).send(newTimetable);
 };
 
 
@@ -73,13 +72,12 @@ exports.add_course = async function (req, res) {
    
     let courses = timetable_we_want.courses;
     for(let i = 0; i < courses.length; i++) {
-        let course = await Course.findOne({ "_id": courses[i]})
-        if (course.course_id == existingCourse.course_id) {
+        if (courses[i] == existingCourse.course_id) {
             return res.status(404).send("Course already exists in Timetable");
         }
     }
 
-    timetable_we_want.courses.push(existingCourse);
+    timetable_we_want.courses.push(existingCourse.course_id);
     timetable_we_want.lectures.push(existingLecture);
     timetable_we_want.tutorials.push(existingTutorial);
     
@@ -122,15 +120,13 @@ exports.remove_course = async function (req, res) {
     // If we found the timetable
     if (timetable_we_want) {
 
-      const course_index = timetable_we_want.courses.indexOf(existingCourse._id); // error check here
+      const course_index = timetable_we_want.courses.indexOf(course_id); // error check here
 
-
-      let course = await Course.findOne({ course_id: existingCourse.course_id });
       // Lecture deletion
       for (let i = 0; i < timetable_we_want.lectures.length; i++) {
         let lecture = await Lecture.findOne({ _id: timetable_we_want.lectures[i] });
         
-        if (course.course_id == lecture.course_id) {
+        if (course_id == lecture.course_id) {
           timetable_we_want.lectures.splice(i, 1);
           break;
         }
@@ -140,7 +136,7 @@ exports.remove_course = async function (req, res) {
       for (let i = 0; i < timetable_we_want.tutorials.length; i++) {
         let tutorial = await Tutorial.findOne({ _id: timetable_we_want.tutorials[i] });
 
-        if (course.course_id == tutorial.course_id) {
+        if (course_id == tutorial.course_id) {
           timetable_we_want.tutorials.splice(i, 1);
           break;
         }
@@ -176,18 +172,37 @@ exports.get_courses = async function (req, res) {
   var id = req.body.id;
 
   let timetable_we_want = await Timetable.findOne({ timetable_id: id }); // error check later
-  let courses_to_return = [];
-  if (timetable_we_want) {
-    var course_ids = timetable_we_want.courses;
-    let result = "Timetable courses:<br/>";
-    
-    for (let i = 0; i < course_ids.length; i++) {
 
-      let course = await Course.findOne({ _id: course_ids[i] });
-      result = result.concat(course.course_id, ": ", course.course_name, "<br/>");
+  if (timetable_we_want) {
+    // var course_ids = timetable_we_want.courses;
+    var lecture_ids = timetable_we_want.lectures;
+    var tut_ids = timetable_we_want.tutorials;
+    // let result = "Timetable courses:<br/>";
+    let courses = [];
+    
+    // for (let i = 0; i < course_ids.length; i++) {
+
+    //   let course = await Course.findOne({ _id: course_ids[i] });
+    //   result = result.concat(course.course_id, ": ", course.course_name, "<br/>");
+
+    //   let lecture = await Lecture.findOne({ _id: lecture_ids[i] })
+    //   let tutorial = await Tutorial.findOne({ _id: tut_ids[i] })
+    //   courses.push(lecture);
+    //   courses.push(tutorial);
+    //   // courses.push(course);
+    // }
+
+    for (let i = 0; i < lecture_ids.length; i++) {
+      let lecture = await Lecture.findOne({ _id: lecture_ids[i] })
+      courses.push(lecture);
     }
 
-    return res.status(200).send(result);
+    for (let i = 0; i < tut_ids.length; i++) {
+      let tutorial = await Tutorial.findOne({ _id: tut_ids[i] })
+      courses.push(tutorial);
+    }
+
+    return res.status(200).send(courses);
   } else {
     // timetable not found
     return res.status(404).send("Timetable doesn't exist");

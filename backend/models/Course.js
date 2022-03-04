@@ -9,7 +9,7 @@ const CourseSchema = mongoose.Schema({
     },
     course_id: {
         type: String,
-        lowercase: false,
+        uppercase: false,
         unique: true, // Ex CSC301H5
         required: [true, "can't be blank"],
         // double check later on
@@ -20,13 +20,13 @@ const CourseSchema = mongoose.Schema({
         unique: false,
         required: [true, "can't be blank"],
     },
-    lectures: {
-        array_of_lectures: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Lecture' }],
-    },
+    // lectures: {
+    //     array_of_lectures: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Lecture' }],
+    // },
 
-    tutorials: {
-        array_of_tutorials: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tutorial' }],
-    },
+    // tutorials: {
+    //     array_of_tutorials: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tutorial' }],
+    // },
     
     
 });
