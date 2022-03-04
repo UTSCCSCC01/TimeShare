@@ -4,7 +4,7 @@
 
 * **URL**
 
-  /api/createTimetable/
+  /api/Timetable/createTimetable
 
 * **Method:**
   
