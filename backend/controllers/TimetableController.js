@@ -40,7 +40,7 @@ exports.create_timetable = async function (req, res) {
   });
 
  
-  res.status(200).send(name);
+  res.status(200).send(newTimetable);
 };
 
 
@@ -176,18 +176,37 @@ exports.get_courses = async function (req, res) {
   var id = req.body.id;
 
   let timetable_we_want = await Timetable.findOne({ timetable_id: id }); // error check later
-  let courses_to_return = [];
-  if (timetable_we_want) {
-    var course_ids = timetable_we_want.courses;
-    let result = "Timetable courses:<br/>";
-    
-    for (let i = 0; i < course_ids.length; i++) {
 
-      let course = await Course.findOne({ _id: course_ids[i] });
-      result = result.concat(course.course_id, ": ", course.course_name, "<br/>");
+  if (timetable_we_want) {
+    // var course_ids = timetable_we_want.courses;
+    var lecture_ids = timetable_we_want.lectures;
+    var tut_ids = timetable_we_want.tutorials;
+    // let result = "Timetable courses:<br/>";
+    let courses = [];
+    
+    // for (let i = 0; i < course_ids.length; i++) {
+
+    //   let course = await Course.findOne({ _id: course_ids[i] });
+    //   result = result.concat(course.course_id, ": ", course.course_name, "<br/>");
+
+    //   let lecture = await Lecture.findOne({ _id: lecture_ids[i] })
+    //   let tutorial = await Tutorial.findOne({ _id: tut_ids[i] })
+    //   courses.push(lecture);
+    //   courses.push(tutorial);
+    //   // courses.push(course);
+    // }
+
+    for (let i = 0; i < lecture_ids.length; i++) {
+      let lecture = await Lecture.findOne({ _id: lecture_ids[i] })
+      courses.push(lecture);
     }
 
-    return res.status(200).send(result);
+    for (let i = 0; i < tut_ids.length; i++) {
+      let tutorial = await Tutorial.findOne({ _id: tut_ids[i] })
+      courses.push(tutorial);
+    }
+
+    return res.status(200).send(courses);
   } else {
     // timetable not found
     return res.status(404).send("Timetable doesn't exist");
