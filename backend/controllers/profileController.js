@@ -55,23 +55,43 @@ const createProfile = asyncHandler(async (req, res, next) => {
 })
 
 const getProfiles = asyncHandler(async (req, res, next) => {
-    let errors = {}
-    if(!req.query.pid){
-        errors["profile"] = ["Profile id not provided!"]
-        res.status(400).json(errors)
-        return
+    let errors = {"errors": {}}
+    let state = null
+    const { username } = req.params
+
+    if(req._parsedUrl.path === '/'){
+        state = "self-view"
+    }
+
+    if(!state){
+        user = await User.findOne({username})
+        if(!user){
+            errors.errors["user"] = ["User with given username doesn't exist!"]
+            return res.status(404).json(errors)
+        }
     }
 
 
-    let profile = await Profile.findOne({_id: req.query.pid})
-
+    let profile = null
+    profile = state != "self-view" ? await Profile.findOne({user: user._id}) : await Profile.findOne({user: req.user._id})
+    
     if(!profile){
-        errors["profile"] = ["Profile with given ID doesn't exist!"]
-        res.status(404).json(errors)
+        errors.errors["profile"] = ["Profile with given ID doesn't exist!"]
+        return res.status(404).json(errors)
     }
-    else{
-        res.status(200).json(profile)
+
+    let {groups, ...data} = profile._doc
+    data['public_groups'] = []
+    data['public_groups'] = groups.filter((group) => group.type === "public")
+
+    if(!state){
+        return res.status(200).json(data)
     }
+
+    data['private_groups'] = []
+    data['private_groups'] = groups.filter((group) => group.type === "private")
+
+    return res.status(200).json(data)
 })
 
 const deleteProfiles = asyncHandler( async (req, res, next) => {
@@ -85,22 +105,21 @@ const deleteProfiles = asyncHandler( async (req, res, next) => {
 })
 
 const updateProfile = asyncHandler( async (req, res, next) => {
-    const { pid, first_name, last_name, program, year_of_study, phone, desc } = req.body
-    let profile = await Profile.findOne({_id: pid})
+    const { first_name, last_name, program, year_of_study, phone, desc } = req.body
+    let profile = await Profile.findOne({user: req.user._id})
 
     let errors = {}
-    if(!pid || !profile){
+    if(!profile){
         errors["profile"] = ["Profile with given ID does not exist"]
-        res.status(404).json(errors)
-        return
+        return res.status(404).json(errors)
     }
 
-    profile.first_name = first_name
-    profile.last_name = last_name
-    profile.program = program
-    profile.year_of_study = year_of_study
-    profile.phone = phone
-    profile.description = desc
+    profile.first_name = first_name || profile.first_name
+    profile.last_name = last_name || profile.last_name
+    profile.program = program || profile.program
+    profile.year_of_study = year_of_study || profile.year_of_study
+    profile.phone = phone || profile.phone
+    profile.description = desc || profile.desc
 
     let e = await profile.validateSync()
 

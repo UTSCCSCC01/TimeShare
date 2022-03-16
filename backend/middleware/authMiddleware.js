@@ -8,14 +8,12 @@ var User = mongoose.model('User');
 const authorize = asyncHandler(async (req, res, next) => {
     let token
 
-    if (req.header.authorization && req.header.authorization.startsWith('Bearer')){
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         try {
             // Extraction the token
-            token = req.headers,authorization.split(' ')[1]
-
+            token = req.headers.authorization.split(' ')[1]
             // Verify the token
             const data = jwt.verify(token, jwtSecret)
-
             req.user = await User.findById(data.userId).select('-password')
             next()
         } catch (error) {
