@@ -1,27 +1,27 @@
 var mongoose = require('mongoose');
 const asyncHandler = require('express-async-handler')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { createProfile } = require('./profileController');
 const jwtSecret = 'd545f45cc4b0259fb891b9857c1eea26fef114dafc397a4a73b1f5d655da2ead'
 require('../models/User');
 var User = mongoose.model('User');
 
 
-const createUser = asyncHandler(async function(req, res){
+const createUser = asyncHandler(async function(req, res, next){
     const { username, useremail, password } = req.body
     
     var newUser = new User({username: username, email: useremail})
     newUser.setPassword(password)
-    newUser.save(function(err) {
+    await newUser.save(function(err) {
         if (err) {
             return res.json({
                 err
             })
         }
-        else {
-            return res.send('sucessfully created user')
-        }
     })
 
+    req.body['uid'] = newUser._id
+    await createProfile(req, res, next)
     // return res.send('sucessfully created user')
 })
 
