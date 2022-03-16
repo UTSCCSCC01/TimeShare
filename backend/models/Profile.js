@@ -57,7 +57,11 @@ const ProfileSchema = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Post"
         }
-    ]
+    ],
+    avatar: {
+        type: String,
+        required: false
+    }
 });
 
 module.exports = mongoose.model('Profile', ProfileSchema);
