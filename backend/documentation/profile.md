@@ -13,7 +13,7 @@
 * **Protected:**
 
   No
-  
+
 *  **URL Params**
 
    None
@@ -278,4 +278,55 @@
 
 
 
+**Update Profile Avatar**
+----
+  Attempts to upload an avatar and update the profile avatar to the uploaded image
+* **URL**
 
+  /api/Profiles/avatar
+
+* **Method:**
+  
+  `PUT`
+
+* **Protected:**
+
+  Yes
+  
+*  **URL Params**
+
+  None
+
+* **Data Params**
+
+  **Required**
+  Avatar: Image to use
+
+* **Success Response:**
+  
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```
+    {
+      "data": {
+          "name": "Capture.PNG",
+          "size": 241984
+      }
+    }
+    ```
+ 
+* **Error Response:**
+
+  * **Reason:** Avatar not a file / avatar field not given 
+    **Code:** 400 <br />
+    **Content:** 
+    ```
+    { "errors": {
+        "avatar": [
+          "avatar not uploaded!"
+        ]
+    }
+    ```
+    
+  See authentication

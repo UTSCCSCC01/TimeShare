@@ -8,8 +8,8 @@ require('../models/User')
 var User = mongoose.model('User');
 
 const createProfile = asyncHandler(async (req, res, next) => {
-    const { uid, first_name = "", last_name = "", program = "", year_of_study = "", phone = "", desc = "" } = req.body
-    let profile = Profile({user: uid, first_name, last_name, program, year_of_study, phone, description: desc})
+    const { uid, first_name = "", last_name = "", program = "", year_of_study = "", phone = "", desc = "", avatar = "" } = req.body
+    let profile = Profile({user: uid, first_name, last_name, program, year_of_study, phone, description: desc, avatar})
     e = await profile.validateSync()
     let errors = {}
 
@@ -142,9 +142,30 @@ const updateProfile = asyncHandler( async (req, res, next) => {
     
 })
 
+const updateAvatar = asyncHandler( async (req, res, next) => {
+    if(!req.files || !req.files.avatar) {
+        return res.status(400).json({errors: {'avatar': ['avatar not uploaded!']}})
+    }
+
+    let avatar = req.files.avatar
+    const url = "static/users/" + req.user.username + "/" + avatar.name
+    avatar.mv(url)
+
+    profile = Profile.findOne({user: req.user._id})
+    profile.avatar = url
+
+    res.status(200).send({
+        data: {
+            name: avatar.name,
+            mimetype: avatar.mimetpye,
+            size: avatar.size
+        }
+    })
+})
 module.exports = {
     createProfile,
     getProfiles,
     deleteProfiles,
-    updateProfile
+    updateProfile,
+    updateAvatar
 }

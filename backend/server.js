@@ -4,11 +4,18 @@ const connectDB = require('./db/conn')
 const dotenv = require("dotenv").config({ path: "./config.env" })
 const cors = require("cors")
 const port = process.env.PORT || 5000
+const fileUpload = require('express-fileupload')
+
 connectDB()
 
 const app = express()
+
+app.use(fileUpload({
+    createParentPath: true
+}))
+
 app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
 
