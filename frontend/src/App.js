@@ -8,6 +8,7 @@ import { CreateTimetable } from './pages/CreateTimetable';
 import { App2 } from './pages/CreateTimetable';
 import { UpdateProfile } from './pages/UpdateProfile';
 import { ProfileViewMe } from './pages/ViewProfile';
+import { CompareTimetables } from './pages/CompareTimetables';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/login" element={<LogIn/>} />
         <Route path="/updateProfile" element={<UpdateProfile/>} />
         <Route path="/createTimetable" element={<CreateTimetable/>} />
+        <Route path="/compareTimetables" element={<CompareTimetables/>} />
         <Route path="/profile/me" element={<ProfileViewMe/>} />
       </Routes>
     </Router>
