@@ -1,5 +1,18 @@
 import React, { useState } from 'react'
 import Axios from 'axios';
+import TextField from '@material-ui/core/TextField';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import { Button, Paper } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import Radio from "@material-ui/core/Radio";
+import Slider from "@material-ui/core/Slider";
+import Box from '@mui/material/Box';
+
 
 export const CreatePost = () => {
 
@@ -76,13 +89,15 @@ export const CreatePost = () => {
     return (
         <div>
             <h1>Create Post</h1>
-            <form onSubmit={(e) => {
+            <FormControl class="container" onSubmit={(e) => {
             e.preventDefault();
           }}
-            >
+            >   
+                    
  
-                    <label for="title" required> Post Title </label>  
-                    <input id="title" type="text" name="title" error={errors.username !== ''} helperText={errors.username}
+                    
+                    <TextField label="Post Title" class="input" id="title" variant="filled" 
+                    error={errors.username !== ''} helperText={errors.username}
                  required onChange={(e) => {
                     setTitle(e.target.value);
                   }}/>  
@@ -91,23 +106,76 @@ export const CreatePost = () => {
 
   
                     <label for="description" required> Description </label>  
-                    <textarea required onChange={(e) => {
+                    <TextField class="input" required label="Filled" variant="filled" onChange={(e) => {
                     setDescription(e.target.value);
                   }} id="description" type="textarea" name="description"/>
 
                   <label for="label">Choose a label:</label>
-                    <select id="label" name="label" required onChange={(e) => {
+                    <Select class="input" id="label" name="label" required onChange={(e) => {
                     setLabel(e.target.value);
                   }}>
-                    <option value="1st-year">1st-year</option>
-                    <option value="2nd-year">2nd-year</option>
-                    <option value="3rd-year">3rd-year</option>
-                    <option value="4th-year">4th-year</option>
-                    </select>  
+                    <MenuItem value="1st-year">1st-year</MenuItem>
+                    <MenuItem value="2nd-year">2nd-year</MenuItem>
+                    <MenuItem value="3rd-year">3rd-year</MenuItem>
+                    <MenuItem value="4th-year">4th-year</MenuItem>
+                    </Select>  
                  <br></br>
-                <button type="submit" onClick={makePost}>Create Post</button>  
+                <Button type="submit" onClick={makePost}>Create Post</Button>  
   
-            </form>  
+            </FormControl>  
+
+            <Box
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+
+      <div>
+        <TextField 
+            label="Post Title" 
+            id="title" 
+            variant="filled" 
+            error={errors.username !== ''} 
+            helperText={errors.username}
+            required 
+            onChange={(e) => {
+            setTitle(e.target.value);
+                  }}/>  
+        <TextField 
+            required 
+            label="Description" 
+            variant="filled" 
+            onChange={(e) => {
+                    setDescription(e.target.value);
+                  }} 
+            id="description" 
+            multiline
+            rows={8}
+            name="description"/>
+        <Select 
+          variant="filled" 
+          class="input" 
+          id="label" 
+          name="label" 
+          required 
+          onChange={(e) => {
+                    setLabel(e.target.value);
+                  }}>
+              <MenuItem value="2nd-year">2nd-year</MenuItem>
+              <MenuItem value="3rd-year">3rd-year</MenuItem>
+              <MenuItem value="1st-year">1st-year</MenuItem>
+              <MenuItem value="4th-year">4th-year</MenuItem>
+          </Select> 
+          <Button type="submit" onClick={makePost}>Create Post</Button>
+      </div>
+
+    </Box>
+
+
+
 
         </div>
 
