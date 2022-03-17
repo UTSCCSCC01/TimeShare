@@ -108,8 +108,6 @@ export const CreatePost = () => {
                         label="Post Title"
                         id="title"
                         variant="filled"
-                        error={errors.username !== ''}
-                        helperText={errors.username}
                         required
                         onChange={(e) => {
                             setTitle(e.target.value);
