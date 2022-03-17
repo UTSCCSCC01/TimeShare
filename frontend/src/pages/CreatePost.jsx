@@ -5,6 +5,8 @@ export const CreatePost = () => {
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [label, setLabel] = useState("");
+
 
     const [errors, setErrors] = useState({
         title: '',
@@ -31,7 +33,14 @@ export const CreatePost = () => {
             allErrors['title'] = "Cannot be empty"
         }
         else {
-            allErrors['title'] = ''
+            allErrors['label'] = ''
+        }
+        if (!title) {
+            formIsValid = false
+            allErrors['label'] = "Cannot be empty"
+        }
+        else {
+            allErrors['label'] = ''
         }
 
         setErrors(allErrors)
@@ -43,21 +52,22 @@ export const CreatePost = () => {
         console.log(errors)
         console.log(title)
         console.log(description)
+        console.log(label)
         if (!validateForm) {
             console.log("SHOULD NOT SEE THIS!")
             return
         }
         
         const data = {
-            "post_id": 80,
+            "label": label,
             "name": title,
-            "timetable_id": 1,
+            "timetable_id": "62068f431286035443ce6efc",
             "desc": description
         }
 
         Axios.post("http://localhost:5112/api/Timetable/createPost", data)
         
-
+ 
     }
     
   
@@ -76,13 +86,25 @@ export const CreatePost = () => {
                  required onChange={(e) => {
                     setTitle(e.target.value);
                   }}/>  
+                  <br></br>
+                  <hr></hr>
 
   
                     <label for="description" required> Description </label>  
                     <textarea required onChange={(e) => {
                     setDescription(e.target.value);
-                  }} id="description" type="textarea" name="description"/>  
-  
+                  }} id="description" type="textarea" name="description"/>
+
+                  <label for="label">Choose a label:</label>
+                    <select id="label" name="label" required onChange={(e) => {
+                    setLabel(e.target.value);
+                  }}>
+                    <option value="1st-year">1st-year</option>
+                    <option value="2nd-year">2nd-year</option>
+                    <option value="3rd-year">3rd-year</option>
+                    <option value="4th-year">4th-year</option>
+                    </select>  
+                 <br></br>
                 <button type="submit" onClick={makePost}>Create Post</button>  
   
             </form>  
