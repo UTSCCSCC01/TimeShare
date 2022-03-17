@@ -158,3 +158,14 @@ button {
   grid-column: 1 / 3;  
   text-align: center;  
 }  
+
+.marg {
+  margin-bottom: 30px;
+
+
+}
+ .marg2 {
+   width: 100px;
+   display: grid;  
+  justify-content: center;  
+ }
