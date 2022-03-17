@@ -9,6 +9,7 @@ var User = mongoose.model('User');
 
 const createProfile = asyncHandler(async (req, res, next) => {
     const { uid, first_name = "", last_name = "", program = "", year_of_study = "", phone = "", desc = "", avatar = "" } = req.body
+
     let profile = Profile({user: uid, first_name, last_name, program, year_of_study, phone, description: desc, avatar})
     e = await profile.validateSync()
     let errors = {}
@@ -58,7 +59,6 @@ const getProfiles = asyncHandler(async (req, res, next) => {
     let errors = {"errors": {}}
     let state = null
     const { username } = req.params
-
     if(req._parsedUrl.path === '/'){
         state = "self-view"
     }
@@ -151,8 +151,9 @@ const updateAvatar = asyncHandler( async (req, res, next) => {
     const url = "static/users/" + req.user.username + "/" + avatar.name
     avatar.mv(url)
 
-    profile = Profile.findOne({user: req.user._id})
+    profile = await Profile.findOne({user: req.user._id})
     profile.avatar = url
+    await profile.save()
 
     res.status(200).send({
         data: {
