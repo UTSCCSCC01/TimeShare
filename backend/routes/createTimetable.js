@@ -7,6 +7,7 @@ router.post('/getTimetable', TimetableController.get_timetable);
 
 router.post('/createPost', TimetableController.create_post);
 router.get('/getPost', TimetableController.get_post);
+router.post('/GetAllPostsByLabel', TimetableController.GetAllPostsByLabel);
 
 router.post('/addCourse', TimetableController.add_course);
 router.post('/removeCourse', TimetableController.remove_course);

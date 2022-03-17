@@ -16,6 +16,7 @@ import Box from '@mui/material/Box';
 export const SearchPost = () => {
 
     const [label, setLabel] = useState("");
+    const [posts, setPosts] = useState([])
 
     const [errors, setErrors] = useState({
         title: '',
@@ -40,7 +41,7 @@ export const SearchPost = () => {
     }
 
     const makePost = () => {
-        console.log(errors)
+        // console.log(errors)
         console.log(label)
 
         if (!validateForm) {
@@ -52,22 +53,29 @@ export const SearchPost = () => {
             "label": label     
         }
 
-        temp = Axios.get("http://localhost:5112/api/Timetable/GetAllPostsByLabel", data)
-        print(temp)
-
+        const x = []
         
-
-              
+        Axios.post("http://localhost:5112/api/Timetable/GetAllPostsByLabel", data)
+        .then(result => result.data)
+        .then(data2 => 
+            {
+                for (let j = 0; j < data2.length; j++){ 
+                    x.push(data2[j]); 
+                }
+                setPosts(x)
+                console.log(x)  
+            })
     }
     return (
         <div>
             <h1>Search Post</h1>
             <FormControl class="container" onSubmit={(e) => {
             e.preventDefault();
-          }}
+            }}
             > 
             <label for="label">Choose a label:</label>
-                    <Select class="input" id="label" name="label" required onChange={(e) => {
+                    <Select class="input" id="label" name="label" required onClick={(e) => {
+                    e.preventDefault();    
                     setLabel(e.target.value);
                   }}>
                     <MenuItem value="1st-year">1st-year</MenuItem>
@@ -76,7 +84,15 @@ export const SearchPost = () => {
                     <MenuItem value="4th-year">4th-year</MenuItem>
                     </Select>  
                  <br></br>
-                <Button type="submit" onClick={makePost}>Create Post</Button>  
+                 <div>
+                    <ul id="myUL" style={{ maxHeight: 200, overflow: 'auto' }}>
+                        {posts.map((item, index) => {
+                            return <li key={index} ><a href="#">{item.post_name}</a></li>;
+                        })}
+                    </ul>
+                 </div>
+                <Button type="submit" onClick={makePost} >Search</Button>  
+               
                 </FormControl>  
 
         </div>
