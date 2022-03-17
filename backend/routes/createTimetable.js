@@ -3,6 +3,7 @@ var router = express.Router();
 var TimetableController = require('../controllers/TimetableController');
 
 router.post('/createTimetable', TimetableController.create_timetable);
+router.post('/getTimetable', TimetableController.get_timetable);
 
 router.post('/createPost', TimetableController.create_post);
 router.get('/getPost', TimetableController.get_post);

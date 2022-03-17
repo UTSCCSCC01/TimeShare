@@ -99,3 +99,62 @@ h1 {
 
   text-align: center;
 }
+
+html {  
+  font-family: Arial;  
+}  
+
+input {  
+  width: 40%;  
+  height: 30px;  
+  border: 1px solid;  
+  margin: 5px 10px;  
+  font-size: 1.2rem;  
+}  
+
+select {  
+  width: 40%;  
+  height: 30px;  
+  border: 1px solid;  
+  margin: 5px 10px;  
+  font-size: 1.2rem;  
+} 
+
+textarea {  
+  width: 40%;  
+  height: 90px;  
+  border: 1px solid;  
+  margin: 5px 10px;  
+  font-size: 1.2rem;  
+} 
+
+
+
+label {  
+  text-align: right;  
+  line-height: 45px;  
+}  
+
+button {  
+  background: rgb(114, 114, 204);  
+  width: 120px;  
+  height: 40px;  
+  border: none;  
+  border-radius: 5px;  
+  font-size: 1.1rem;  
+  grid-column: 1 / 3;  
+  margin: auto;  
+}  
+
+.container {  
+  display: grid;  
+  justify-content: center;  
+  flex-direction: column;  
+  grid-template-columns: 40% 60%;  
+  grid-row-gap: 20px;  
+}  
+
+.container div {  
+  grid-column: 1 / 3;  
+  text-align: center;  
+}  

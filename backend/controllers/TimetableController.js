@@ -96,6 +96,23 @@ exports.get_post = async function (req, res) {
   res.status(200).send(existingPost);
 };
 
+exports.get_timetable = async function (req, res) {
+
+  // Get the name and id from the post request
+  
+  var timetable_id = req.body.timetable_id;
+  console.log(req.body)
+  // Create an empty timtable
+  let existingPost = await Timetable.findOne({ timetable_id: timetable_id });
+  console.log()
+  if (!existingPost) {
+    console.log(existingPost)
+    return res.status(404).send("That tt does not exist");
+  }
+ 
+  res.status(200).send(existingPost);
+};
+
 exports.add_course = async function (req, res) {
   
   // name of course to add
