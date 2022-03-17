@@ -89,7 +89,7 @@ export const CreatePost = () => {
     return (
         <div>
             <h1>Create Post</h1>
-            <FormControl class="container" onSubmit={(e) => {
+            {/* <FormControl class="container" onSubmit={(e) => {
             e.preventDefault();
           }}
             >   
@@ -122,7 +122,7 @@ export const CreatePost = () => {
                  <br></br>
                 <Button type="submit" onClick={makePost}>Create Post</Button>  
   
-            </FormControl>  
+            </FormControl>   */}
 
             <Box
       component="form"
