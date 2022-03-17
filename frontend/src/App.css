@@ -161,11 +161,6 @@ button {
 
 .marg {
   margin-bottom: 30px;
-
+  background-color: "#FFFFFF";
 
 }
- .marg2 {
-   width: 100px;
-   display: grid;  
-  justify-content: center;  
- }

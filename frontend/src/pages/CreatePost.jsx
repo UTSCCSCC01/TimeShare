@@ -7,16 +7,11 @@ import { Button, Paper } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
+import { Component } from 'react'
 
-import Divider from '@mui/material/Divider';
-import MenuList from '@mui/material/MenuList';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Typography from '@mui/material/Typography';
-import ContentCut from '@mui/icons-material/ContentCut';
-import ContentCopy from '@mui/icons-material/ContentCopy';
-import ContentPaste from '@mui/icons-material/ContentPaste';
-import Cloud from '@mui/icons-material/Cloud';
+import ParticlesBg from 'particles-bg'
+
+
 
 export const CreatePost = () => {
 
@@ -92,6 +87,7 @@ export const CreatePost = () => {
 
     return (
         <div>
+            <ParticlesBg num={5} type="circle" bg={true} />
             <h1>Create Post</h1>
 
 
@@ -108,7 +104,7 @@ export const CreatePost = () => {
 
                 <div class="marg">
                     <TextField
-                        style={{ width: 300 }}
+                        style={{ width: 300, backgroundColor: "rgba(255, 255, 255, 0.9)" }}
                         label="Post Title"
                         id="title"
                         variant="filled"
@@ -120,10 +116,10 @@ export const CreatePost = () => {
                         }} />
                 </div><div class="marg">
                     <TextField
-                        style={{ width: 300 }}
+                        style={{ width: 400, backgroundColor: "rgba(255, 255, 255, 0.9)" }}
                         required
                         label="Description"
-                        variant="filled"
+                        variant="outlined"
                         onChange={(e) => {
                             setDescription(e.target.value);
                         }}
@@ -136,13 +132,13 @@ export const CreatePost = () => {
                     <FormControl 
                     ccontainer justifyContent="center">
                         
-                    <InputLabel id="demo-simple-select-standard-label">Label</InputLabel>
+                    <InputLabel  id="demo-simple-select-standard-label">Label</InputLabel>
         
-                        <Select
-                            label={"Label"}
+                        <Select  
+                            label="Label"
                             value={label}
                             variant="filled"
-                            style={{ width: 300 }}
+                            style={{ width: 200, backgroundColor: "rgba(255, 255, 255, 0.9)" }}
                             required
                             labelId="categ"
                             id="categ"
