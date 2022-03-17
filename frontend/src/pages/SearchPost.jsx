@@ -106,10 +106,9 @@ export const SearchPost = () => {
                         {posts.map((item, index) => {
                             // return <li key={index} ><a href="#">{item.post_name}</a></li>;
                             return <div class="card">
-                                    <div class="container" key={index}>
-                                        <p class="title"><b>Title: </b>{item.post_name}</p>
-                                        <br></br>
-                                        <p><b>Description: </b>{item.description}</p>
+                                    <div class="container2" key={index}>
+                                        <p class="title"><b>{item.post_name}</b></p>
+                                        <p>{item.description}</p>
                                     </div>
                             </div>;
                         })}

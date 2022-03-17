@@ -196,6 +196,7 @@ li {
   margin-right: 25%;
   background-color: rgba(255, 255, 255, 0.85);
   margin-bottom: 15px;
+  border-radius: 5px;
 }
 
 /* On mouse-over, add a deeper shadow */
@@ -204,10 +205,12 @@ li {
 }
 
 /* Add some padding inside the card container */
-.container {
+.container2 {
+  text-align: center; 
   padding: 2px 16px;
 }
 
 .title {
   font-size: 20px;
+  width: 100%;
 }
