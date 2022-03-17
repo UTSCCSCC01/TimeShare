@@ -12,6 +12,11 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import Radio from "@material-ui/core/Radio";
 import Slider from "@material-ui/core/Slider";
 import Box from '@mui/material/Box';
+import { Component } from 'react'
+
+import InputLabel from '@mui/material/InputLabel';
+
+import ParticlesBg from 'particles-bg'
 
 export const SearchPost = () => {
 
@@ -50,52 +55,72 @@ export const SearchPost = () => {
         }
 
         const data = {
-            "label": label     
+            "label": label
         }
 
         const x = []
-        
+
         Axios.post("http://localhost:5112/api/Timetable/GetAllPostsByLabel", data)
-        .then(result => result.data)
-        .then(data2 => 
-            {
-                for (let j = 0; j < data2.length; j++){ 
-                    x.push(data2[j]); 
+            .then(result => result.data)
+            .then(data2 => {
+                for (let j = 0; j < data2.length; j++) {
+                    x.push(data2[j]);
                 }
                 setPosts(x)
-                console.log(x)  
+                console.log(x)
             })
     }
     return (
-        <div>
+        <div class="marg">
+            <ParticlesBg num={5} type="circle" bg={true} />
+
             <h1>Search Post</h1>
+            <p class="lab">Choose a Label</p>
             <FormControl class="container" onSubmit={(e) => {
-            e.preventDefault();
+                e.preventDefault();
             }}
-            > 
-            <label for="label">Choose a label:</label>
-                    <Select class="input" id="label" name="label" required onClick={(e) => {
-                    e.preventDefault();    
-                    setLabel(e.target.value);
-                  }}>
-                    <MenuItem value="1st-year">1st-year</MenuItem>
-                    <MenuItem value="2nd-year">2nd-year</MenuItem>
-                    <MenuItem value="3rd-year">3rd-year</MenuItem>
-                    <MenuItem value="4th-year">4th-year</MenuItem>
-                    </Select>  
-                 <br></br>
-                 <div>
-                    <ul id="myUL" style={{ maxHeight: 200, overflow: 'auto' }}>
+            >
+
+
+                <div class="marg2">
+                    <Select
+                        label="Label"
+                        value={label}
+                        variant="filled"
+                        style={{ width: 400, backgroundColor: "rgba(255, 255, 255, 0.85)" }}
+                        required
+                        labelId="categ"
+                        id="categ"
+                        onChange={(e) => {
+                            setLabel(e.target.value);
+                        }}
+
+                    >
+                        <MenuItem value="1st-year">1st-year</MenuItem>
+                        <MenuItem value="2nd-year">2nd-year</MenuItem>
+                        <MenuItem value="3rd-year">3rd-year</MenuItem>
+                        <MenuItem value="4th-year">4th-year</MenuItem>
+                    </Select></div>
+                <div class="marg2">
+                    <ul id="myUL" >
                         {posts.map((item, index) => {
-                            return <li key={index} ><a href="#">{item.post_name}</a></li>;
+                            // return <li key={index} ><a href="#">{item.post_name}</a></li>;
+                            return <div class="card">
+                                    <div class="container" key={index}>
+                                        <p class="title"><b>Title: </b>{item.post_name}</p>
+                                        <br></br>
+                                        <p><b>Description: </b>{item.description}</p>
+                                    </div>
+                            </div>;
                         })}
                     </ul>
-                 </div>
-                <Button type="submit" onClick={makePost} >Search</Button>  
-               
-                </FormControl>  
+                </div>
+                <div class="marg">
+                    <Button type="submit" onClick={makePost} variant="contained">Search</Button>
+                </div>
+            </FormControl>
 
         </div>
     )
-                   
+
 }

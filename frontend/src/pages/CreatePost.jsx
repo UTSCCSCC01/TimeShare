@@ -129,12 +129,12 @@ export const CreatePost = () => {
                         name="description" />
                 </div><div class="marg">
 
-                    <FormControl 
-                    ccontainer justifyContent="center">
-                        
-                    <InputLabel  id="demo-simple-select-standard-label">Label</InputLabel>
-        
-                        <Select  
+                    <FormControl
+                        ccontainer justifyContent="center">
+
+                        <p class="lab">Choose a Label</p>    
+
+                        <Select
                             label="Label"
                             value={label}
                             variant="filled"
@@ -153,7 +153,7 @@ export const CreatePost = () => {
                             <MenuItem value="4th-year">4th-year</MenuItem>
                         </Select>
                     </FormControl>
-                
+
                 </div><div>
 
                     <Button
