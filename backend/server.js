@@ -23,6 +23,8 @@ app.use("/api/Profiles", require("./routes/profileRoutes"))
 app.use("/api/User", require("./routes/userRoutes"))
 app.use("/api/Timetable", require("./routes/createTimetable"))
 app.use("/api/Timetable", require("./routes/compareTimetables"))
+app.use("/api/Group", require("./routes/groupRoutes"))
+app.use("/static", express.static('static'))
 
 // custom error handler
 app.use(errorHandler)

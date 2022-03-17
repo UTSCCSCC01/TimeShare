@@ -11,7 +11,7 @@ var User = mongoose.model('User');
 const createGroup = asyncHandler(async (req, res, next) => {
     let errors = {}
     const { name, description = "" } = req.body
-    let users = []
+    let users = [req.user._id]
     let owner = req.user._id
     
     let group = Group({name, description, users, owner, type: "public"})
@@ -45,7 +45,6 @@ const createGroup = asyncHandler(async (req, res, next) => {
     if(image){
         image.mv(image_url)
     }
-
     group = await group.save()
     profile.groups.push(group._id)
     await profile.save()
@@ -111,8 +110,29 @@ const updateGroup = asyncHandler( async (req, res, next) => {
     
 })
 
+const joinGroup = asyncHandler( async (req, res, next) => {
+    const { name } = req.body
+    let errors = {"errors": {}}
+    
+    let group = await Group.findOne({name})
+    if(!group){
+        errors.errors["group"] = ["Group with given name doesn't exist!"]
+        return res.status(404).json(errors)
+    }
+
+    let profile = await Profile.findOne({user: req.user._id})
+
+    profile.groups.addToSet(group._id)
+    group.users.addToSet(req.user._id)
+    profile = await profile.save()
+    group = await group.save()
+    return res.status(201).json(profile)
+    
+})
+
 module.exports = {
     createGroup,
     updateGroup,
-    getGroup
+    getGroup,
+    joinGroup
 }
