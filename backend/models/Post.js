@@ -19,6 +19,16 @@ const PostSchema = mongoose.Schema({
         unique: false,
     },
 
+    image: {
+        type: String,
+        required: false
+    },
+
+    owner:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
+
     timetable: { type: mongoose.Schema.Types.ObjectId, ref: 'Timetable' },
 });
 

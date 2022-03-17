@@ -48,6 +48,14 @@ exports.create_post = async function (req, res) {
   var name = req.body.name;
   var timetable_id = req.body.timetable_id;
   var desc = req.body.desc;
+  var owner = req.body.owner;
+
+  if (!req.files || !req.files.image) {
+    var image = "";
+  } else {
+    var image = req.files.image;
+  }
+  
 
   // Create an empty timtable
   let existingTable = await Timetable.findOne({ timetable_id: timetable_id });
@@ -67,6 +75,8 @@ exports.create_post = async function (req, res) {
     post_name: name,
     description: desc,
     timetable: existingTable,
+    owner: owner,
+    image: image,
   });
   
 
