@@ -41,38 +41,76 @@ exports.create_timetable = async function (req, res) {
   res.status(200).send(newTimetable);
 };
 
-exports.create_post = async function (req, res) {
+// exports.create_post = async function (req, res) {
 
-  // Get the name and id from the post request
-  var post_id = req.body.post_id;
-  var name = req.body.name;
-  var timetable_id = req.body.timetable_id;
-  var desc = req.body.desc;
+//   // Get the name and id from the post request
+//   var post_id = req.body.post_id;
+//   var name = req.body.name;
+//   var timetable_id = req.body.timetable_id;
+//   var desc = req.body.desc;
 
-  // Create an empty timtable
-  let existingTable = await Timetable.findOne({ timetable_id: timetable_id });
+//   // Create an empty timtable
+//   let existingTable = await Timetable.findOne({ timetable_id: timetable_id });
  
-  if (!existingTable) {
-    return res.status(400).send("That timetable does not exist");
-  }
+//   if (!existingTable) {
+//     return res.status(400).send("That timetable does not exist");
+//   }
 
-  let existingPost = await Post.findOne({ post_id: post_id });
+//   let existingPost = await Post.findOne({ post_id: post_id });
 
-  if (existingPost) {
-    return res.status(400).send("That post already exists");
-  }
+//   if (existingPost) {
+//     return res.status(400).send("That post already exists");
+//   }
 
-  var newPost = new Post({
-    post_id: post_id,
-    post_name: name,
-    description: desc,
-    timetable: existingTable,
-  });
+//   var newPost = new Post({
+//     post_id: post_id,
+//     post_name: name,
+//     description: desc,
+//     timetable: existingTable,
+//   });
+
+  exports.create_post = async function (req, res) {
+
+    // Get the name and id from the post request
+    // var post_id = req.body.post_id;
+    var name = req.body.name;
+    var timetable_id = req.body.timetable_id;
+    var desc = req.body.desc;
+    var label2 = req.body.label;
+    console.log(req.body)
+    console.log(label2)
+    console.log(timetable_id)
+    // Create an empty timtable
+    let existingTable = await Timetable.findOne({ _id: timetable_id });
+   
+    if (!existingTable) {
+      console.log("NOT A TIMETABLE")
+      return res.status(400).send("That timetable does not exist");
+    }
+  
+    // let existingPost = await Post.findOne({ post_id: post_id });
+  
+    // if (existingPost) {
+    //   console.log("AAYOOOO")
+    //   return res.status(400).send("That post already exists");
+    // }
+    console.log(name)
+    console.log(desc)
+    console.log(existingTable)
+    var newPost = new Post({
+      post_label: label2,
+      post_id: 206,
+      post_name: name,
+      description: desc,
+      timetable: existingTable,
+    });
+    
   
 
   // save to database
   newPost.save(function (err) {
     if (err) {
+      console.log("COULDNT SAVE")
       return new Error(`Error while saving to DB`);
     }
   });
@@ -112,6 +150,16 @@ exports.get_timetable = async function (req, res) {
  
   res.status(200).send(existingPost);
 };
+
+exports.GetAllPostsByLabel = async function (req, res) {
+  console.log("WE MADE IT!")
+  var label2 = req.body.label;
+  console.log(label2)
+  let Posts = await Post.find({ post_label: label2 });
+  console.log(Posts)
+  return res.status(200).send(Posts);
+
+}
 
 exports.add_course = async function (req, res) {
   
