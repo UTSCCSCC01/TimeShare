@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 const asyncHandler = require('express-async-handler');
 require('../models/Group');
 var Group =  mongoose.model('Group');
+require('../models/Profile');
+var Profile =  mongoose.model('Profile');
 
 require('../models/User')
 var User = mongoose.model('User');
@@ -13,6 +15,7 @@ const createGroup = asyncHandler(async (req, res, next) => {
     let owner = req.user._id
     
     let group = Group({name, description, users, owner, type: "public"})
+    let profile = Profile({user: req.user._id})
 
     let image, image_url = ""
     if(req.files && req.files.image){
@@ -44,6 +47,9 @@ const createGroup = asyncHandler(async (req, res, next) => {
     }
 
     group = await group.save()
+    profile.groups.push(group._id)
+    await profile.save()
+    
     return res.status(201).json(group)
 })
 
@@ -74,7 +80,7 @@ const updateGroup = asyncHandler( async (req, res, next) => {
         errors.errors["user"] = ["User is not the owner of the group!"]
         return res.status(403).json(errors)
     }
-    
+
     let image, image_url
     if(req.files && req.files.image){
         image = req.files.image
