@@ -13,12 +13,18 @@ import Radio from "@material-ui/core/Radio";
 import Slider from "@material-ui/core/Slider";
 import Box from '@mui/material/Box';
 import { Component } from 'react'
+import  { useNavigate  } from 'react-router-dom';
 
 import InputLabel from '@mui/material/InputLabel';
 
 import ParticlesBg from 'particles-bg'
 
 export const SearchPost = () => {
+    let navigate = useNavigate();
+
+    const routeToPost = () => {
+        navigate('/viewPost/62068f431286035443ce6efc');
+    }
 
     const [label, setLabel] = useState("");
     const [posts, setPosts] = useState([])
@@ -103,12 +109,14 @@ export const SearchPost = () => {
                     <div class="marg">
                     <Button type="submit" onClick={makePost} variant="contained">Search</Button>
                 </div>
+                </FormControl>
                 <div class="marg2">
                     <ul class= "NN" id="myUL" >
                         {posts.map((item, index) => {
                             // return <li key={index} ><a href="#">{item.post_name}</a></li>;
-                            return <div class="card">
-                                    <div class="container2" key={index}>
+                            return <div class="card" onClick={routeToPost}>
+                                    <div class="container2" key={index} >
+                                      
                                         <p class="title"><b>{item.post_name}</b></p>
                                         <p>{item.description}</p>
                                     </div>
@@ -117,7 +125,7 @@ export const SearchPost = () => {
                     </ul>
                 </div>
                 
-            </FormControl>
+            
 
         </div>
     )

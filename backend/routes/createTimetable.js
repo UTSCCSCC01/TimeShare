@@ -18,6 +18,7 @@ router.post('/GetAllPostsByLabel', TimetableController.GetAllPostsByLabel);
 
 router.post('/addCourse', TimetableController.add_course);
 router.post('/removeCourse', TimetableController.remove_course);
+
 router.get('/getCourses', TimetableController.get_courses);
 router.get('/getAllCourses', TimetableController.get_courses);
 

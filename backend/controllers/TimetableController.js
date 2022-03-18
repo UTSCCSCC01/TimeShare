@@ -30,6 +30,7 @@ exports.create_timetable = async function (req, res) {
   });
   
 
+  
   // save to database
   newTimetable.save(function (err) {
     if (err) {
@@ -43,11 +44,19 @@ exports.create_timetable = async function (req, res) {
 
 // exports.create_post = async function (req, res) {
 
-//   // Get the name and id from the post request
-//   var post_id = req.body.post_id;
-//   var name = req.body.name;
-//   var timetable_id = req.body.timetable_id;
-//   var desc = req.body.desc;
+  // Get the name and id from the post request
+  // var post_id = req.body.post_id;
+  // var name = req.body.name;
+  // var timetable_id = req.body.timetable_id;
+  // var desc = req.body.desc;
+  // var owner = req.body.owner;
+
+  // if (!req.files || !req.files.image) {
+  //   var image = "";
+  // } else {
+  //   var image = req.files.image;
+  // }
+  
 
 //   // Create an empty timtable
 //   let existingTable = await Timetable.findOne({ timetable_id: timetable_id });
@@ -306,26 +315,13 @@ exports.remove_course = async function (req, res) {
 exports.get_courses = async function (req, res) {
   var id = req.body.id;
 
-  let timetable_we_want = await Timetable.findOne({ timetable_id: id }); // error check later
+  let timetable_we_want = await Timetable.findOne({ timetable_id: id });
 
   if (timetable_we_want) {
-    // var course_ids = timetable_we_want.courses;
+
     var lecture_ids = timetable_we_want.lectures;
     var tut_ids = timetable_we_want.tutorials;
-    // let result = "Timetable courses:<br/>";
     let courses = [];
-    
-    // for (let i = 0; i < course_ids.length; i++) {
-
-    //   let course = await Course.findOne({ _id: course_ids[i] });
-    //   result = result.concat(course.course_id, ": ", course.course_name, "<br/>");
-
-    //   let lecture = await Lecture.findOne({ _id: lecture_ids[i] })
-    //   let tutorial = await Tutorial.findOne({ _id: tut_ids[i] })
-    //   courses.push(lecture);
-    //   courses.push(tutorial);
-    //   // courses.push(course);
-    // }
 
     for (let i = 0; i < lecture_ids.length; i++) {
       let lecture = await Lecture.findOne({ _id: lecture_ids[i] })
