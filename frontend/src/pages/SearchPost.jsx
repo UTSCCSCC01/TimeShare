@@ -60,7 +60,7 @@ export const SearchPost = () => {
 
         const x = []
 
-        Axios.post("http://localhost:5006/api/Timetable/GetAllPostsByLabel", data)
+        Axios.post("http://localhost:5004/api/Timetable/GetAllPostsByLabel", data)
             .then(result => result.data)
             .then(data2 => {
                 for (let j = 0; j < data2.length; j++) {

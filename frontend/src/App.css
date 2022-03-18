@@ -169,6 +169,15 @@ button {
   background-color: "#FFFFFF";
 
 }
+.marg4 {
+  margin-bottom: 30px;
+}
+
+.marg3 {
+  background-color: "#FFFFFF";
+  margin-left: 100px;
+  margin-right: 100px;
+}
 
 ul {
   justify-content: center;

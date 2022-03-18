@@ -143,8 +143,10 @@ export const ViewPost = () => {
     
     let description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean posuere turpis metus, eu luctus dolor tincidunt quis. Duis viverra odio ut pretium sagittis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut imperdiet pretium lorem, nec gravida arcu aliquet in. Duis quis molestie augue. Cras vestibulum sodales sodales. Morbi rhoncus tempor neque, ac rutrum lacus vehicula quis. Ut malesuada, nunc scelerisque volutpat facilisis, arcu risus convallis libero, quis ultrices quam ex id nisl. Donec congue turpis vel libero feugiat, sit amet dignissim turpis dictum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae"
     return (
-        <div>
-        <h1>{title}</h1> <h1>{description}</h1>
+        <div class="marg3">
+          <ParticlesBg num={5} type="circle" bg={true} />
+        <h1 class="marg4">{title}</h1>
+         <p class="marg4">{description}</p>
 
         <Timetable class="timetable2"
           
