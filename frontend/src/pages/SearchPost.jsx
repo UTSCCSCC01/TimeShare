@@ -101,6 +101,9 @@ export const SearchPost = () => {
                         <MenuItem value="3rd-year">3rd-year</MenuItem>
                         <MenuItem value="4th-year">4th-year</MenuItem>
                     </Select></div>
+                    <div class="marg">
+                    <Button type="submit" onClick={makePost} variant="contained">Search</Button>
+                </div>
                 <div class="marg2">
                     <ul id="myUL" >
                         {posts.map((item, index) => {
@@ -114,9 +117,7 @@ export const SearchPost = () => {
                         })}
                     </ul>
                 </div>
-                <div class="marg">
-                    <Button type="submit" onClick={makePost} variant="contained">Search</Button>
-                </div>
+                
             </FormControl>
 
         </div>
