@@ -2,11 +2,18 @@ var express = require('express');
 var router = express.Router();
 var TimetableController = require('../controllers/TimetableController');
 
+// const {
+//     authorize
+// } = require("../middleware/authMiddleware")
+
 router.post('/createTimetable', TimetableController.create_timetable);
 router.post('/getTimetable', TimetableController.get_timetable);
 
+// router.post('/createPost', authorize, TimetableController.create_post);
 router.post('/createPost', TimetableController.create_post);
 router.get('/getPost', TimetableController.get_post);
+router.get('/getPost2/:postId', TimetableController.get_post2);
+
 router.post('/GetAllPostsByLabel', TimetableController.GetAllPostsByLabel);
 
 router.post('/addCourse', TimetableController.add_course);

@@ -9,6 +9,12 @@ const PostSchema = mongoose.Schema({
         required: [true, "This field can't be blank"]
     },
 
+    // owner: {
+    //     type: mongoose.Schema.Types.ObjectId, 
+    //     ref: "User",
+    //     required: [true, "A user ID is required to create a profile!"]
+    // },
+
     post_id: {
         type: Number,
         // unique: true,

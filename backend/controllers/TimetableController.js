@@ -74,6 +74,7 @@ exports.create_timetable = async function (req, res) {
     // Get the name and id from the post request
     // var post_id = req.body.post_id;
     var name = req.body.name;
+    // let owner = req.user._id;
     var timetable_id = req.body.timetable_id;
     var desc = req.body.desc;
     var label2 = req.body.label;
@@ -98,8 +99,9 @@ exports.create_timetable = async function (req, res) {
     console.log(desc)
     console.log(existingTable)
     var newPost = new Post({
+      // owner: owner,
       post_label: label2,
-      post_id: 206,
+      post_id: 400,
       post_name: name,
       description: desc,
       timetable: existingTable,
@@ -111,6 +113,7 @@ exports.create_timetable = async function (req, res) {
   newPost.save(function (err) {
     if (err) {
       console.log("COULDNT SAVE")
+      console.log(err)
       return new Error(`Error while saving to DB`);
     }
   });
@@ -118,6 +121,12 @@ exports.create_timetable = async function (req, res) {
  
   res.status(200).send(newPost);
 };
+
+exports.get_post2 = async function (req, res) {
+
+    
+}
+
 
 exports.get_post = async function (req, res) {
 

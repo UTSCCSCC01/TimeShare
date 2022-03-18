@@ -15,6 +15,22 @@ import ParticlesBg from 'particles-bg'
 
 export const CreatePost = () => {
 
+    // const authHeader = () => {
+    //     // return authorization header with basic auth credentials
+    //     console.log(localStorage.getItem('token'))
+    //     let token = localStorage.getItem('token');
+
+    //     if (token) {
+    //         console.log(token)
+    //         return { Authorization: `Bearer ${token}` };
+    //     } else {
+    //         console.log('no token')
+    //         return;
+    //     }
+    // }
+
+
+
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [label, setLabel] = useState("");
@@ -61,6 +77,7 @@ export const CreatePost = () => {
     }
 
     const makePost = () => {
+        console.log("hello")
         console.log(errors)
         console.log(title)
         console.log(description)
@@ -77,8 +94,13 @@ export const CreatePost = () => {
             "desc": description
         }
 
-        Axios.post("http://localhost:5112/api/Timetable/createPost", data)
 
+        // const auth = authHeader()
+        // if (!auth) {
+        //     return;
+        // }
+        // Axios.post("http://localhost:5000/api/Timetable/createPost", data,  {headers: auth})
+        Axios.post("http://localhost:5000/api/Timetable/createPost", data)
 
     }
 
@@ -107,6 +129,8 @@ export const CreatePost = () => {
                         style={{ width: 300, backgroundColor: "rgba(255, 255, 255, 0.9)" }}
                         label="Post Title"
                         id="title"
+                        // error={errors.username !== ''}
+                        // helperText={errors.username}
                         variant="filled"
                         required
                         onChange={(e) => {
@@ -130,7 +154,7 @@ export const CreatePost = () => {
                     <FormControl
                         ccontainer justifyContent="center">
 
-                        <p class="lab">Choose a Label</p>    
+                        <p class="lab">Choose a Label</p>
 
                         <Select
                             label="Label"
