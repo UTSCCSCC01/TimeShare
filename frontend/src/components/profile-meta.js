@@ -58,7 +58,7 @@ class ProfileMeta extends React.Component {
                     maxHeight: 300,
                     textAlign: "center",
                 }}>
-                    <img style={{maxWidth: "inherit", objectFit: "contain", maxHeight: "inherit"}} src="https://images.unsplash.com/photo-1554080353-a576cf803bda?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGhvdG98ZW58MHx8MHx8&w=1000&q=80"></img>
+                    <img style={{maxWidth: "inherit", objectFit: "contain", maxHeight: "inherit"}} src={this.props.avatar}></img>
                 </Box>
                 <Box sx={{
                     maxWidth: this.props.maxWidth,
@@ -69,12 +69,6 @@ class ProfileMeta extends React.Component {
                     year={this.props.year}
                     program={this.props.program}
                     description={this.props.description}/>
-                </Box>
-                <Box sx={{
-                    maxWidth: this.props.maxWidth,
-                    textAlign: "center",
-                }}>
-                    <Button sx={{maxWidth: this.props.maxWidth / 2}} variant="contained">Update Profile</Button>
                 </Box>
             </Stack>
         )

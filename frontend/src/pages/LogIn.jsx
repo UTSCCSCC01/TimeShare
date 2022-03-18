@@ -101,7 +101,7 @@ export const LogIn = () => {
         } else {
             localStorage.setItem('user-id', res.data._id)
             localStorage.setItem('token', res.data.token)
-            navigate('/profile/me/');
+            navigate('/profile/');
         }
       })
       .catch((error) => {
