@@ -6,12 +6,13 @@ import React, { useState } from 'react'
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import Axios from 'axios';
-
+import  { useNavigate  } from 'react-router-dom';
 
 // -------
 
 export const CreateTimetable = () => {
 
+  let navigate = useNavigate();
   const authHeader = () => {
     // return authorization header with basic auth credentials
     console.log(localStorage.getItem('token'))
@@ -37,6 +38,7 @@ export const CreateTimetable = () => {
     })
     .then((res) => {
       console.log(res)
+      navigate('/createPost');
     })
     .catch((error) => {
       console.log("Error:", error);
@@ -157,7 +159,7 @@ export const CreateTimetable = () => {
 
 
       <h1>Timetable Builder</h1>    <br /><br />
-      <link rel="stylesheet" href="../App.css" />
+      <link rel="stylesheet" href="../App2.css" />
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
       <input type="text" id="myInput" onKeyUp={myFunction} placeholder="Search for a course" />
 
@@ -174,7 +176,7 @@ export const CreateTimetable = () => {
 
       <div>
         <Timetable class="timetable2"
-
+          
           events={events} />
       </div>
       <br /><br />
