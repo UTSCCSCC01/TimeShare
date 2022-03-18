@@ -85,7 +85,6 @@ export const SearchPost = () => {
                 <div class="marg2">
                     <Select
                         label="Label"
-                        value={label}
                         variant="filled"
                         style={{ width: 400, backgroundColor: "rgba(255, 255, 255, 0.85)" }}
                         required
@@ -105,7 +104,7 @@ export const SearchPost = () => {
                     <Button type="submit" onClick={makePost} variant="contained">Search</Button>
                 </div>
                 <div class="marg2">
-                    <ul id="myUL" >
+                    <ul class= "NN" id="myUL" >
                         {posts.map((item, index) => {
                             // return <li key={index} ><a href="#">{item.post_name}</a></li>;
                             return <div class="card">
