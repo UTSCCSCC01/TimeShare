@@ -112,20 +112,17 @@ exports.create_timetable = async function (req, res) {
   // save to database
   newPost.save(function (err) {
     if (err) {
-      console.log("COULDNT SAVE")
-      console.log(err)
-      return new Error(`Error while saving to DB`);
-    }
+      return res.json({
+          err
+      })
+  }
   });
 
  
   res.status(200).send(newPost);
 };
 
-exports.get_post2 = async function (req, res) {
 
-    
-}
 
 
 exports.get_post = async function (req, res) {
