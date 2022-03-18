@@ -8,8 +8,12 @@
 
 * **Method:**
   
-  `GET`
-  
+  `POST`
+
+* **Protected:**
+
+  No
+
 *  **URL Params**
 
    None
@@ -95,16 +99,16 @@
 * **Method:**
   
   `PUT`
+
+* **Protected:**
+
+  Yes
   
 *  **URL Params**
 
    None
 
 * **Data Params**
-
-    **Required:**
- 
-   `pid=[objectID]`
 
    **Optional:**
  
@@ -140,17 +144,7 @@
  
 * **Error Response:**
 
-    Profile ID does not correspond
-
-  * **Code:** 404 NOT FOUND <br />
-    **Content:** 
-    ```
-    {
-         "errors" : {
-             "profile": ["Profile with given ID does not exist"]
-         }
-    }
-    ```
+  See authentication
   
   The endpoint may also face validation errors:
   - Phone number not in correct format
@@ -170,23 +164,24 @@
     ```
 
 
-**Get Profile**
+**Get Public Profile**
 ----
-  Attempts to get a profile.
-
+  Attempts to retrieve public info about profile
 * **URL**
 
-  /api/Profiles/
+  /api/Profiles/<username>
 
 * **Method:**
   
   `GET`
+
+* **Protected:**
+
+  No
   
 *  **URL Params**
 
-   **Required:**
-   
-   `pid=[objectID]`
+  None
 
 * **Data Params**
 
@@ -198,42 +193,140 @@
   * **Code:** 200 <br />
     **Content:** 
     ```
-    { 
-        "_id": "6219747368ac5a8823eb92e4",
-        "user": "6205b3ed031c87d276fa2410",
-        "first_name": "im a user",
-        "last_name": "With this last name",
-        "program": "computer science",
-        "year_of_study": 3,
-        "phone": "4373459802",
-        "description": "I'm a third year cs student!"
+    {
+      "_id": "6231212d0b5e24ccad62e62d",
+      "user": "6231212d0b5e24ccad62e62c",
+      "first_name": "",
+      "last_name": "",
+      "program": "",
+      "year_of_study": null,
+      "phone": "",
+      "description": "",
+      "posts": [],
+      "comments": [],
+      "likes_posts": [],
+      "__v": 0,
+      "public_groups": []
+    }
+    ```
+ 
+* **Error Response:**
+  
+  username does not correspond to a user
+
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** 
+    ```
+    { "errors": {
+        "user": [
+          "User with given username doesn't exist!"
+        ]
+    }
+    ```
+
+
+**Get Private Profile**
+----
+  Attempts to retrieve all info about profile
+* **URL**
+
+  /api/Profiles/
+
+* **Method:**
+  
+  `GET`
+
+* **Protected:**
+
+  Yes
+  
+*  **URL Params**
+
+  None
+
+* **Data Params**
+
+  None
+
+* **Success Response:**
+  
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```
+    {
+      "_id": "6231212d0b5e24ccad62e62d",
+      "user": "6231212d0b5e24ccad62e62c",
+      "first_name": "",
+      "last_name": "",
+      "program": "",
+      "year_of_study": null,
+      "phone": "",
+      "description": "",
+      "posts": [],
+      "comments": [],
+      "likes_posts": [],
+      "__v": 0,
+      "public_groups": [],
+      "private_groups": []
     }
     ```
  
 * **Error Response:**
 
-  PID not provided
+  See authentication
 
-  * **Code:** 400 BAD REQUEST <br />
+
+
+**Update Profile Avatar**
+----
+  Attempts to upload an avatar and update the profile avatar to the uploaded image
+* **URL**
+
+  /api/Profiles/avatar
+
+* **Method:**
+  
+  `PUT`
+
+* **Protected:**
+
+  Yes
+  
+*  **URL Params**
+
+  None
+
+* **Data Params**
+
+  **Required**
+  Avatar: Image to use
+
+* **Success Response:**
+  
+
+  * **Code:** 200 <br />
     **Content:** 
     ```
     {
-         "errors" : {
-             "profile": ["Profile id not provided!"]
-         }
+      "data": {
+          "name": "Capture.PNG",
+          "size": 241984
+      }
     }
     ```
-  
-  PID does not correspond to a user
+ 
+* **Error Response:**
 
-  * **Code:** 404 NOT FOUND <br />
+  * **Reason:** Avatar not a file / avatar field not given 
+    **Code:** 400 <br />
     **Content:** 
     ```
-    { "errors" : {
-            "profile" : ["Profile with given ID doesn't exist!"]
-        } 
+    { "errors": {
+        "avatar": [
+          "avatar not uploaded!"
+        ]
     }
     ```
-
-
-
+    
+  See authentication

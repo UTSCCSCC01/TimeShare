@@ -1,5 +1,7 @@
 import React from "react";
 import { BasicForm } from "../components/form";
+import axios from "axios";
+
 
 class UpdateProfileForm extends BasicForm {
     constructor(props) {
@@ -13,6 +15,7 @@ class UpdateProfileForm extends BasicForm {
                 "year_of_study": "",
                 "phone": "", 
                 "description": "",
+                "avatar": "",
             },
             errors: {
                 "first_name": "",
@@ -21,6 +24,7 @@ class UpdateProfileForm extends BasicForm {
                 "year_of_study": "",
                 "phone": "", 
                 "description": "",
+                "avatar": ""
             },
             labels: {
                 "first_name": "First Name",
@@ -28,61 +32,60 @@ class UpdateProfileForm extends BasicForm {
                 "program": "Program",
                 "year_of_study": "Year of study",
                 "phone": "Phone",
-                "description": "Description"
+                "description": "Description",
+                "avatar": "Avatar"
             },
             inputtype: {
-                "year_of_study": "number"
+                "year_of_study": "number",
+                "avatar": "file"
             },
             formError: "profile"
 
         }
+
+        this.formTitle = "Update Profile"
     };
 
     async componentDidMount () {
-        let data = await (await fetch(`http://localhost:5000/api/Profiles/?pid=${this.props.pid}`)).json()
-        let new_data = {}
-        console.log(this.state)
-        Object.keys(this.state.data).forEach(key => {
-            new_data[key] = data[key] || this.state.data[key]
+        let resp = await axios.get(`http://localhost:5000/api/Profiles/`, { 
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem('token')}`
+            }
         })
-        
-        this.setState({ data: new_data })
-        this.setState({ loading: false })
+        let {first_name = "", last_name = "", program = "", year_of_study = "", phone = "", description = "" } = resp.data
+        let data = {...this.state.data, first_name, last_name, program, year_of_study, phone, description}
+        this.setState({data, loading: false})
+
     }
 
-    async onSubmit() {
-        let body = {pid: this.props.pid, ...this.state.data}
-        let resp = await fetch(
-            "http://localhost:5000/api/Profiles/",{
-            method: "PUT",
+    postSubmitSucess(){
+        window.location.href = "/profile"
+    }
+    async onSubmit(event) {
+        let data = new FormData(event.target)
+        let resp = await axios.put(
+            "http://localhost:5000/api/Profiles/", data, {
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body),
+                'Content-Type': 'multipart/form-data',
+                "Authorization": `Bearer ${localStorage.getItem('token')}`
+            }
+        }).catch((e) => {
+            return e.response
         })
+
         if(resp.status >= 400){
-            let response = await resp.json()
+            let response = await resp.data
             let errors = response.errors
             let errs = this.state.errors
-            console.log(errors)
             Object.keys(errors).forEach(key => {
                 errs[key] = response.errors[key]
             })
 
             this.setState({errors: errs})
-            
+            return false;
         }
         else{
-            this.setState({errors: {
-                "first_name": "",
-                "last_name": "",
-                "program": "",
-                "year_of_study": "",
-                "phone": "", 
-                "description": "",
-            }})
-            // redirect, nothing for now
+            return true;
         }
     }
 }
