@@ -73,7 +73,7 @@ const getProfiles = asyncHandler(async (req, res, next) => {
 
 
     let profile = null
-    profile = state != "self-view" ? await Profile.findOne({user: user._id}) : await Profile.findOne({user: req.user._id})
+    profile = state != "self-view" ? await Profile.findOne({user: user._id}).populate('groups').populate('posts') : await Profile.findOne({user: req.user._id}).populate('groups').populate('posts')
     
     if(!profile){
         errors.errors["profile"] = ["Profile with given ID doesn't exist!"]
@@ -105,7 +105,7 @@ const deleteProfiles = asyncHandler( async (req, res, next) => {
 })
 
 const updateProfile = asyncHandler( async (req, res, next) => {
-    const { first_name, last_name, program, year_of_study, phone, desc } = req.body
+    const { first_name, last_name, program, year_of_study, phone, description } = req.body
     let profile = await Profile.findOne({user: req.user._id})
 
     let errors = {}
@@ -113,14 +113,20 @@ const updateProfile = asyncHandler( async (req, res, next) => {
         errors["profile"] = ["Profile with given ID does not exist"]
         return res.status(404).json(errors)
     }
-
+    
     profile.first_name = first_name || profile.first_name
     profile.last_name = last_name || profile.last_name
     profile.program = program || profile.program
     profile.year_of_study = year_of_study || profile.year_of_study
     profile.phone = phone || profile.phone
-    profile.description = desc || profile.desc
+    profile.description = description || profile.description
 
+    let avatar, avatarURL
+    if(req.files && req.files.avatar){
+        avatar = req.files.avatar
+        avatarURL = "static/users/" + req.user.username + "/" + avatar.name
+        profile.avatar = avatarURL
+    }
     let e = await profile.validateSync()
 
     if(e){
@@ -137,6 +143,7 @@ const updateProfile = asyncHandler( async (req, res, next) => {
     }
     else{
         profile = await profile.save()
+        avatar && avatar.mv(avatarURL)
         res.status(201).json(profile)
     }
     

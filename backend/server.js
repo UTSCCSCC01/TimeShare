@@ -5,6 +5,7 @@ const dotenv = require("dotenv").config({ path: "./config.env" })
 const cors = require("cors")
 const port = process.env.PORT || 5000
 const fileUpload = require('express-fileupload')
+const { application } = require("express")
 
 connectDB()
 
@@ -23,7 +24,8 @@ app.use("/api/Profiles", require("./routes/profileRoutes"))
 app.use("/api/User", require("./routes/userRoutes"))
 app.use("/api/Timetable", require("./routes/createTimetable"))
 app.use("/api/Timetable", require("./routes/compareTimetables"))
-
+app.use("/api/Groups", require('./routes/groupRoutes'))
+app.use("/static", express.static('static'))
 // custom error handler
 app.use(errorHandler)
  
