@@ -23,11 +23,24 @@ class BasicForm extends React.Component {
         throw new Error('You have to implement the method onSubmit!');
     }
 
+    postSubmitSucess(){
+        this.setState({ loading: false, has_loaded: true })
+    }
+
+    postSubmitFailure(){
+        this.setState({ loading: false, has_loaded: true })
+    }
+
     async handleSubmit(e) {
         e.preventDefault()
         this.setState({ loading: true, has_loaded: false })
-        await this.onSubmit()
-        this.setState({ loading: false, has_loaded: true })
+        let success = await this.onSubmit(e)
+        if(success){
+            this.postSubmitSucess()
+        }
+        else{
+            this.postSubmitFailure()
+        }
     }
 
     handleFieldChange(event) {
@@ -48,15 +61,18 @@ class BasicForm extends React.Component {
         )
 
         if(this.state.loading){
-            return <div>Loading</div>
+            return <h1>Loading</h1>
         }
         else{
         return (
-            <form onSubmit={this.handleSubmit}>
+            <div className="form-container" style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                <h1>{this.formTitle}</h1>
+            <form onSubmit={this.handleSubmit} style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                 <FormError error={this.state.errors[this.state.formError] || ""}/>
                 {fields}
                 <button type="submit">Submit</button>
             </form>
+            </div>
         )}
     }
 }

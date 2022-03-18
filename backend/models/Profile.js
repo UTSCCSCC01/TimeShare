@@ -33,6 +33,34 @@ const ProfileSchema = mongoose.Schema({
     description: {
         type: String,
         maxLength: 160
+    },
+    posts: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Post"
+        }
+    ],
+    groups: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Group"
+        }
+    ],
+    comments: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Comment"
+        }
+    ],
+    likes_posts: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Post"
+        }
+    ],
+    avatar: {
+        type: String,
+        required: false
     }
 });
 

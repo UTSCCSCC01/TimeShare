@@ -3,11 +3,13 @@ require("../models/Timetable");
 require("../models/Course");
 require('../models/Tutorial');
 require('../models/Lecture');
+require('../models/Post');
 
 var Timetable = mongoose.model("Timetable");
 var Course = mongoose.model("Course");
 var Lecture = mongoose.model("Lecture");
 var Tutorial = mongoose.model('Tutorial');
+var Post = mongoose.model('Post');
 
 exports.create_timetable = async function (req, res) {
 
@@ -24,9 +26,6 @@ exports.create_timetable = async function (req, res) {
 
   var newTimetable = new Timetable({
     timetable_name: name,
-    // courses: [],
-    // lectures: [],
-    // tutorials: [],
     timetable_id: id,
   });
   
@@ -42,7 +41,70 @@ exports.create_timetable = async function (req, res) {
   res.status(200).send(newTimetable);
 };
 
+exports.create_post = async function (req, res) {
 
+  // Get the name and id from the post request
+  var post_id = req.body.post_id;
+  var name = req.body.name;
+  var timetable_id = req.body.timetable_id;
+  var desc = req.body.desc;
+  var owner = req.body.owner;
+
+  if (!req.files || !req.files.image) {
+    var image = "";
+  } else {
+    var image = req.files.image;
+  }
+  
+
+  // Create an empty timtable
+  let existingTable = await Timetable.findOne({ timetable_id: timetable_id });
+ 
+  if (!existingTable) {
+    return res.status(400).send("That timetable does not exist");
+  }
+
+  let existingPost = await Post.findOne({ post_id: post_id });
+
+  if (existingPost) {
+    return res.status(400).send("That post already exists");
+  }
+
+  var newPost = new Post({
+    post_id: post_id,
+    post_name: name,
+    description: desc,
+    timetable: existingTable,
+    owner: owner,
+    image: image,
+  });
+  
+
+  // save to database
+  newPost.save(function (err) {
+    if (err) {
+      return new Error(`Error while saving to DB`);
+    }
+  });
+
+ 
+  res.status(200).send(newPost);
+};
+
+exports.get_post = async function (req, res) {
+
+  // Get the name and id from the post request
+  var post_id = req.body.post_id;
+
+  // Create an empty timtable
+  let existingPost = await Post.findOne({ post_id: post_id });
+ 
+  if (!existingPost) {
+    return res.status(400).send("That post does not exist");
+  }
+ 
+  res.status(200).send(existingPost);
+};
 
 exports.add_course = async function (req, res) {
   
@@ -171,26 +233,13 @@ exports.remove_course = async function (req, res) {
 exports.get_courses = async function (req, res) {
   var id = req.body.id;
 
-  let timetable_we_want = await Timetable.findOne({ timetable_id: id }); // error check later
+  let timetable_we_want = await Timetable.findOne({ timetable_id: id });
 
   if (timetable_we_want) {
-    // var course_ids = timetable_we_want.courses;
+
     var lecture_ids = timetable_we_want.lectures;
     var tut_ids = timetable_we_want.tutorials;
-    // let result = "Timetable courses:<br/>";
     let courses = [];
-    
-    // for (let i = 0; i < course_ids.length; i++) {
-
-    //   let course = await Course.findOne({ _id: course_ids[i] });
-    //   result = result.concat(course.course_id, ": ", course.course_name, "<br/>");
-
-    //   let lecture = await Lecture.findOne({ _id: lecture_ids[i] })
-    //   let tutorial = await Tutorial.findOne({ _id: tut_ids[i] })
-    //   courses.push(lecture);
-    //   courses.push(tutorial);
-    //   // courses.push(course);
-    // }
 
     for (let i = 0; i < lecture_ids.length; i++) {
       let lecture = await Lecture.findOne({ _id: lecture_ids[i] })
@@ -209,3 +258,12 @@ exports.get_courses = async function (req, res) {
   }
 };
 
+exports.get_all_courses = async function (req, res) {
+  let lectures = await Lecture.find();
+
+  let tutorials = await Tutorial.find();
+
+  let courses = lectures.concat(tutorials)
+  return res.status(200).send(courses);
+
+};

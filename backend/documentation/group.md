@@ -1,0 +1,183 @@
+**Create Public Group**
+----
+  Attempts to create a public group. Returns validation errors if any, otherwise the newly created object.
+
+* **URL**
+
+  /api/Groups/
+
+* **Method:**
+  
+  `POST`
+
+* **Protected:**
+
+  Yes, requires login
+
+*  **URL Params**
+
+   None
+
+* **Data Params**
+
+    **Required:**
+ 
+   `name=[String]`
+
+    **Optional:**
+   `image=[Image]`
+   `description=[String]`
+
+* **Success Response:**
+  
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```
+    {
+        "_id": "6232957990d86bc7b951cf27",
+        "name": "porta potty poopers",
+        "description": "",
+        "users": [],
+        "owner": "623134904542a814cadee759",
+        "type": "public",
+        "image": "static/groups/porta potty poopers/image/WhatsApp.exe",
+        "__v": 0
+    }
+    ```
+ 
+* **Error Response:**
+
+    Name not provided
+
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** 
+    ```
+    {
+    "errors": {
+        "name": [
+            "can't be blank"
+            ]
+        }
+    }
+    ```
+
+    Duplicate name 
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** 
+    ```
+    {
+        "message": "E11000 duplicate key error collection: dev-pub-data.groups index: name_1 dup key: { name: \"porta potty poopers\" }"
+    }
+    ```
+
+**Update Group**
+----
+  Attempts to update a group. Returns validation errors if any, otherwise the newly created object.
+
+* **URL**
+
+  /api/Groups/
+
+* **Method:**
+  
+  `PUT`
+
+* **Protected:**
+
+  Yes, requires login and requires requesting user to be owner of that group
+  
+*  **URL Params**
+
+   None
+
+* **Data Params**
+
+    **Required:**
+ 
+   `name=[String]`
+
+    **Optional:**
+
+   `image=[Image]`
+   `description=[String]`
+
+
+* **Success Response:**
+  
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```
+    {
+        "_id": "6232957990d86bc7b951cf27",
+        "name": "porta potty poopers",
+        "description": "e",
+        "users": [],
+        "owner": "623134904542a814cadee759",
+        "type": "public",
+        "image": "static/groups/porta potty poopers/image/WhatsApp.exe",
+        "__v": 0
+    }
+    ```
+ 
+* **Error Response:**
+
+    see Create Group
+
+
+**Get Group**
+----
+  Attempts to retrieve public info about profile
+* **URL**
+
+  /api/Groups/<group_name>
+
+* **Method:**
+  
+  `GET`
+
+* **Protected:**
+
+  No
+  
+*  **URL Params**
+
+  None
+
+* **Data Params**
+
+  None
+
+* **Success Response:**
+  
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```
+        {
+        "_id": "6232957990d86bc7b951cf27",
+        "name": "porta potty poopers",
+        "description": "e",
+        "users": [],
+        "owner": "623134904542a814cadee759",
+        "type": "public",
+        "image": "static/groups/porta potty poopers/image/WhatsApp.exe",
+        "__v": 0
+    }
+    ```
+ 
+* **Error Response:**
+  
+  group name does not correspond to a group
+
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** 
+    ```
+    { "errors": {
+        "group": [
+          "Group with given name doesn't exist!"
+        ]
+    }
+    ```

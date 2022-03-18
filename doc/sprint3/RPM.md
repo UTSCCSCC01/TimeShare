@@ -1,32 +1,29 @@
 # Release Planning Meeting
 
-At 6 PM on March 1, Axel Visan, Brooklyn Guo, Burhan Mirza, Danyal Ilyas, Ramzi Abu-Zeineh, Saiem Irfan, Stanislav Kalynych had their Release Planning Meeting on Discord.
+At 6 PM on March 11, Axel Visan, Brooklyn Guo, Burhan Mirza, Danyal Ilyas, Ramzi Abu-Zeineh, Saiem Irfan, Stanislav Kalynych had their Release Planning Meeting on Discord.
 
-The release goal is to complete all sprint epics (and corresponding subtasks), and ensure that we can visualize the next steps for sprint2 clearly.
+The release goal is to complete all sprint epics (and corresponding subtasks), and ensure that we can visualize the next steps for sprint 3 clearly.
 
 ## Project Setup
 Developers setup the frontend (React), backend (Node.js), and Database (MongoDB).
-- WAV-27 Setup Database
 
 ## Release Stories: Accounts
 Users can create and login to their accounts, and access their saved timetables. 
-- WAV-29 Account User Input
-- WAV-28 Connect Application to DB	
-- WAV-30 Setup User Input
-- WAV-31 Simplified Authentication Process
-
+- WAV-19 Provide Post Title, Description, Label
+- WAV-6 Share Post
+- WAV-49 Use Request Data to display Porfile View
+- WAV-52 Add label to posts
+- WAV-53 Filter Posts by Label
+- WAV-54 Create Group Schema
+- WAV-55 CRUD Backend for groups
+- WAV-57 Join groups frontend and backend
 
 ## Release Stories: Timetable Planning
 Students can create and compare their timetables with one another.
-- WAV-32 	
-Determine Data Structure / Design of how timetables will be stored
-- WAV-33 Create a simple command line interface to book time slots
-- WAV-34 Create simple command line interface to display booked timeslot
-- WAV-36 [After Completing WAV-14] Sending info to the DB
-- WAV-39 	
-Configure account and timetable in DB so that we can save timetable
-- WAV-37 [After Completing WAV-14] Iterate through both timetables
-- WAV-38 Display both tables to command line STDOUT
+- WAV-36 Connect timatbles to user accounts
+- WAV-39 Account holder can edit timatables
+- WAV-37 Display courses on side by side timetables
+- WAV-58 Change colours of select sessions
 
 Core Features:
 - WAV-8: As a student account holder, I want to compare two schedules together so that I can easily see the difference between the schedules

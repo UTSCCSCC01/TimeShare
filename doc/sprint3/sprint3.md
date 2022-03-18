@@ -1,78 +1,79 @@
-# Sprint 2 Planning
+# Sprint 3 Planning
 
-At 6 PM on Feb 23, Axel Visan, Brooklyn Guo, Burhan Mirza, Danyal Ilyas, Ramzi Abu-Zeineh, Saiem Irfan, Stanislav Kalynych (all 7 people) had their Sprint 2 Planning Meeting on Discord.
+At 6 PM on March 9, Axel Visan, Brooklyn Guo, Burhan Mirza, Danyal Ilyas, Ramzi Abu-Zeineh, Saiem Irfan, Stanislav Kalynych (all 7 people) had their Sprint 3 Planning Meeting on Discord.
 
 ## Spring Goal:
 ---
 - Finish User Stories:
-  - WAV-18
-  - WAV-12
-  - WAV-14
-  - WAV-4
-  - WAV-13
+  - WAV-17
   - WAV-8
+  - WAV-13
+  - WAV-1
+  - WAV-4
+  - WAV-6
+  - WAV-19
 
 ## Tasks Breakdown:
 
-
-### **Epic:** Project Setup
----
-Story: **WAV-18**
-
-As a web user, I want to create an account so that I can save my timetables, and socialize over the website.
-- Tasks:
-  - Setup Database
-
-
-
 ### **Epic:** Accounts
 ---
+Story: **WAV-17**
+
+As a student account holder, I want to create a public group so that I can share my post and meet new students.
+- Tasks:
+  - CRUD Backend for groups
+  - Create, Upload, View Group Frontend
+  - Join groups frontend and backend
+
+Story: **WAV-13**
+
+As a student account holder, I want to be able to save my schedule to my account so that I don’t have to reupload/remake my schedule every time I want to make a post about it
+- Tasks:
+  - Connect timetables to user accounts
+  - Allow account hodler the ability to edit, remove and add timetables to their account
+
+
+Story: **WAV-1**
+
+As a student account holder, I can label timetable posts so that I can easily filter by timetables with those labels and save time searching
+- Tasks:
+  - Filter posts by label
+
+
+Story: **WAV-6**
+
+As a student account holder, I want to be able to share a post with others so that I can get other people to see the post I am referring to.
+
+
+Story: **WAV-19**
+
+As a student account holder, I want to be able to provide a description and title of my timetable post along with my schedule so that others can understand why certain timeslots are booked the way they are.
+
+
 Story: **WAV-4**
 
-As a student account holder, I want to compare two schedules together so that I can easily see the difference between the schedules.
+As a student account holder, I want to be able to create a profile with my relevant personal & university information so that others can see me and who I am.
 - Tasks:
-  - Profile DB Schema
-  - Update Profile Form
-  - Create Self Profile View
-  - Add Views based on request profile
-  - Add backend to profile view
-
-
-
-Story: **WAV-18**
-
-As a web user, I want to create an account so that I can save my timetables, and socialize over the website.
-- Tasks:
-  - Account User Input
-  - Connect Application to Database
-
-
-Story: **WAV-12**
-
-As a student account holder, I want to be able to log in to my account so that I can access my existing timetables.
-- Tasks:
-  - Setup User Input
-  - Simplified Authentication Process
+  - Porfile Database Schema
+  - Update Profile form
+  - Create self profile view
+  - Use request data to display profile view
+  - update profile schema and endpoints
 
 
 
 ### **Epic:** Timetable Comparing
 ---
-Story: **WAV-14**
+Story: **WAV-8**
 
 As a web user, I want to be able to create timetable and view it on the application so that I can plan out my semester.
 - Tasks:
-  - Determine Data Structure / Design of how timetables will be stored
-  - Create a simple command line interface to book time slots
-  - Create simple command line interface to display booked timeslots
-  - Create a search bar functionality to show available courses to user with ui
+  - Display Shared and Different Courses
+  - Display both tables to stdout
+  - Inform changes to courses to match other timetable
+  - Change colours of select sessions (lectures, tutorials)
 
 
-Story: **WAV-8**
 
-As a student account holder, I want to compare two schedules together so that I can easily see the difference between the schedules.
-- Tasks:
-  - [After Completing WAV-14] Iterate through both timetables
-  - Display both tables to command line STDOUT
 
 

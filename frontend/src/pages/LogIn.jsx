@@ -87,7 +87,6 @@ export const LogIn = () => {
 
     Axios.post("http://localhost:5000/api/User/login", data)
       .then((res) => {
-        console.log(res)
 
         if (res.data.Error) {
             const resErrors = {
@@ -100,7 +99,9 @@ export const LogIn = () => {
         
             setErrors(resErrors)
         } else {
-            navigate('/profile/me/');
+            localStorage.setItem('user-id', res.data._id)
+            localStorage.setItem('token', res.data.token)
+            navigate('/profile/');
         }
       })
       .catch((error) => {

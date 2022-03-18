@@ -6,7 +6,7 @@ class PostList extends React.Component {
 
     render() {
         const postCards = this.props.posts.map((post) => {
-            return <PostCard key={post.key} item xs post={post} width={this.props.width / 4} height_img="140px"></PostCard>
+            return <PostCard key={post._id} item xs post={post} width={this.props.width / 4} height_img="140px"></PostCard>
         })
 
         return (

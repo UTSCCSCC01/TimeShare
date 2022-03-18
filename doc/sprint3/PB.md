@@ -12,6 +12,13 @@ As any web user, I want to be able to:
 - Create an account so that I can save my timetables, and socialize over the website 
 
 As a student account holder, I want to be able to:
+- I want to be able to provide a description and title of my timetable post along with my schedule so that others can understand why certain timeslots are booked the way they are.
+- I want to be able to share a post with others so that I can get other people to see the post I am referring to.
+- I want to be able to create a profile with my relevant personal & university information so that others can see me and who I am.
+- I can label timetable posts so that I can easily filter by timetables with those labels and save time searching
+- I want to be able to save my schedule to my account so that I don’t have to reupload/remake my schedule every time I want to make a post about it
+- I want to compare two schedules together so that I can easily see the difference between the schedules
+- I want to create a public group so that I can share my post and meet new students
 - Create a profile with my relevant personal & university information so that others can see me and who I am.
 - Save my schedule to my account so that I don’t have to reupload/remake my schedule every time I want to make a post about it
 - Discover students in the same class sections (with their consent to be displayed) so that I can see if I might want to change my timetable to be with people I prefer
@@ -28,8 +35,5 @@ As a student account holder, I want to be able to:
 - Provide a description and title along with my schedule so that others can understand why certain timeslots are booked the way they are
 - Have a rating system (stars out of five) so that I can improve my timetable
 - Upvote/downvote timetables so that the best timetables are most visible
-
-
-
 
 

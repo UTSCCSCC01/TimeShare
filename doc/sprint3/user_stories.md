@@ -1,8 +1,9 @@
-# User Stories that are being pushed to Sprint 3
+# User Stories that are being pushed to Sprint 4
 
-## Story: **WAV-13**
+Story: **WAV-17**
 
-As a student account holder, I want to be able to save my schedule to my account so that I don’t have to reupload/remake my schedule every time I want to make a post about it.
+As a student account holder, I want to create a public group so that I can share my post and meet new students.
 - Tasks:
-  - Configure account [talk to login/create account team] so that we can save timetable to attribute
-  - [After completing WAV-14] Figure out how and what to send to the Database
+  - CRUD Backend for groups
+  - Create, Upload, View Group Frontend
+  - Join groups frontend and backend
