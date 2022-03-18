@@ -125,8 +125,15 @@ exports.create_timetable = async function (req, res) {
 };
 
 exports.get_post2 = async function (req, res) {
+  console.log("SHOULD SEE THIS")
+  console.log(req.params['postId'])
+  var post_id = req.params['postId'];
+  let existingPost = await Post.findOne({ _id: post_id });
 
-    
+  res.status(200).send(existingPost);
+
+  
+
 }
 
 

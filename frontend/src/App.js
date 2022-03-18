@@ -5,6 +5,8 @@ import { SignUp } from './pages/SignUp';
 import { LogIn } from './pages/LogIn';
 
 import { SearchPost } from './pages/SearchPost';
+import { ViewPost } from './pages/ViewPost';
+
 
 import { CreatePost } from './pages/CreatePost';
 import { CreateTimetable } from './pages/CreateTimetable';
@@ -24,6 +26,8 @@ function App() {
         <Route path="/profile/me" element={<ProfileViewMe/>} />
         <Route path="/createPost" element={<CreatePost/>} />
         <Route path="/searchPost" element={<SearchPost/>} />
+        <Route path="/viewPost/:postId" element={<ViewPost/>} />
+
 
       </Routes>
     </Router>
