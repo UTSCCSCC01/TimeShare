@@ -139,7 +139,7 @@ export const CreateTimetable = () => {
 
       <div>
         <Timetable class="timetable2"
-
+          
           events={events} />
       </div>
       <footer>

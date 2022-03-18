@@ -30,6 +30,7 @@ exports.create_timetable = async function (req, res) {
   });
   
 
+  
   // save to database
   newTimetable.save(function (err) {
     if (err) {
@@ -41,55 +42,109 @@ exports.create_timetable = async function (req, res) {
   res.status(200).send(newTimetable);
 };
 
-exports.create_post = async function (req, res) {
+// exports.create_post = async function (req, res) {
 
   // Get the name and id from the post request
-  var post_id = req.body.post_id;
-  var name = req.body.name;
-  var timetable_id = req.body.timetable_id;
-  var desc = req.body.desc;
-  var owner = req.body.owner;
+  // var post_id = req.body.post_id;
+  // var name = req.body.name;
+  // var timetable_id = req.body.timetable_id;
+  // var desc = req.body.desc;
+  // var owner = req.body.owner;
 
-  if (!req.files || !req.files.image) {
-    var image = "";
-  } else {
-    var image = req.files.image;
-  }
+  // if (!req.files || !req.files.image) {
+  //   var image = "";
+  // } else {
+  //   var image = req.files.image;
+  // }
   
 
-  // Create an empty timtable
-  let existingTable = await Timetable.findOne({ timetable_id: timetable_id });
+//   // Create an empty timtable
+//   let existingTable = await Timetable.findOne({ timetable_id: timetable_id });
  
-  if (!existingTable) {
-    return res.status(400).send("That timetable does not exist");
-  }
+//   if (!existingTable) {
+//     return res.status(400).send("That timetable does not exist");
+//   }
 
-  let existingPost = await Post.findOne({ post_id: post_id });
+//   let existingPost = await Post.findOne({ post_id: post_id });
 
-  if (existingPost) {
-    return res.status(400).send("That post already exists");
-  }
+//   if (existingPost) {
+//     return res.status(400).send("That post already exists");
+//   }
 
-  var newPost = new Post({
-    post_id: post_id,
-    post_name: name,
-    description: desc,
-    timetable: existingTable,
-    owner: owner,
-    image: image,
-  });
+//   var newPost = new Post({
+//     post_id: post_id,
+//     post_name: name,
+//     description: desc,
+//     timetable: existingTable,
+//   });
+
+  exports.create_post = async function (req, res) {
+
+    // Get the name and id from the post request
+    // var post_id = req.body.post_id;
+    var name = req.body.name;
+    // let owner = req.user._id;
+    var timetable_id = req.body.timetable_id;
+    var desc = req.body.desc;
+    var label2 = req.body.label;
+    console.log(req.body)
+    console.log(label2)
+    console.log(timetable_id)
+    // Create an empty timtable
+    let existingTable = await Timetable.findOne({ _id: timetable_id });
+   
+    if (!existingTable) {
+      console.log("NOT A TIMETABLE")
+      return res.status(400).send("That timetable does not exist");
+    }
+  
+    // let existingPost = await Post.findOne({ post_id: post_id });
+  
+    // if (existingPost) {
+    //   console.log("AAYOOOO")
+    //   return res.status(400).send("That post already exists");
+    // }
+    console.log(name)
+    console.log(desc)
+    console.log(existingTable)
+    var newPost = new Post({
+      // owner: owner,
+      post_label: label2,
+      post_id: 400,
+      post_name: name,
+      description: desc,
+      timetable: existingTable,
+    });
+    
   
 
   // save to database
   newPost.save(function (err) {
     if (err) {
+      console.log("COULDNT SAVE")
+      console.log(err)
       return new Error(`Error while saving to DB`);
+    } else {
+      return res.send('sucessfully created user')
     }
   });
 
  
   res.status(200).send(newPost);
 };
+
+exports.get_post2 = async function (req, res) {
+  console.log("SHOULD SEE THIS")
+  console.log(req.params['postId'])
+  var post_id = req.params['postId'];
+  let existingPost = await Post.findOne({ _id: post_id });
+
+  res.status(200).send(existingPost);
+
+  
+
+}
+
 
 exports.get_post = async function (req, res) {
 
@@ -105,6 +160,33 @@ exports.get_post = async function (req, res) {
  
   res.status(200).send(existingPost);
 };
+
+exports.get_timetable = async function (req, res) {
+
+  // Get the name and id from the post request
+  
+  var timetable_id = req.body.timetable_id;
+  console.log(req.body)
+  // Create an empty timtable
+  let existingPost = await Timetable.findOne({ timetable_id: timetable_id });
+  console.log()
+  if (!existingPost) {
+    console.log(existingPost)
+    return res.status(404).send("That tt does not exist");
+  }
+ 
+  res.status(200).send(existingPost);
+};
+
+exports.GetAllPostsByLabel = async function (req, res) {
+  console.log("WE MADE IT!")
+  var label2 = req.body.label;
+  console.log(label2)
+  let Posts = await Post.find({ post_label: label2 });
+  console.log(Posts)
+  return res.status(200).send(Posts);
+
+}
 
 exports.add_course = async function (req, res) {
   
