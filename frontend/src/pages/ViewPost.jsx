@@ -27,6 +27,15 @@ export const ViewPost = () => {
     // const [posts, setPosts] = useState([])
     // const {postId} = useParams()
     // console.log(useParams()['postId'])
+    function copy() {
+      const el = document.createElement('input');
+      el.value = window.location.href;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+    }
+
 
     class Section {
         constructor(startTime, endTime, day, name, id, type) {
@@ -160,11 +169,11 @@ export const ViewPost = () => {
 <div>
 <div class="container3">
   <div class="label">
-    Joining Link
+    Share Post
   </div>
   <div class="copy-text">
-    <input type="text" class="text" value="https://fileshare.io/001-510-115" readonly></input>
-    <button >
+    <input type="text" class="text" value="http://localhost:3001/viewPost/234123" readonly></input>
+    <button onClick={ copy }>
       <i class="">Share</i>
     </button>
   </div>

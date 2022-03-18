@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+
 require("../models/Timetable");
 require("../models/Course");
 require('../models/Tutorial');
@@ -95,7 +96,7 @@ exports.create_timetable = async function (req, res) {
    
     if (!existingTable) {
       console.log("NOT A TIMETABLE")
-      return res.status(400).send("That timetable does not exist");
+      return res.send("That timetable does not exist");
     }
   
     // let existingPost = await Post.findOne({ post_id: post_id });
@@ -119,14 +120,12 @@ exports.create_timetable = async function (req, res) {
   
 
   // save to database
-  newPost.save(function (err) {
+  await newPost.save(function (err) {
     if (err) {
       console.log("COULDNT SAVE")
       console.log(err)
-      return new Error(`Error while saving to DB`);
-    } else {
-      return res.send('sucessfully created user')
-    }
+      return res.json(err);
+    } 
   });
 
  
@@ -339,6 +338,112 @@ exports.get_courses = async function (req, res) {
     return res.status(404).send("Timetable doesn't exist");
   }
 };
+
+exports.create_timetable2 = async function (req, res) {
+
+  let owner = req.user._id;
+  let timetable = req.body;
+
+
+  let timetable_name = 'omeorgmeoprg'
+  let timetable_id = '9392'
+  let courses = []
+  let lectures = []
+  let tutorials = []
+
+  Object.keys(timetable).forEach(key => {
+    timetable[key].forEach(section => {
+      if (section.type == 'lecture') {
+        lectures.push(mongoose.Types.ObjectId(section.id))
+      }
+      else {
+        tutorials.push(mongoose.Types.ObjectId(section.id))
+      }
+
+      let tokens = section.name.split(" ")
+      let course_id = tokens[0]
+      courses.push(course_id)
+    })
+  })
+
+ 
+  let newTimetable = new Timetable({
+    owner: owner,
+    timetable_name: timetable_name,
+    timetable_id: timetable_id,
+    courses: courses,
+    lectures: lectures,
+    tutorials: tutorials,
+  });
+
+
+  await newTimetable.save(function (err) {
+    if (err) {
+      return new Error(`Error while saving to DB`);
+    }
+  });
+  
+  res.status(200).send(newTimetable);
+};
+
+const mapTimetableObjectToFrontend = async function (timetable_object_id) {
+
+  // const timetable_object_id = req.body.timetable_object_id
+
+  let obj = {
+    monday: [],
+    tuesday: [],
+    wednesday: [],
+    thursday: [],
+    friday: [],
+  }
+
+  const timetable_object = await Timetable.findOne({'_id': timetable_object_id})
+  
+  for(const section of timetable_object['lectures']) {
+    let lecture_section_obj = await Lecture.findOne({ _id: section })
+    let lecture_section = lecture_section_obj._doc;
+    let name = lecture_section.course_id + " " + "LEC" + lecture_section.lecture_id
+    let day = lecture_section.time[0][0]
+    let startTime = lecture_section.time[0][1] - 5
+    let endTime = lecture_section.time[0][2] - 5
+    let date1 = new Date("01-01-2022 " + startTime + ":00:00");
+    let date2 = new Date("01-01-2022 " + endTime + ":00:00");
+
+    section_obj = {
+      id: section,
+      name: name,
+      type: 'lecture',
+      day: day.toLowerCase(),
+      startTime: date1,
+      endTime: date2,
+    }
+    obj[lecture_section.time[0][0].toLowerCase()].push(section_obj)
+
+  }
+
+  for(const section of timetable_object['tutorials']) {
+    let tutorial_section_obj = await Tutorial.findOne({ _id: section });
+    let tutorial_section = tutorial_section_obj._doc
+    let name = tutorial_section.course_id + " " + "PRA" + tutorial_section.tutorial_id
+    let day = tutorial_section.time[0]
+    let startTime = tutorial_section.time[1]
+    let endTime = tutorial_section.time[2]
+  
+    section_obj = {
+      id: section,
+      name: name,
+      type: 'tutorial',
+      day: day,
+      startTime: startTime,
+      endTime: endTime,
+    }
+    obj[tutorial_section.time[0][0].toLowerCase()].push(section_obj)
+
+  }
+  // res.status(200).send(obj);
+  return obj;
+}
 
 exports.get_all_courses = async function (req, res) {
   let lectures = await Lecture.find();

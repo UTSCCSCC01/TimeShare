@@ -3,13 +3,51 @@ import Timetable from 'react-timetable-events'
 import ReactDOM from 'react-dom'
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useState } from 'react'
-
+import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
+import Axios from 'axios';
+import  { useNavigate  } from 'react-router-dom';
 
 // -------
 
 export const CreateTimetable = () => {
 
+  let navigate = useNavigate();
+  const authHeader = () => {
+    // return authorization header with basic auth credentials
+    console.log(localStorage.getItem('token'))
+    let token = localStorage.getItem('token');
+
+    if (token) {
+        console.log(token)
+        return { Authorization: `Bearer ${token}` };
+    } else {
+        console.log('no token')
+        setSaveError('ERROR')
+        return;
+    }
+  }
+  const savePost = () => {
+    const auth = authHeader()
+    if(!auth) {
+      return;
+    }
+
+    Axios.post('http://localhost:5000/api/Timetable/createTimetable2', events, {
+      headers: auth
+    })
+    .then((res) => {
+      console.log(res)
+      navigate('/createPost');
+    })
+    .catch((error) => {
+      console.log("Error:", error);
+    });
+
+  }
+
   const [search, setSearch] = useState("");
+  const [saveError, setSaveError] = useState("");
 
   class Section {
     constructor(startTime, endTime, day, name, id, type) {
@@ -25,7 +63,7 @@ export const CreateTimetable = () => {
 
   // 3 dummy courses: 2 lecs and 1 tut for each
   // startime                          endtime                         day         name           id    type!=type in events which is always custom
-  let csc420lec9101 = new Section(new Date("2018-02-23T11:00:00"), new Date("2018-02-23T12:00:00"), "thursday", "CSC420 LEC9101", 3, "lecture", "")
+  let csc420lec9101 = new Section(new Date("2018-02-23T11:00:00"), new Date("2018-02-23T12:00:00"), "thursday", "CSC420 LEC9101", 3, "lecture")
   let csc420lec9102 = new Section(new Date("2018-02-23T13:00:00"), new Date("2018-02-23T15:00:00"), "monday", "CSC420 LEC9102", 4, "lecture")
   let csc420tut9103 = new Section(new Date("2018-02-23T21:00:00"), new Date("2018-02-23T12:00:00"), "thursday", "CSC420 PRA9101", 5, "tutorial")
   let sta420lec9101 = new Section(new Date("2018-02-23T09:00:00"), new Date("2018-02-23T11:00:00"), "thursday", "STA420 LEC9101", 6, "lecture")
@@ -52,15 +90,14 @@ export const CreateTimetable = () => {
     console.log(events)
     let cp = { ...events }
     cp[day].push({
-      id: course.id,
+      id: '62212bdb47e6537407f5d5a3',
       name: course.name,
-      type: "custom",
+      type: course.type,
       startTime: course.startTime,
       endTime: course.endTime,
     })
 
     setEvents(cp)
-    //console.log(events)
   }
 
   function myFunction() {
@@ -122,7 +159,7 @@ export const CreateTimetable = () => {
 
 
       <h1>Timetable Builder</h1>    <br /><br />
-      <link rel="stylesheet" href="../App.css" />
+      <link rel="stylesheet" href="../App2.css" />
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
       <input type="text" id="myInput" onKeyUp={myFunction} placeholder="Search for a course" />
 
@@ -142,6 +179,17 @@ export const CreateTimetable = () => {
           
           events={events} />
       </div>
+      <br /><br />
+      <Button 
+        variant="contained" 
+        onClick={savePost}> 
+        SAVE</Button>
+        <br></br>
+        <br></br>
+        <div>
+        {saveError && <Alert severity="error">Must be logged in to save!</Alert>}
+        </div>
+
       <footer>
 <p class="text-center">Copyright 2022 &copy; TimeShare</p>
 </footer>
