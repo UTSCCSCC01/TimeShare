@@ -208,6 +208,13 @@ li {
 .container2 {
   text-align: center; 
   padding: 2px 16px;
+  
+}
+
+ul {
+
+  height:400px;
+   overflow:auto;
 }
 
 .title {

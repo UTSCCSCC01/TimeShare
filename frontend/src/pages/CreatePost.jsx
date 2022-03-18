@@ -15,30 +15,14 @@ import ParticlesBg from 'particles-bg'
 
 export const CreatePost = () => {
 
-    // const authHeader = () => {
-    //     // return authorization header with basic auth credentials
-    //     console.log(localStorage.getItem('token'))
-    //     let token = localStorage.getItem('token');
-
-    //     if (token) {
-    //         console.log(token)
-    //         return { Authorization: `Bearer ${token}` };
-    //     } else {
-    //         console.log('no token')
-    //         return;
-    //     }
-    // }
-
-
-
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [label, setLabel] = useState("");
 
 
     const [errors, setErrors] = useState({
-        title: '',
-        description: ''
+        post_name: '',
+        post_label: ''
     })
 
     // const data = {
@@ -54,38 +38,43 @@ export const CreatePost = () => {
 
     // Add date created to model, labels to model
     const validateForm = () => {
+
+        console.log('hELLLOO!!!')
         let formIsValid = true
         const allErrors = {}
+        console.log("HE");
         if (!title) {
             formIsValid = false
-            allErrors['title'] = "Cannot be empty"
+            allErrors['post_name'] = "Cannot be empty"
         }
         else {
-            allErrors['label'] = ''
+            allErrors['post_name'] = ''
         }
-        if (!title) {
+        if (!label) {
             formIsValid = false
-            allErrors['label'] = "Cannot be empty"
+            allErrors['post_label'] = "Cannot be empty"
         }
         else {
-            allErrors['label'] = ''
+            allErrors['post_label'] = ''
         }
-
+        
         setErrors(allErrors)
         return formIsValid
 
     }
 
     const makePost = () => {
-        console.log("hello")
-        console.log(errors)
-        console.log(title)
-        console.log(description)
-        console.log(label)
+
+
         if (!validateForm) {
             console.log("SHOULD NOT SEE THIS!")
             return
         }
+        else {
+            console.log(errors)
+            console.log('fejwofejwoifewjoi')
+        }
+
 
         const data = {
             "label": label,
@@ -95,13 +84,34 @@ export const CreatePost = () => {
         }
 
 
-        // const auth = authHeader()
-        // if (!auth) {
-        //     return;
-        // }
-        // Axios.post("http://localhost:5000/api/Timetable/createPost", data,  {headers: auth})
-        Axios.post("http://localhost:5000/api/Timetable/createPost", data)
 
+        Axios.post("http://localhost:5006/api/Timetable/createPost", data)
+
+        .then((res) => {
+            console.log(res)
+            if (res.data.errors) {
+              const resErrors = {
+                post_label: '',
+                post_name: ''
+              }
+              if (res.data.errors && res.data.errors.post_label) {
+                resErrors['post_label'] = res.data.errors.post_label.message
+              }
+              if (res.data.errors && res.data.errors.post_name) {
+                resErrors['post_name'] = res.data.errors.post_name.message
+              }
+              console.log(resErrors)
+              setErrors(resErrors)
+            }
+            else {
+              //no errors
+              //do something cool!
+              console.log("COol!")
+            }
+          })
+          .catch((error) => {
+            console.log("Error:", error);
+          });
     }
 
 
@@ -125,23 +135,25 @@ export const CreatePost = () => {
             >
 
                 <div class="marg">
+                <form
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}>
                     <TextField
                         style={{ width: 300, backgroundColor: "rgba(255, 255, 255, 0.9)" }}
-                        label="Post Title"
                         id="title"
-                        // error={errors.username !== ''}
-                        // helperText={errors.username}
+                        label="Title"
                         variant="filled"
-                        required
+                        required={true}
                         onChange={(e) => {
                             setTitle(e.target.value);
-                        }} />
-                </div><div class="marg">
+                        }} /><br></br><br></br>
                     <TextField
                         style={{ width: 400, backgroundColor: "rgba(255, 255, 255, 0.9)" }}
-                        required
+                    
                         label="Description"
                         variant="outlined"
+                        
                         onChange={(e) => {
                             setDescription(e.target.value);
                         }}
@@ -149,19 +161,18 @@ export const CreatePost = () => {
                         multiline
                         rows={8}
                         name="description" />
-                </div><div class="marg">
 
-                    <FormControl
-                        ccontainer justifyContent="center">
-
+                
+<br></br><br></br>
                         <p class="lab">Choose a Label</p>
+                        
 
                         <Select
                             label="Label"
                             value={label}
                             variant="filled"
                             style={{ width: 200, backgroundColor: "rgba(255, 255, 255, 0.9)" }}
-                            required
+                            required={true}
                             labelId="categ"
                             id="categ"
                             onChange={(e) => {
@@ -174,15 +185,16 @@ export const CreatePost = () => {
                             <MenuItem value="3rd-year">3rd-year</MenuItem>
                             <MenuItem value="4th-year">4th-year</MenuItem>
                         </Select>
-                    </FormControl>
+                    
 
-                </div><div>
-
+                
+                                <br></br><br></br>
                     <Button
                         type="submit"
-                        onClick={makePost}
+                        onClick={() => {makePost(); console.log("H"); return 1;}}
                         variant="contained"> Post
                     </Button>
+                    </form>
                 </div>
 
             </Box>
