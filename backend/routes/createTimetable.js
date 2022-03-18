@@ -11,5 +11,4 @@ router.post('/addCourse', TimetableController.add_course);
 router.post('/removeCourse', TimetableController.remove_course);
 router.get('/getCourses', TimetableController.get_courses);
 router.post('/createTimetable2', authorize, TimetableController.create_timetable2);
-router.post('/mapTimetableObjectToFrontendz', TimetableController.mapTimetableObjectToFrontendz);
 module.exports = router;
