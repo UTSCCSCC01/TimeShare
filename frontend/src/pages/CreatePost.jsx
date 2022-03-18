@@ -8,7 +8,6 @@ import FormControl from "@material-ui/core/FormControl";
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import { Component } from 'react'
-
 import ParticlesBg from 'particles-bg'
 
 
@@ -85,7 +84,7 @@ export const CreatePost = () => {
 
 
 
-        Axios.post("http://localhost:5006/api/Timetable/createPost", data)
+        Axios.post("http://localhost:5000/api/Timetable/createPost", data)
 
         .then((res) => {
             console.log(res)

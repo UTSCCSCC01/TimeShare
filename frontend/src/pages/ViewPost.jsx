@@ -40,10 +40,15 @@ export const ViewPost = () => {
         }
       }
 
+    // const [link, setLink] = useState("");
+
+
     let text1 = "http://localhost:5000/api/Timetable/getPost2/";
     let text2 = useParams()['postId'];
     let result = text1.concat(text2);
     console.log(result)
+    
+    // setLink(result)
 
     // // const [title, setTitle] = useState("");
     // // const [desc, setdesc] = useState("");
@@ -109,7 +114,7 @@ export const ViewPost = () => {
     let sci420tut9103 = new Section(new Date("2018-02-23T11:13:00"), new Date("2018-02-23T15:00:00"), "thursday", "MAT420 PRA9101", 11, "tutorial")
 
     let courses = [csc420lec9101, csc420lec9102, csc420tut9103, sta420lec9101, sta420lec9102, sta420tut9103, sci420lec9101, sci420lec9102, sci420tut9103]
-      
+   
     let events = {
         monday: [],
         tuesday: [],
@@ -144,6 +149,7 @@ export const ViewPost = () => {
     let description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean posuere turpis metus, eu luctus dolor tincidunt quis. Duis viverra odio ut pretium sagittis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut imperdiet pretium lorem, nec gravida arcu aliquet in. Duis quis molestie augue. Cras vestibulum sodales sodales. Morbi rhoncus tempor neque, ac rutrum lacus vehicula quis. Ut malesuada, nunc scelerisque volutpat facilisis, arcu risus convallis libero, quis ultrices quam ex id nisl. Donec congue turpis vel libero feugiat, sit amet dignissim turpis dictum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae"
     return (
         <div class="marg3">
+          
           <ParticlesBg num={5} type="circle" bg={true} />
         <h1 class="marg4">{title}</h1>
          <p class="marg4">{description}</p>
@@ -151,6 +157,19 @@ export const ViewPost = () => {
         <Timetable class="timetable2"
           
           events={events} />
+<div>
+<div class="container3">
+  <div class="label">
+    Joining Link
+  </div>
+  <div class="copy-text">
+    <input type="text" class="text" value="https://fileshare.io/001-510-115" readonly></input>
+    <button >
+      <i class="">Share</i>
+    </button>
+  </div>
+</div>
+      </div>
       </div>
     )
 
