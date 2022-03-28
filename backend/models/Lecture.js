@@ -12,20 +12,24 @@ const LectureSchema = mongoose.Schema({
         required: [true, "can't be blank"], 
         match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
     },
-    time: [[
+    time: [
         {
-            type: String,
-            lowercase: true, 
-            unique: false, 
-            required: [true, "can't be blank"], 
-            match: [/(Monday|Tuesday|Wednesday|Thursday|Friday)/, 'is invalid'],
-        },
-        {
-            type: Number, 
-        },
-        {
-            type: Number, 
-        }]]
+            day: {
+                type: String,
+                // lowercase: true, 
+                unique: false, 
+                required: [true, "can't be blank"], 
+                match: [/(Monday|Tuesday|Wednesday|Thursday|Friday)/, 'is invalid'],
+            },
+            start: {
+                type: Number
+            },
+            end: {
+                type: Number
+            },
+            _id: false
+        }
+    ]
         
 });
 
