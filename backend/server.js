@@ -3,7 +3,7 @@ const { errorHandler } = require('./middleware/errorMiddleware')
 const connectDB = require('./db/conn')
 const dotenv = require("dotenv").config({ path: "./config.env" })
 const cors = require("cors")
-const port = process.env.PORT || 5012
+const port = process.env.PORT || 5013
 const fileUpload = require('express-fileupload')
 const { application } = require("express")
 

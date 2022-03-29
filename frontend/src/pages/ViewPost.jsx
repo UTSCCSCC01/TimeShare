@@ -61,7 +61,7 @@ export const ViewPost = () => {
   // const [link, setLink] = useState("");
 
 
-  let text1 = "http://localhost:5012/api/Timetable/getPost2/";
+  let text1 = "http://localhost:5013/api/Timetable/getPost2/";
   let text2 = useParams()['postId'];
   let result = text1.concat(text2);
   console.log(result)
@@ -192,16 +192,18 @@ export const ViewPost = () => {
 
 
     const x = []
-    Axios.post("http://localhost:5012/api/Timetable/createComment", data)
-    .then(result => result.data)
-      .then(data2 => {
-        console.log("HERE")
-        for (let j = 0; j < data2.length; j++) {
-          x.push(data2[j]);
-        }
-        console.log(x)
-        setComments(x)
-      })
+    if (content.length > 0) {
+      Axios.post("http://localhost:5013/api/Timetable/createComment", data)
+        .then(result => result.data)
+        .then(data2 => {
+          console.log("HERE")
+          for (let j = 0; j < data2.length; j++) {
+            x.push(data2[j]);
+          }
+          console.log(x)
+          setComments(x)
+        })
+    }
   }
 
   const data = {
@@ -209,10 +211,10 @@ export const ViewPost = () => {
 
   }
 
-    if (flag == 0) {
-      const x = []
-    Axios.post("http://localhost:5012/api/Timetable/getComment", data)
-    .then(result => result.data)
+  if (flag == 0) {
+    const x = []
+    Axios.post("http://localhost:5013/api/Timetable/getComment", data)
+      .then(result => result.data)
       .then(data2 => {
         console.log("HERE")
         for (let j = 0; j < data2.length; j++) {
@@ -222,9 +224,9 @@ export const ViewPost = () => {
         setComments(x)
         setFlag(1)
       })
-      
-}
-  
+
+  }
+
   // const x = []
   //   Axios.post("http://localhost:5011/api/Timetable/getComment", data)
   //   .then(result => result.data)
@@ -236,59 +238,78 @@ export const ViewPost = () => {
   //       console.log(x)
   //       setComments(x)
   //     })
+  const style2 = {
+
+      width: "100%",
+      height: "100%",
+      position: "fixed",
+      "z-index": "-1",
+    top: "0px",
+    left: "0px",
+    
+
+  };
 
   return (
     <div class="marg3">
 
-      <ParticlesBg num={5} type="circle" bg={true} />
+
+      <ParticlesBg num={5} type="circle" id="particles-js" bg={true} />
+      {/* <canvas class="particles-bg-canvas-self" style={style2} width="897" height="755"></canvas> */}
       <h1 class="marg4">{title}</h1>
       <p class="marg4">{desc}</p>
 
       <Timetable class="timetable2"
 
         events={events} />
-      <div>
-        <div class="container3">
-          <div class="label">
-            Share Post
-          </div>
+
+      <div class="container3">
+        <div class="label">
+          Share Post
+        </div>
+        <div class="marg">
           {/* <div class="copy-text">
     <input type="text" class="text" value="http://localhost:3001/viewPost/234123" readonly></input>
     <button onClick={ copy }>
       <i class="">Share</i>
     </button>
   </div> */}
-          <TextField
-            style={{ width: 600, backgroundColor: "rgba(255, 255, 255, 0.9)" }}
-            id="title"
-            label="Title"
-            variant="filled"
+          <h1>Comment Section</h1>
+          <FormControl class="container">
+            <div class="marg2">
+              <TextField
+                style={{ width: 600, backgroundColor: "rgba(255, 255, 255, 0.9)" }}
+                id="title"
+                label="Comment..."
+                variant="filled"
 
-            onChange={(e) => {
-              setContent(e.target.value);
-            }} />
-          <Button
-            type="submit"
-            onClick={() => { addComment(); console.log("H"); return 1; }}
-            variant="contained"> Add Comment!
-          </Button>
+                onChange={(e) => {
+                  setContent(e.target.value);
+                }} /> <br></br><br></br>
+              <Button
+                type="submit"
+                onClick={() => { addComment(); console.log("H"); return 1; }}
+                variant="contained"> Add Comment!
+              </Button>
 
-          <div class="marg2">
-            <ul class="NN" id="myUL" >
-              {posts.slice(0).reverse().map((item, index) => {
-                // return <li key={index} ><a href="#">{item.post_name}</a></li>;
-                return <div class="card">
-                  <div class="container2" key={index} >
+              <br></br><br></br>
+              <ul class="NN2" id="myUL" >
+                {posts.slice(0).reverse().map((item, index) => {
+                  // return <li key={index} ><a href="#">{item.post_name}</a></li>;
+                  return <div class="card">
+                    <div class="container2" key={index} >
 
-                    {/* <p class="title"><b>{item.post_name}</b></p> */}
-                    <b>N/A commented:</b>
-                    <p>{item.content}</p>
-                  </div>
-                </div>;
-              })}
-            </ul>
-          </div>
+                      {/* <p class="title"><b>{item.post_name}</b></p> */}
+                      <b>Anonymous user commented:</b>
+                      <p>{item.content}</p>
+                    </div>
+                  </div>;
+                })}
+              </ul>
+            </div>
+          </FormControl>
         </div>
+
       </div>
     </div>
   )
