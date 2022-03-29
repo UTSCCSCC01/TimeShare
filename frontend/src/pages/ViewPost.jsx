@@ -264,16 +264,17 @@ export const ViewPost = () => {
         events={events} />
 
       <div class="container3">
-        <div class="label">
+        {/* <div class="label">
           Share Post
-        </div>
+        </div> */}
+        <br></br>
         <div class="marg">
-          {/* <div class="copy-text">
+          <div class="copy-text">
     <input type="text" class="text" value="http://localhost:3001/viewPost/234123" readonly></input>
     <button onClick={ copy }>
       <i class="">Share</i>
     </button>
-  </div> */}
+  </div>
           <h1>Comment Section</h1>
           <FormControl class="container">
             <div class="marg2">
@@ -296,12 +297,13 @@ export const ViewPost = () => {
               <ul class="NN2" id="myUL" >
                 {posts.slice(0).reverse().map((item, index) => {
                   // return <li key={index} ><a href="#">{item.post_name}</a></li>;
-                  return <div class="card">
+                  return <div class="card" key={index}>
                     <div class="container2" key={index} >
 
                       {/* <p class="title"><b>{item.post_name}</b></p> */}
                       <b>Anonymous user commented:</b>
                       <p>{item.content}</p>
+                      <p>{item.time}</p>
                     </div>
                   </div>;
                 })}
