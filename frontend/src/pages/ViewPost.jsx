@@ -47,7 +47,7 @@ export const ViewPost = () => {
           this.type = type
           this.name_time = name + " - " + day.charAt(0).toUpperCase() + day.slice(1) + " " + startTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}) + " to " + endTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'})
         }
-      }
+    }
 
     // const [link, setLink] = useState("");
 
@@ -69,13 +69,27 @@ export const ViewPost = () => {
     // let temp = ""
     // let temp2 = ""
     // const getPost = (temp) => {
-    // Axios.get(result).then(result => result.data)
-    // .then(data => { 
-        
-    //     console.log(data)
-    // })
+
+
+    // Axios.get(result)
+
+
+    const [title, setTitle] = useState("");
+    const [desc, setDesc] = useState("");
+
+    useEffect(() => {
+      Axios.get(result)
+      .then(res => setTitle(res.data['post_name']))
+      .catch(err => console.log(err));
+    }, [])
+
+    useEffect(() => {
+      Axios.get(result)
+      .then(res => setDesc(res.data['description']))
+      .catch(err => console.log(err));
+    }, [])
     // }   
-    
+    console.log(title)
 
     // const displayPost = (temp) => {
     //     console.log(temp)
@@ -110,7 +124,7 @@ export const ViewPost = () => {
 
     // )
 
-    let title = "title of post"
+    // let title = "title of post"
 
     let csc420lec9101 = new Section(new Date("2018-02-23T11:00:00"), new Date("2018-02-23T12:00:00"), "thursday", "CSC420 LEC9101", 3, "lecture", "")
     let csc420lec9102 = new Section(new Date("2018-02-23T13:00:00"), new Date("2018-02-23T15:00:00"), "monday", "CSC420 LEC9102", 4, "lecture")
@@ -161,7 +175,7 @@ export const ViewPost = () => {
           
           <ParticlesBg num={5} type="circle" bg={true} />
         <h1 class="marg4">{title}</h1>
-         <p class="marg4">{description}</p>
+         <p class="marg4">{desc}</p>
 
         <Timetable class="timetable2"
           
