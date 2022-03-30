@@ -183,20 +183,21 @@ export const ViewPost = () => {
 
 
 
-
+    
     const data = {
       "content": content,
       "post_id": text2,
-
+      "user_id": localStorage.getItem('user-id')
     }
 
 
     const x = []
     if (content.length > 0) {
+
       Axios.post("http://localhost:5013/api/Timetable/createComment", data)
         .then(result => result.data)
         .then(data2 => {
-          console.log("HERE")
+          console.log(data2)
           for (let j = 0; j < data2.length; j++) {
             x.push(data2[j]);
           }
@@ -217,6 +218,7 @@ export const ViewPost = () => {
       .then(result => result.data)
       .then(data2 => {
         console.log("HERE")
+        console.log(data2)
         for (let j = 0; j < data2.length; j++) {
           x.push(data2[j]);
         }
@@ -240,13 +242,13 @@ export const ViewPost = () => {
   //     })
   const style2 = {
 
-      width: "100%",
-      height: "100%",
-      position: "fixed",
-      "z-index": "-1",
+    width: "100%",
+    height: "100%",
+    position: "fixed",
+    "z-index": "-1",
     top: "0px",
     left: "0px",
-    
+
 
   };
 
@@ -270,11 +272,11 @@ export const ViewPost = () => {
         <br></br>
         <div class="marg">
           <div class="copy-text">
-    <input type="text" class="text" value="http://localhost:3001/viewPost/234123" readonly></input>
-    <button onClick={ copy }>
-      <i class="">Share</i>
-    </button>
-  </div>
+            <input type="text" class="text" value="http://localhost:3001/viewPost/234123" readonly></input>
+            <button onClick={copy}>
+              <i class="">Share</i>
+            </button>
+          </div>
           <h1>Comment Section</h1>
           <FormControl class="container">
             <div class="marg2">
@@ -301,7 +303,7 @@ export const ViewPost = () => {
                     <div class="container2" key={index} >
 
                       {/* <p class="title"><b>{item.post_name}</b></p> */}
-                      <b>Anonymous user commented:</b>
+                      <b>{item.commenter ? item.commenter: 'Anonymous user'} commented:</b>
                       <p>{item.content}</p>
                       <p>{item.time}</p>
                     </div>
