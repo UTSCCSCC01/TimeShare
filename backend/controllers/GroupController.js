@@ -4,6 +4,7 @@ require('../models/Group');
 var Group =  mongoose.model('Group');
 require('../models/Profile');
 var Profile =  mongoose.model('Profile');
+var Post = mongoose.model('Post');
 
 require('../models/User')
 var User = mongoose.model('User');
@@ -111,17 +112,20 @@ const updateGroup = asyncHandler( async (req, res, next) => {
 })
 
 const joinGroup = asyncHandler( async (req, res, next) => {
-    const { name } = req.body
+
+    console.log('herefewfewfwe');
+    const { group_id } = req.body
     let errors = {"errors": {}}
-    
-    let group = await Group.findOne({name})
+    console.log(group_id);
+
+    let group = await Group.findOne({_id: group_id})
     if(!group){
         errors.errors["group"] = ["Group with given name doesn't exist!"]
         return res.status(404).json(errors)
     }
 
     let profile = await Profile.findOne({user: req.user._id})
-
+    
     profile.groups.addToSet(group._id)
     group.users.addToSet(req.user._id)
     profile = await profile.save()
@@ -130,9 +134,41 @@ const joinGroup = asyncHandler( async (req, res, next) => {
     
 })
 
+const viewGroup = asyncHandler(async (req, res, next) => {
+    let errors = {"errors": {}}
+    const { group_id } = req.params
+    let group = await Group.findOne({_id: group_id})
+
+    if(!group){
+        errors.errors["Group"] = ["Group with given name doesn't exist!"]
+        return res.status(404).json(errors)
+    }
+
+    let users = group.users;
+    let posts = [];
+    let userObjs = [];
+    for(let i = 0; i < users.length; i++) {
+        let post = await Post.findOne({owner: users[i]})
+        posts.push(post)
+        let user = await User.findOne({_id: users[i]})
+        let profile = await Profile.findOne({user: users[i]})
+        userObjs.push({
+            username: user.username,
+            profile: profile,
+        })
+    }
+    
+    return res.status(200).json({
+        users: userObjs,
+        posts: posts,
+        group: group,
+    })
+})
+
 module.exports = {
     createGroup,
     updateGroup,
     getGroup,
-    joinGroup
+    joinGroup,
+    viewGroup,
 }
