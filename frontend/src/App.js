@@ -15,7 +15,7 @@ import { App2 } from './pages/CreateTimetable';
 import { UpdateProfile } from './pages/UpdateProfile';
 import { CompareTimetables } from './pages/CompareTimetables';
 import { PubProfileView, PrivProfileView } from './pages/ViewProfile';
-
+import { ViewGroup} from './pages/ViewGroup';
 
 function App() {
   return (
@@ -33,6 +33,9 @@ function App() {
         <Route path="/compareTimetables" element={<CompareTimetables/>} />
         <Route path="/profile/" element={<PrivProfileView />}/>
         <Route path="/profile/:username" element={<PubProfileView/>} />
+
+
+        <Route path="/viewGroup/:groupId" element={<ViewGroup/>} />
       </Routes>
     </Router>
   )}
