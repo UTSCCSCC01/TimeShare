@@ -3,9 +3,8 @@ const mongoose = require('mongoose');
 const GroupSchema = mongoose.Schema({
     name: {
         type: String,
-        unique: [true, "A group with this name already exists!"],
         required: [true, "can't be blank"],
-        
+        unique: true
     },
     image: {
         type: String,
@@ -28,8 +27,9 @@ const GroupSchema = mongoose.Schema({
     },
     type: {
         type: String,
-        required: true
+        required: [true, "Must make group public or private!"]
     }
 });
+
 
 mongoose.model('Group', GroupSchema);

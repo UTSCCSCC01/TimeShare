@@ -29,6 +29,7 @@ class BasicForm extends React.Component {
     }
 
     postSubmitFailure(){
+        console.log("Failed")
         this.setState({ loading: false, has_loaded: true })
     }
 

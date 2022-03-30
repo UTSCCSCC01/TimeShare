@@ -27,7 +27,7 @@ class UnlimitedScrollBox extends React.Component {
         const items = this.props.objects.map((obj) => {
             return (
             <Card key={obj._id}>
-                <CardActionArea>
+                <CardActionArea onClick={() => window.location.href = this.props.baseURL + obj._id}>
             <Stack direction="row" sx={{height: 70, justifyContent: "flex-start", alignItems: "center"}}>
                 <Avatar
                     src={obj.image ? "http://localhost:5000/" + obj.image : null}

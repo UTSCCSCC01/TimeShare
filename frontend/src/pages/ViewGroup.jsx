@@ -127,7 +127,7 @@ export const ViewGroup = (props) => {
 
 
                             </div>
-                            {group.owner == localStorage.getItem('user-id') && <Button variant="contained"> Update Group</Button>}
+                            {group.owner == localStorage.getItem('user-id') && <Button variant="contained" onClick={() => window.location.href = "/group/update/" + group.name } > Update Group</Button>}
                         </Stack>
                     </Container>
                 </Box>

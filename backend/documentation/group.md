@@ -4,7 +4,7 @@
 
 * **URL**
 
-  /api/Groups/
+  /api/Group/
 
 * **Method:**
   
@@ -79,7 +79,7 @@
 
 * **URL**
 
-  /api/Groups/
+  /api/Group/
 
 * **Method:**
   
@@ -133,7 +133,7 @@
   Attempts to retrieve public info about profile
 * **URL**
 
-  /api/Groups/<group_name>
+  /api/Group/<group_name>
 
 * **Method:**
   
@@ -188,7 +188,7 @@
   Attempts to use token user to join group
 * **URL**
 
-  /api/Groups/join
+  /api/Group/join
 
 * **Method:**
   

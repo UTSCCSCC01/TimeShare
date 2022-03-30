@@ -61,7 +61,7 @@ class CreateGroupForm extends BasicForm {
     async onSubmit(event) {
         let data = new FormData(event.target)
         let resp = await axios.post(
-            "http://localhost:5000/api/Groups/", data, {
+            "http://localhost:5000/api/Group/", data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 "Authorization": `Bearer ${localStorage.getItem('token')}`
@@ -74,8 +74,8 @@ class CreateGroupForm extends BasicForm {
             let response = await resp.data
             let errors = response.errors
             let errs = this.state.errors
-            Object.keys(errors).forEach(key => {
-                errs[key] = response.errors[key]
+            Object.keys(errs).forEach(key => {
+                errs[key] = response.errors[key] ? response.errors[key] : ""
             })
 
             this.setState({errors: errs})
@@ -94,19 +94,16 @@ class UpdateGroupForm extends BasicForm {
         this.state = {
             ...this.state,
             data: {
-                "name": "",
                 "description": "",
                 "type": "",
                 "image": "",
             },
             errors: {
-                "name": "",
                 "image": "",
                 "type": "",
                 "description": "",
             },
             labels: {
-                "name": "Group Name",
                 "image": "Group Avatar",
                 "type": "Visibility",
                 "description": "Group Description",
@@ -126,7 +123,8 @@ class UpdateGroupForm extends BasicForm {
                 }
                 ]
             },
-            formError: "none"
+            formError: "none",
+            gid: ""
 
         }
 
@@ -134,25 +132,26 @@ class UpdateGroupForm extends BasicForm {
     };
 
     async componentDidMount () {
-        const group_id = this.props.kwargs.group_id
-        let resp = await axios.get(`http://localhost:5000/api/Profiles/`, { 
+        const group_name = this.props.kwargs.groupName
+        let resp = await axios.get(`http://localhost:5000/api/Group/${group_name}`, { 
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem('token')}`
             }
         })
-        let {first_name = "", last_name = "", program = "", year_of_study = "", phone = "", description = "" } = resp.data
-        let data = {...this.state.data, first_name, last_name, program, year_of_study, phone, description}
-        this.setState({data, loading: false})
+        let {description = "", type = "", _id, name} = resp.data
+        let data = {...this.state.data, description, type}
+        this.setState({data, loading: false, gid: _id, name})
 
     }
 
     postSubmitSucess(){
-        window.location.href = "/profile"
+        window.location.href = `/viewGroup/${this.state.gid}`
     }
     async onSubmit(event) {
         let data = new FormData(event.target)
+        data.set('name', this.state.name)
         let resp = await axios.put(
-            "http://localhost:5000/api/Profiles/", data, {
+            "http://localhost:5000/api/Group/", data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 "Authorization": `Bearer ${localStorage.getItem('token')}`
@@ -165,11 +164,11 @@ class UpdateGroupForm extends BasicForm {
             let response = await resp.data
             let errors = response.errors
             let errs = this.state.errors
-            Object.keys(errors).forEach(key => {
-                errs[key] = response.errors[key]
+            Object.keys(errs).forEach(key => {
+                errs[key] = response.errors[key] ? response.errors[key] : ""
             })
 
-            this.setState({errors: errs})
+            this.setState({errors: {name: "", description: "", type: "", image: "", ...errs}})
             return false;
         }
         else{

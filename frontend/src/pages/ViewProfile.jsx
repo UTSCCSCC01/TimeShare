@@ -142,10 +142,11 @@ class ProfileView extends React.Component {
                     maxHeight: "30vh",
                     width: "20vw",
                     marginLeft: "5vw"
-
+    
                 }}
                 objects={this.state.private_groups}
                 title="Private Groups"
+                baseURL="/viewGroup/"
             ></UnlimitedScrollBox>
         }
         else{
@@ -207,6 +208,7 @@ class ProfileView extends React.Component {
                     marginLeft: "5vw"}}
                 objects={this.state.public_groups}
                 title="Public Groups"
+                baseURL="/viewGroup/"
                 ></UnlimitedScrollBox>
                 {privateGroups}
                 {profileEdits}
