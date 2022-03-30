@@ -8,6 +8,7 @@ import { CreateTimetable } from './pages/CreateTimetable';
 import { App2 } from './pages/CreateTimetable';
 import { UpdateProfile } from './pages/UpdateProfile';
 import { PubProfileView, PrivProfileView } from './pages/ViewProfile';
+import { CreateGroup } from './pages/CreateGroup';
 
 function App() {
   return (
@@ -17,8 +18,10 @@ function App() {
         <Route path="/login" element={<LogIn/>} />
         <Route path="/updateProfile" element={<UpdateProfile/>} />
         <Route path="/createTimetable" element={<CreateTimetable/>} />
+        <Route path="/group/:name" />
         <Route path="/profile/" element={<PrivProfileView />}/>
         <Route path="/profile/:username" element={<PubProfileView/>} />
+        <Route path="/group/create" element={<CreateGroup/>}/>
       </Routes>
     </Router>
   )}

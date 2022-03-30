@@ -14,7 +14,7 @@ class EditProfileButtons extends React.Component {
             <Button sx={{width: "20%"}} variant="contained">
                 Create Timetable
             </Button>
-            <Button sx={{width: "20%"}} variant="contained">
+            <Button sx={{width: "20%"}} variant="contained" onClick = {() => window.location.href="/group/create"}>
                 Create Group
             </Button>
         </div>

@@ -30,7 +30,7 @@ class UnlimitedScrollBox extends React.Component {
                 <CardActionArea>
             <Stack direction="row" sx={{height: 70, justifyContent: "flex-start", alignItems: "center"}}>
                 <Avatar
-                    src={obj.image}
+                    src={obj.image ? "http://localhost:5000/" + obj.image : null}
                     sx={{ marginLeft: "2%", width: 50, height: 50, marginRight: "5%" }}
                 />
                 <p>

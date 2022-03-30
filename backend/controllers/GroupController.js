@@ -10,12 +10,12 @@ var User = mongoose.model('User');
 
 const createGroup = asyncHandler(async (req, res, next) => {
     let errors = {}
-    const { name, description = "" } = req.body
-    let users = []
+    let { name, description = "", type } = req.body
+    let users = [req.user._id]
     let owner = req.user._id
-    
-    let group = Group({name, description, users, owner, type: "public"})
-    let profile = Profile({user: req.user._id})
+    type = type ? type : "public"
+    let group = Group({name, description, users, owner, type})
+    let profile = await Profile.findOne({user: req.user._id})
 
     let image, image_url = ""
     if(req.files && req.files.image){

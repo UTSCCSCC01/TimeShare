@@ -14,7 +14,7 @@ class PostCard extends React.Component {
                 <CardMedia
                 component="img"
                 height={this.props.height_img}
-                image={this.props.post.image_url || "https://cdn.theatlantic.com/thumbor/pw4nRHmVwizV5kJBsUO5aiE39dU=/1500x1004/media/img/photo/2018/10/images-of-the-season-fall-is-in-the/f02_RTX6EJJJ/original.jpg"}
+                image={this.props.post.image || "https://cdn.theatlantic.com/thumbor/pw4nRHmVwizV5kJBsUO5aiE39dU=/1500x1004/media/img/photo/2018/10/images-of-the-season-fall-is-in-the/f02_RTX6EJJJ/original.jpg"}
                 />
                 <CardContent>
                 <Typography gutterBottom variant="h5" component="div">

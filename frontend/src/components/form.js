@@ -12,6 +12,7 @@ class BasicForm extends React.Component {
             errors: {},
             labels: {},
             inputtype: {},
+            selectOptions: {},
             formError: null
         }
         this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -56,7 +57,8 @@ class BasicForm extends React.Component {
                 name={dt}
                 type={this.state.inputtype[dt] || "text"}
                 value={this.state.data[dt]}
-                handleFieldChange={this.handleFieldChange}      
+                handleFieldChange={this.handleFieldChange}
+                opts={this.state.selectOptions[dt]}      
             />
         )
 
