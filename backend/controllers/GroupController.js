@@ -4,6 +4,7 @@ require('../models/Group');
 var Group =  mongoose.model('Group');
 require('../models/Profile');
 var Profile =  mongoose.model('Profile');
+var Post = mongoose.model('Post');
 
 require('../models/User')
 var User = mongoose.model('User');
@@ -11,6 +12,7 @@ var User = mongoose.model('User');
 const createGroup = asyncHandler(async (req, res, next) => {
     let errors = {}
     let { name, description = "", type } = req.body
+
     let users = [req.user._id]
     let owner = req.user._id
     type = type ? type : "public"
@@ -45,7 +47,6 @@ const createGroup = asyncHandler(async (req, res, next) => {
     if(image){
         image.mv(image_url)
     }
-
     group = await group.save()
     profile.groups.push(group._id)
     await profile.save()
@@ -111,8 +112,64 @@ const updateGroup = asyncHandler( async (req, res, next) => {
     
 })
 
+const joinGroup = asyncHandler( async (req, res, next) => {
+
+    console.log('herefewfewfwe');
+    const { group_id } = req.body
+    let errors = {"errors": {}}
+    console.log(group_id);
+
+    let group = await Group.findOne({_id: group_id})
+    if(!group){
+        errors.errors["group"] = ["Group with given name doesn't exist!"]
+        return res.status(404).json(errors)
+    }
+
+    let profile = await Profile.findOne({user: req.user._id})
+    
+    profile.groups.addToSet(group._id)
+    group.users.addToSet(req.user._id)
+    profile = await profile.save()
+    group = await group.save()
+    return res.status(201).json(profile)
+    
+})
+
+const viewGroup = asyncHandler(async (req, res, next) => {
+    let errors = {"errors": {}}
+    const { group_id } = req.params
+    let group = await Group.findOne({_id: group_id})
+
+    if(!group){
+        errors.errors["Group"] = ["Group with given name doesn't exist!"]
+        return res.status(404).json(errors)
+    }
+
+    let users = group.users;
+    let posts = [];
+    let userObjs = [];
+    for(let i = 0; i < users.length; i++) {
+        let post = await Post.findOne({owner: users[i]})
+        posts.push(post)
+        let user = await User.findOne({_id: users[i]})
+        let profile = await Profile.findOne({user: users[i]})
+        userObjs.push({
+            username: user.username,
+            profile: profile,
+        })
+    }
+    
+    return res.status(200).json({
+        users: userObjs,
+        posts: posts,
+        group: group,
+    })
+})
+
 module.exports = {
     createGroup,
     updateGroup,
-    getGroup
+    getGroup,
+    joinGroup,
+    viewGroup,
 }

@@ -18,7 +18,7 @@ class PostCard extends React.Component {
                 />
                 <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                    {this.props.post.title}
+                    {this.props.post.post_name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                     {this.props.post.description}

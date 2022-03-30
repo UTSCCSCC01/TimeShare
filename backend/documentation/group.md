@@ -182,3 +182,59 @@
         ]
     }
     ```
+
+**Join Group**
+----
+  Attempts to use token user to join group
+* **URL**
+
+  /api/Groups/join
+
+* **Method:**
+  
+  `POST`
+
+* **Protected:**
+
+  Yes, requires login
+  
+*  **URL Params**
+
+  None
+
+* **Data Params**
+
+  **Required:**
+  `name=[String]`
+
+* **Success Response:**
+  
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```
+    {
+        "_id": "623134914542a814cadee75b",
+        "user": "623134904542a814cadee759",
+        "first_name": "saiem6",
+        "last_name": "",
+        "program": "",
+        "year_of_study": null,
+        "phone": "",
+        "description": "",
+        "posts": [],
+        "groups": [
+            "6232952190d86bc7b951cf1b",
+            "6232950490d86bc7b951cf18",
+            "6232952d90d86bc7b951cf1e"
+        ],
+        "comments": [],
+        "likes_posts": [],
+        "avatar": "static/users/saiem6/Capture.PNG",
+        "__v": 0
+    }
+    ```
+ 
+* **Error Response:**
+  
+  see auth
