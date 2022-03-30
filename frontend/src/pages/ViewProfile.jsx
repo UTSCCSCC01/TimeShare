@@ -106,7 +106,6 @@ class ProfileView extends React.Component {
     }
 
     render () {
-        console.log(this.state)
 
         if(this.state.loading){
             return <h1>Loading</h1>

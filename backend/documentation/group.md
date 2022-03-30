@@ -1,4 +1,4 @@
-**Create Public Group**
+**Create Group**
 ----
   Attempts to create a group. Returns validation errors if any, otherwise the newly created object. Defaults to public group if type not specified
 
