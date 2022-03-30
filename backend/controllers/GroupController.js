@@ -11,12 +11,12 @@ var User = mongoose.model('User');
 
 const createGroup = asyncHandler(async (req, res, next) => {
     let errors = {}
-    const { name, description = "" } = req.body
+    let { name, description = "", type = "public" } = req.body
     let users = [req.user._id]
     let owner = req.user._id
-    
-    let group = Group({name, description, users, owner, type: "public"})
-    let profile = Profile({user: req.user._id})
+
+    let group = Group({name, description, users, owner, type})
+    let profile = await Profile.findOne({user: req.user._id})
 
     let image, image_url = ""
     if(req.files && req.files.image){
@@ -25,9 +25,14 @@ const createGroup = asyncHandler(async (req, res, next) => {
     }
     group.image = image_url
 
-    
     e = await group.validateSync()
-    
+    let g = Group.findOne({name})
+    if(g && name != ""){
+        if(!e){
+            e = {errors: {name: {message: []}}}
+        }
+        e.errors['name'].message = ["Group with this name already exists!"]
+    }
     if(e){
         Object.keys(e.errors).map((key) => {
             if(key == "user"){
@@ -42,7 +47,6 @@ const createGroup = asyncHandler(async (req, res, next) => {
         })
         return res.status(400).json({errors: errors})
     }
-    
     if(image){
         image.mv(image_url)
     }
@@ -75,12 +79,10 @@ const updateGroup = asyncHandler( async (req, res, next) => {
         errors.errors["group"] = ["Group with given name doesn't exist!"]
         return res.status(404).json(errors)
     }
-
-    if(group.owner != req.user._id){
+    if(!group.owner.equals(req.user._id)){
         errors.errors["user"] = ["User is not the owner of the group!"]
         return res.status(403).json(errors)
     }
-
     let image, image_url
     if(req.files && req.files.image){
         image = req.files.image
@@ -92,7 +94,6 @@ const updateGroup = asyncHandler( async (req, res, next) => {
     group.image = image_url || group.image
 
     let e = await group.validateSync()
-
     if(e){
         Object.keys(e.errors).map((key) => {
             if(!errors[key]){
