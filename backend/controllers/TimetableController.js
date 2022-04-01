@@ -5,13 +5,15 @@ require("../models/Course");
 require('../models/Tutorial');
 require('../models/Lecture');
 require('../models/Post');
+require('../models/Comment');
 
 var Timetable = mongoose.model("Timetable");
 var Course = mongoose.model("Course");
 var Lecture = mongoose.model("Lecture");
 var Tutorial = mongoose.model("Tutorial");
 var Post = mongoose.model('Post');
-
+var Comment = mongoose.model('Comment');
+var User = mongoose.model('User');
 exports.create_timetable = async function (req, res) {
 
   // Get the name and id from the post request
@@ -79,7 +81,7 @@ exports.create_timetable = async function (req, res) {
 //     timetable: existingTable,
 //   });
 
-  exports.create_post = async function (req, res) {
+exports.create_post = async function (req, res) {
 
     // Get the name and id from the post request
     // var post_id = req.body.post_id;
@@ -105,9 +107,9 @@ exports.create_timetable = async function (req, res) {
     //   console.log("AAYOOOO")
     //   return res.status(400).send("That post already exists");
     // }
-    console.log(name)
-    console.log(desc)
-    console.log(existingTable)
+    // console.log(name)
+    // console.log(desc)
+    // console.log(existingTable)
     var newPost = new Post({
       // owner: owner,
       post_label: label2,
@@ -131,6 +133,78 @@ exports.create_timetable = async function (req, res) {
  
   res.status(200).send(newPost);
 };
+
+exports.create_comment = async function (req, res) {
+  console.log("ENTERED CREATE COMMENT!!!")
+  // Get the name and id from the post request
+  // var post_id = req.body.post_id;
+  var content = req.body.content;
+  // let owner = req.user._id;
+  var post_id = req.body.post_id;
+  // var user_id = req.body.user;
+  console.log(post_id)
+  // Create an empty timtable
+  let existingPost = await Post.findOne({ _id: post_id });
+  // let existingUser = await User.findOne({ _id: user_id });
+  console.log(existingPost)
+
+  if (!existingPost) {
+    console.log("NOT SOMETHING")
+    return res.send("That something does not exist");
+  }
+
+
+  let user_id = req.body.user_id;
+
+  let user_name;
+  if(user_id) {
+    let user = await User.findOne({_id: user_id});
+    user_name = user.username;
+  }
+  else {
+    user_name = 'Anonymous user';
+  }
+
+  
+  var newComment = new Comment({
+    // owner: owner,
+    // post_label: label2,
+    // post_id: 400,
+    // post_name: name,
+    // description: desc,
+    // timetable: existingTable,
+    content: content,
+    post: existingPost,
+    commenter: user_name,
+    // user: existingUser,
+  });
+  
+
+
+  // save to database
+  await newComment.save(function (err) {
+    if (err) {
+      console.log("COULDNT SAVE")
+      console.log(err)
+      return res.json(err);
+    } 
+  });
+
+  let Comments = await Comment.find({ post: post_id });
+  Comments.push(newComment)
+  // console.log(Comments)
+  res.status(200).send(Comments);
+};
+
+exports.get_comment = async function (req, res) {
+  console.log("WE MADE IT!!!!!!!!!!")
+  var post_id = req.body.post_id;
+
+  let comments = await Comment.find({ post: post_id });
+  // console.log(comments)
+  return res.status(200).send(comments);
+
+}
 
 exports.get_post2 = async function (req, res) {
   console.log("SHOULD SEE THIS")
