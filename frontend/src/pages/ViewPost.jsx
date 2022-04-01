@@ -14,6 +14,8 @@ import Slider from "@material-ui/core/Slider";
 import Box from '@mui/material/Box';
 import { Component } from 'react'
 import Timetable from 'react-timetable-events'
+import Navbar from '../components/navbar';
+
 
 import InputLabel from '@mui/material/InputLabel';
 
@@ -253,10 +255,17 @@ export const ViewPost = () => {
   };
 
   return (
+    <div>
+      <Navbar />
+       <ParticlesBg num={5} type="circle" id="particles-js" bg={{
+  position: "fixed",
+  zIndex: "-1",
+  width: "100%"
+}} />
+    
     <div class="marg3">
+     
 
-
-      <ParticlesBg num={5} type="circle" id="particles-js" bg={true} />
       {/* <canvas class="particles-bg-canvas-self" style={style2} width="897" height="755"></canvas> */}
       <h1 class="marg4">{title}</h1>
       <p class="marg4">{desc}</p>
@@ -315,6 +324,7 @@ export const ViewPost = () => {
         </div>
 
       </div>
+    </div>
     </div>
   )
 

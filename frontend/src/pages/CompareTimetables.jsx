@@ -90,7 +90,7 @@ export const CompareTimetables = () => {
         // shared courses
         for (let i = 0; i < shared.length; i++) {
           let course = shared[i]
-          console.log(course)
+          // console.log(course)
           let name = ""
           if (course.lecture_id) {
             name = course.course_id + " LEC" + course.lecture_id + "(SHARED)"
@@ -114,8 +114,9 @@ export const CompareTimetables = () => {
               name: name,
               startTime: new Date("2018-02-23T" + startTime + ":00:00"),
               endTime: new Date("2018-02-23T" + endtime + ":00:00"),
-              colour: "red"
+              colour: "green",
             }
+            console.log(section)
             cp1[day].push(section)
             section.id = -i
             cp2[day].push(section)
@@ -150,7 +151,9 @@ export const CompareTimetables = () => {
               name: name,
               startTime: new Date("2018-02-23T" + startTime + ":00:00"),
               endTime: new Date("2018-02-23T" + endtime + ":00:00"),
+              colour: "red",
             }
+            console.log(section)
             cp1[day].push(section)
           }
         }      
@@ -184,7 +187,9 @@ export const CompareTimetables = () => {
               name: name,
               startTime: new Date("2018-02-23T" + startTime + ":00:00"),
               endTime: new Date("2018-02-23T" + endtime + ":00:00"),
+              colour: "red",
             }
+            console.log(section)
             cp2[day].push(section)
           }
       
@@ -218,7 +223,9 @@ export const CompareTimetables = () => {
               name: name,
               startTime: new Date("2018-02-23T" + startTime + ":00:00"),
               endTime: new Date("2018-02-23T" + endtime + ":00:00"),
+              colour: "gray",
             }
+            console.log(section)
             cp1[day].push(section)
           }
       
@@ -252,7 +259,9 @@ export const CompareTimetables = () => {
               name: name,
               startTime: new Date("2018-02-23T" + startTime + ":00:00"),
               endTime: new Date("2018-02-23T" + endtime + ":00:00"),
+              colour: "gray",
             }
+            console.log(section)
             cp2[day].push(section)
           }
         }

@@ -22,6 +22,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 
+import Navbar from '../components/navbar';
 
 
 const theme = createTheme();
@@ -81,16 +82,11 @@ export const ViewGroup = (props) => {
 
 
     return (
+       <div>
+            <Navbar />
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <AppBar position="relative">
-                <Toolbar>
-                    {/* <CameraIcon sx={{ mr: 2 }} /> */}
-                    <Typography variant="h6" color="inherit" noWrap>
-                        TimeShare
-                    </Typography>
-                </Toolbar>
-            </AppBar>
+
             <main>
                 {/* Hero unit */}
                 <Box
@@ -119,7 +115,7 @@ export const ViewGroup = (props) => {
                             spacing={2}
                             justifyContent="center"
                         >
-                            <Button variant="contained" onClick={joinGroup}>Join Group</Button>
+                            <Button variant="contained" onClick={joinGroup} style={{padding: '2em'}}>Join Group</Button>
                             <div>
                                 {loggedIn == 'error' && <Alert severity="error">Must be logged in to join!</Alert>}
                                 {loggedIn == 'true' && <Alert severity="success">Successfully joined the group!</Alert>}
@@ -127,7 +123,7 @@ export const ViewGroup = (props) => {
 
 
                             </div>
-                            {group.owner == localStorage.getItem('user-id') && <Button variant="contained" onClick={() => window.location.href = "/group/update/" + group.name } > Update Group</Button>}
+                            {group.owner == localStorage.getItem('user-id') && <Button variant="contained" onClick={() => window.location.href = "/group/update/" + group.name } style={{padding: '2em'}}> Update Group</Button>}
                         </Stack>
                     </Container>
                 </Box>
@@ -182,5 +178,6 @@ export const ViewGroup = (props) => {
             </Box>
             {/* End footer */}
         </ThemeProvider>
+        </div>
     );
 }

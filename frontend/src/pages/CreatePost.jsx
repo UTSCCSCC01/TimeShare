@@ -9,6 +9,8 @@ import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import { Component } from 'react'
 import ParticlesBg from 'particles-bg'
+import Navbar from '../components/navbar';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 
 
@@ -118,6 +120,11 @@ export const CreatePost = () => {
 
     return (
         <div>
+          
+      <Navbar />
+      
+        
+
             <ParticlesBg num={5} type="circle" bg={true} />
             <h1>Create Post</h1>
 
@@ -197,7 +204,29 @@ export const CreatePost = () => {
                 </div>
 
             </Box>
-
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/><br/>
+        <br/>
+        <br/><br/>
+        <br/>
+        <br/><br/>
+        <br/>
+        <br/><br/>
+        <br/>
+        <br/>
         </div>
 
     )

@@ -8,6 +8,8 @@ import axios from "axios";
 import { useParams } from "react-router-dom"
 import "../css/ProfileView.css"
 import { EditProfileButtons } from "../components/edit-profile-buttons"
+import Navbar from '../components/navbar';
+
 
 class ProfileView extends React.Component {
     constructor(props) {
@@ -364,12 +366,18 @@ class PrivateProfileView extends React.Component {
 
 export const PubProfileView = () => {
         return (
+            <div>
+                <Navbar />
             <ProfileView
             kwargs={useParams()}/>
+            </div>
         )}
 export const PrivProfileView = () => {
         return (
+            <div>
+                <Navbar />
             <ProfileView
             private={true}/>
+            </div>
         )
     }
