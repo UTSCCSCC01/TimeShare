@@ -220,9 +220,13 @@ li {
   
 }
 
-.NN {
+
+
+.NN2 {
 
   height:400px;
+  margin-left: 50px;
+  margin-right: 50px;
    overflow:auto;
 }
 
@@ -245,7 +249,7 @@ body {
   background:#f0f2f7;
 }
 .container3 {
-  width: 300px;
+  /* width: 300px; */
   top:50%;
   left:50%;
   /* transform:translate(-20%,-20%); */

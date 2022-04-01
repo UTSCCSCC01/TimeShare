@@ -8,6 +8,8 @@ import axios from "axios";
 import { useParams } from "react-router-dom"
 import "../css/ProfileView.css"
 import { EditProfileButtons } from "../components/edit-profile-buttons"
+import Navbar from '../components/navbar';
+
 
 class ProfileView extends React.Component {
     constructor(props) {
@@ -106,7 +108,6 @@ class ProfileView extends React.Component {
     }
 
     render () {
-        console.log(this.state)
 
         if(this.state.loading){
             return <h1>Loading</h1>
@@ -143,10 +144,11 @@ class ProfileView extends React.Component {
                     maxHeight: "30vh",
                     width: "20vw",
                     marginLeft: "5vw"
-
+    
                 }}
                 objects={this.state.private_groups}
                 title="Private Groups"
+                baseURL="/viewGroup/"
             ></UnlimitedScrollBox>
         }
         else{
@@ -208,6 +210,7 @@ class ProfileView extends React.Component {
                     marginLeft: "5vw"}}
                 objects={this.state.public_groups}
                 title="Public Groups"
+                baseURL="/viewGroup/"
                 ></UnlimitedScrollBox>
                 {privateGroups}
                 {profileEdits}
@@ -363,12 +366,18 @@ class PrivateProfileView extends React.Component {
 
 export const PubProfileView = () => {
         return (
+            <div>
+                <Navbar />
             <ProfileView
             kwargs={useParams()}/>
+            </div>
         )}
 export const PrivProfileView = () => {
         return (
+            <div>
+                <Navbar />
             <ProfileView
             private={true}/>
+            </div>
         )
     }

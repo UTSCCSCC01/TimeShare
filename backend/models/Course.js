@@ -20,14 +20,8 @@ const CourseSchema = mongoose.Schema({
         unique: false,
         required: [true, "can't be blank"],
     },
-    // lectures: {
-    //     array_of_lectures: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Lecture' }],
-    // },
-
-    // tutorials: {
-    //     array_of_tutorials: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tutorial' }],
-    // },
-    
+    lectures: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Lecture' }],
+    tutorials: [{type: mongoose.Schema.Types.ObjectId, ref: 'Tutorial' }],
     
 });
 

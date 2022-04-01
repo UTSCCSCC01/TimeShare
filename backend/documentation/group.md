@@ -1,10 +1,10 @@
-**Create Public Group**
+**Create Group**
 ----
-  Attempts to create a public group. Returns validation errors if any, otherwise the newly created object.
+  Attempts to create a group. Returns validation errors if any, otherwise the newly created object. Defaults to public group if type not specified
 
 * **URL**
 
-  /api/Groups/
+  /api/Group/
 
 * **Method:**
   
@@ -27,6 +27,7 @@
     **Optional:**
    `image=[Image]`
    `description=[String]`
+   `type=[String]`
 
 * **Success Response:**
   
@@ -78,7 +79,7 @@
 
 * **URL**
 
-  /api/Groups/
+  /api/Group/
 
 * **Method:**
   
@@ -132,7 +133,7 @@
   Attempts to retrieve public info about profile
 * **URL**
 
-  /api/Groups/<group_name>
+  /api/Group/<group_name>
 
 * **Method:**
   
@@ -187,7 +188,7 @@
   Attempts to use token user to join group
 * **URL**
 
-  /api/Groups/join
+  /api/Group/join
 
 * **Method:**
   

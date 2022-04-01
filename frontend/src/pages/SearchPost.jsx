@@ -16,6 +16,8 @@ import { Component } from 'react'
 import  { useNavigate  } from 'react-router-dom';
 
 import InputLabel from '@mui/material/InputLabel';
+import Navbar from '../components/navbar';
+
 
 import ParticlesBg from 'particles-bg'
 
@@ -77,6 +79,8 @@ export const SearchPost = () => {
             })
     }
     return (
+        <div>
+            <Navbar />
         <div class="marg">
             <ParticlesBg num={5} type="circle" bg={true} />
 
@@ -127,6 +131,7 @@ export const SearchPost = () => {
                 
             
 
+        </div>
         </div>
     )
 

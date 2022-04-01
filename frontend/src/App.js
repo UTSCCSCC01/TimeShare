@@ -15,7 +15,8 @@ import { App2 } from './pages/CreateTimetable';
 import { UpdateProfile } from './pages/UpdateProfile';
 import { CompareTimetables } from './pages/CompareTimetables';
 import { PubProfileView, PrivProfileView } from './pages/ViewProfile';
-
+import { CreateGroup, UpdateGroup } from './pages/CreateGroup';
+import { ViewGroup} from './pages/ViewGroup';
 
 function App() {
   return (
@@ -25,6 +26,8 @@ function App() {
         <Route path="/login" element={<LogIn/>} />
         <Route path="/updateProfile" element={<UpdateProfile/>} />
         <Route path="/createTimetable" element={<CreateTimetable/>} />
+        <Route path="/group/create" element={<CreateGroup/>}/>
+        <Route path='/group/update/:groupName' element={<UpdateGroup/>}></Route>
         <Route path="/createPost" element={<CreatePost/>} />
         <Route path="/searchPost" element={<SearchPost/>} />
         <Route path="/viewPost/:postId" element={<ViewPost/>} />
@@ -33,6 +36,10 @@ function App() {
         <Route path="/compareTimetables" element={<CompareTimetables/>} />
         <Route path="/profile/" element={<PrivProfileView />}/>
         <Route path="/profile/:username" element={<PubProfileView/>} />
+
+
+        <Route path="/viewGroup/:groupId" element={<ViewGroup/>} />
+
       </Routes>
     </Router>
   )}
