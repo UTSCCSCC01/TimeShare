@@ -17,6 +17,7 @@ import  { useNavigate  } from 'react-router-dom';
 
 import InputLabel from '@mui/material/InputLabel';
 import Navbar from '../components/navbar';
+import '../App2.css'
 
 
 import ParticlesBg from 'particles-bg'

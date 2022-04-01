@@ -47,147 +47,11 @@
   }
 }
 
-
-
-#myInput {
-  /* background-image: url('/css/searchicon.png'); Add a search icon to input */
-  background-position: 10px 12px; /* Position the search icon */
-  background-repeat: no-repeat; /* Do not repeat the icon image */
-  width: 100%; /* Full-width */
-  font-size: 16px; /* Increase font-size */
-  padding: 12px 20px 12px 40px; /* Add some padding */
-  border: 1px solid #ddd; /* Add a grey border */
-  margin-bottom: 12px; /* Add some space below the input */
-
-}
-
-#myUL {
-  /* Remove default list styling */
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-#myUL li a {
-  border: 1px solid #ddd; /* Add a border to all links */
-  margin-top: -1px; /* Prevent double borders */
-  background-color: #f6f6f6; /* Grey background color */
-  padding: 12px; /* Add some padding */
-  text-decoration: none; /* Remove default text underline */
-  font-size: 18px; /* Increase the font-size */
-  color: black; /* Add a black text color */
-  display: block; /* Make it into a block element to fill the whole list */
-}
-
-#myUL li a:hover:not(.header) {
-  background-color: #eee; /* Add a hover effect to all links, except for headers */
-}
-
-
-
-.timetable {
-  margin-left: 6%;
-  margin-right: 6%;
-}
-
-.timetable2 {
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
-
-h1 {
-
-  text-align: center;
-}
-
 html {  
   font-family: Arial;  
 }  
 
-input {  
-  width: 40%;  
-  height: 30px;  
-  border: 1px solid;  
-  margin: 5px 10px;  
-  font-size: 1.2rem;  
-}  
 
-select {  
-  width: 40%;  
-  height: 30px;  
-  border: 1px solid;  
-  margin: 5px 10px;  
-  font-size: 1.2rem;  
-} 
-
-textarea {  
-  width: 40%;  
-  height: 90px;  
-  border: 1px solid;  
-  margin: 5px 10px;  
-  font-size: 1.2rem;  
-} 
-
-
-
-label {  
-  text-align: right;  
-  line-height: 45px;  
-}  
-
-button {  
-  background: rgb(114, 114, 204);  
-  width: 120px;  
-  height: 40px;  
-  border: none;  
-  border-radius: 5px;  
-  font-size: 1.1rem;  
-  grid-column: 1 / 3;  
-  margin: auto;  
-}  
-
-.container {  
-  display: grid;  
-  justify-content: center;  
-  flex-direction: column;  
-  grid-template-columns: 40% 60%;  
-  grid-row-gap: 20px;  
-}  
-
-.container div {  
-  grid-column: 1 / 3;  
-  text-align: center;  
-}  
-
-.marg {
-  margin-bottom: 30px;
-  background-color: "#FFFFFF";
-
-}
-
-.marg2 {
-  background-color: "#FFFFFF";
-
-}
-.marg4 {
-  margin-bottom: 30px;
-}
-
-.marg3 {
-  background-color: "#FFFFFF";
-  margin-left: 100px;
-  margin-right: 100px;
-}
-
-/* ul {
-  justify-content: center;
-}
-
-li {
-  margin-bottom: 15px;
-  margin-left: 35%;
-  margin-right: 35%;
-} */
 
 .lab {
 
@@ -196,22 +60,6 @@ li {
 
 }
 
-
-.card {
-  /* Add shadows to create the "card" effect */
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-  margin-left: 25%;
-  margin-right: 25%;
-  background-color: rgba(255, 255, 255, 0.85);
-  margin-bottom: 15px;
-  border-radius: 5px;
-}
-
-/* On mouse-over, add a deeper shadow */
-.card:hover {
-  box-shadow: 0 26px 26px 0 rgba(0,0,0,0.4);
-}
 
 /* Add some padding inside the card container */
 .container2 {
@@ -233,21 +81,8 @@ li {
 .title {
   font-size: 20px;
   width: 100%;
-}
+} */
 
-Button {
-  margin: 0 auto;
-}
-/* ================ */
-* {
-  margin:0px;
-  padding:0px;
-  box-sizing:border-box;
-}
-body {
-  font-family:"Roboto",sans-serif;
-  background:#f0f2f7;
-}
 .container3 {
   /* width: 300px; */
   top:50%;

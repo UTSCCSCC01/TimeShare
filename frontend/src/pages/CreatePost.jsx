@@ -11,7 +11,7 @@ import { Component } from 'react'
 import ParticlesBg from 'particles-bg'
 import Navbar from '../components/navbar';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
+import '../App2.css'
 
 
 export const CreatePost = () => {

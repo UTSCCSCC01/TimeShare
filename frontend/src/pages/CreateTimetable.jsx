@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import Axios from 'axios';
 import  { useNavigate  } from 'react-router-dom';
-
+import '../App2.css'
 // -------
 
 export const CreateTimetable = () => {
