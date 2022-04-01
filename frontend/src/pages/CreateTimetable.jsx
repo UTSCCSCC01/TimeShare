@@ -46,6 +46,65 @@ export const CreateTimetable = () => {
 
   }
 
+  const uploadTimetable = async (input_file) => {
+    const auth = authHeader()
+    if(!auth) {
+      return;
+    }
+
+    let file = input_file.target.files[0];
+
+    if (file.type === "text/calendar"){
+      const data = new FormData();
+      data.append('timetable', file);
+      
+      Axios.post('http://localhost:5000/api/Timetable/readIcsFile', data)
+      .then((schedule) => {
+        schedule.data.forEach((course) => {
+          let name = course.course_id;
+          let type = "";
+          let cp = { ...events }
+
+          if (course.lecture_id){
+            name += " " + course.lecture_id;
+            type = "lecture";
+          } else if (course.tutorial_id){
+            name += " " + course.tutorial_id;
+            type = "tutorial";
+          }
+
+          course.time.forEach((date) => {
+            let day = (date.day).toLowerCase();
+            let startTime = date.start
+            let endTime = date.end
+
+            if(startTime < 10) {
+              startTime = "0" + startTime;
+            }
+            if(endTime < 10) {
+              endTime = "0" + endTime;
+            }
+            
+            cp[day].push({
+              id: course._id,
+              name: name,
+              type: type,
+              startTime: new Date("2018-02-23T" + startTime + ":00:00"),
+              endTime: new Date("2018-02-23T" + endTime + ":00:00"),
+            })
+          });
+          
+          setEvents(cp)
+        });
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
+    } else {
+      console.log("Error: ", "Only calendar type files are allowed");
+    }
+  }
+
   const [search, setSearch] = useState("");
   const [saveError, setSaveError] = useState("");
 
@@ -184,6 +243,24 @@ export const CreateTimetable = () => {
         variant="contained" 
         onClick={savePost}> 
         SAVE</Button>
+      {" "}
+
+      <input
+        name="icsFile"
+        onChange={(input_file) => uploadTimetable(input_file)}
+        type="file"
+        accept=".ics"
+        style={{ display: 'none' }}
+        id="uploadTimetableFile"
+      />
+  
+      <Button 
+        variant="contained"
+        onClick={(e) => {
+          e.preventDefault();
+          document.getElementById('uploadTimetableFile').click()}}> 
+        UPLOAD</Button>
+
         <br></br>
         <br></br>
         <div>
