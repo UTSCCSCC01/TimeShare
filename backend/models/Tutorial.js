@@ -12,6 +12,7 @@ const TutorialSchema = mongoose.Schema({
         required: [true, "can't be blank"], 
         match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
     },
+
     time: {
         day: {
             type: String, 
@@ -29,6 +30,7 @@ const TutorialSchema = mongoose.Schema({
             unique: false, 
             required: [true, "can't be blank"], 
             match:[/0[0-9]|1[0-9]|2[0-3]]/, 'is invalid'], index: true}}
+
 });
 
 mongoose.model('Tutorial', TutorialSchema);

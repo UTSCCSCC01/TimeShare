@@ -4,18 +4,19 @@ require('../models/Group');
 var Group =  mongoose.model('Group');
 require('../models/Profile');
 var Profile =  mongoose.model('Profile');
+var Post = mongoose.model('Post');
 
 require('../models/User')
 var User = mongoose.model('User');
 
 const createGroup = asyncHandler(async (req, res, next) => {
     let errors = {}
-    const { name, description = "" } = req.body
+    let { name, description = "", type = "public" } = req.body
     let users = [req.user._id]
     let owner = req.user._id
-    
-    let group = Group({name, description, users, owner, type: "public"})
-    let profile = Profile({user: req.user._id})
+
+    let group = Group({name, description, users, owner, type})
+    let profile = await Profile.findOne({user: req.user._id})
 
     let image, image_url = ""
     if(req.files && req.files.image){
@@ -24,9 +25,14 @@ const createGroup = asyncHandler(async (req, res, next) => {
     }
     group.image = image_url
 
-    
     e = await group.validateSync()
-    
+    let g = Group.findOne({name})
+    if(g && name != ""){
+        if(!e){
+            e = {errors: {name: {message: []}}}
+        }
+        e.errors['name'].message = ["Group with this name already exists!"]
+    }
     if(e){
         Object.keys(e.errors).map((key) => {
             if(key == "user"){
@@ -41,7 +47,6 @@ const createGroup = asyncHandler(async (req, res, next) => {
         })
         return res.status(400).json({errors: errors})
     }
-    
     if(image){
         image.mv(image_url)
     }
@@ -74,12 +79,10 @@ const updateGroup = asyncHandler( async (req, res, next) => {
         errors.errors["group"] = ["Group with given name doesn't exist!"]
         return res.status(404).json(errors)
     }
-
-    if(group.owner != req.user._id){
+    if(!group.owner.equals(req.user._id)){
         errors.errors["user"] = ["User is not the owner of the group!"]
         return res.status(403).json(errors)
     }
-
     let image, image_url
     if(req.files && req.files.image){
         image = req.files.image
@@ -91,7 +94,6 @@ const updateGroup = asyncHandler( async (req, res, next) => {
     group.image = image_url || group.image
 
     let e = await group.validateSync()
-
     if(e){
         Object.keys(e.errors).map((key) => {
             if(!errors[key]){
@@ -111,17 +113,20 @@ const updateGroup = asyncHandler( async (req, res, next) => {
 })
 
 const joinGroup = asyncHandler( async (req, res, next) => {
-    const { name } = req.body
+
+    console.log('herefewfewfwe');
+    const { group_id } = req.body
     let errors = {"errors": {}}
-    
-    let group = await Group.findOne({name})
+    console.log(group_id);
+
+    let group = await Group.findOne({_id: group_id})
     if(!group){
         errors.errors["group"] = ["Group with given name doesn't exist!"]
         return res.status(404).json(errors)
     }
 
     let profile = await Profile.findOne({user: req.user._id})
-
+    
     profile.groups.addToSet(group._id)
     group.users.addToSet(req.user._id)
     profile = await profile.save()
@@ -130,9 +135,41 @@ const joinGroup = asyncHandler( async (req, res, next) => {
     
 })
 
+const viewGroup = asyncHandler(async (req, res, next) => {
+    let errors = {"errors": {}}
+    const { group_id } = req.params
+    let group = await Group.findOne({_id: group_id})
+
+    if(!group){
+        errors.errors["Group"] = ["Group with given name doesn't exist!"]
+        return res.status(404).json(errors)
+    }
+
+    let users = group.users;
+    let posts = [];
+    let userObjs = [];
+    for(let i = 0; i < users.length; i++) {
+        let post = await Post.findOne({owner: users[i]})
+        posts.push(post)
+        let user = await User.findOne({_id: users[i]})
+        let profile = await Profile.findOne({user: users[i]})
+        userObjs.push({
+            username: user.username,
+            profile: profile,
+        })
+    }
+    
+    return res.status(200).json({
+        users: userObjs,
+        posts: posts,
+        group: group,
+    })
+})
+
 module.exports = {
     createGroup,
     updateGroup,
     getGroup,
-    joinGroup
+    joinGroup,
+    viewGroup,
 }
