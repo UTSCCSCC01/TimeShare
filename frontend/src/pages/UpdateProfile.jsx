@@ -1,6 +1,9 @@
 import React from "react";
 import { BasicForm } from "../components/form";
 import axios from "axios";
+import Navbar from '../components/navbar';
+
+
 
 
 class UpdateProfileForm extends BasicForm {
@@ -93,9 +96,13 @@ class UpdateProfileForm extends BasicForm {
 
 export const UpdateProfile = () => {
     return (
+        
+        <div>
+            <Navbar />
         <UpdateProfileForm
             pid="621b22ee0180781ea2f20948"
         />
+        </div>
         // <BasicForm data={data} errors={errors} labels={labels} inputtype={{phone: "number"}}/>
     );
 }

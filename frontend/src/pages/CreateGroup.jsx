@@ -2,6 +2,8 @@ import React from "react";
 import { BasicForm } from "../components/form";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import Navbar from '../components/navbar';
+
 
 
 class CreateGroupForm extends BasicForm {
@@ -181,17 +183,22 @@ class UpdateGroupForm extends BasicForm {
 
 export const UpdateGroup = () => {
     return (
+        <div>
+        <Navbar />
         <UpdateGroupForm
             kwargs={useParams()}/>
-        // <BasicForm data={data} errors={errors} labels={labels} inputtype={{phone: "number"}}/>
+        </div>
     );
 }
 
 
 export const CreateGroup = () => {
     return (
+        <div>
+        <Navbar />
         <CreateGroupForm
         />
+        </div>
         // <BasicForm data={data} errors={errors} labels={labels} inputtype={{phone: "number"}}/>
     );
 }

@@ -22,6 +22,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 
+import Navbar from '../components/navbar';
 
 
 const theme = createTheme();
@@ -81,16 +82,11 @@ export const ViewGroup = (props) => {
 
 
     return (
+       <div>
+            <Navbar />
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <AppBar position="relative">
-                <Toolbar>
-                    {/* <CameraIcon sx={{ mr: 2 }} /> */}
-                    <Typography variant="h6" color="inherit" noWrap>
-                        TimeShare
-                    </Typography>
-                </Toolbar>
-            </AppBar>
+
             <main>
                 {/* Hero unit */}
                 <Box
@@ -182,5 +178,6 @@ export const ViewGroup = (props) => {
             </Box>
             {/* End footer */}
         </ThemeProvider>
+        </div>
     );
 }
