@@ -4,7 +4,7 @@
 Axel Visan, Brooklyn Guo, Burhan Mirza, Danyal Ilyas, Ramzi Abu-zeinah, Saiem Irfan, Stanislav Kalynych
 
 ## Unfinished tasks and group them into stories:
- - TODO
+ - None
 
 ## What are practices that you should continue during next sprint:
  - Balanced work allocation across group members
