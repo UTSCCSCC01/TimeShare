@@ -71,7 +71,7 @@ const getGroup = asyncHandler(async (req, res, next) => {
 })
 
 const updateGroup = asyncHandler( async (req, res, next) => {
-    const { name, description } = req.body
+    const { name, description, type } = req.body
     let errors = {"errors": {}}
     
     let group = await Group.findOne({name})
@@ -92,6 +92,7 @@ const updateGroup = asyncHandler( async (req, res, next) => {
 
     group.description = description || group.description
     group.image = image_url || group.image
+    group.type = type || group.type
 
     let e = await group.validateSync()
     if(e){

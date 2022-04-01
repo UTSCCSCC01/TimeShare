@@ -22,6 +22,7 @@ import InputLabel from '@mui/material/InputLabel';
 import ParticlesBg from 'particles-bg'
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
+import '../App2.css'
 
 let temp = 0
 
