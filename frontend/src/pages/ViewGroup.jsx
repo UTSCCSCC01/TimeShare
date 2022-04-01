@@ -119,7 +119,7 @@ export const ViewGroup = (props) => {
                             spacing={2}
                             justifyContent="center"
                         >
-                            <Button variant="contained" onClick={joinGroup}>Join Group</Button>
+                            <Button variant="contained" onClick={joinGroup} style={{padding: '2em'}}>Join Group</Button>
                             <div>
                                 {loggedIn == 'error' && <Alert severity="error">Must be logged in to join!</Alert>}
                                 {loggedIn == 'true' && <Alert severity="success">Successfully joined the group!</Alert>}
@@ -127,7 +127,7 @@ export const ViewGroup = (props) => {
 
 
                             </div>
-                            {group.owner == localStorage.getItem('user-id') && <Button variant="contained" onClick={() => window.location.href = "/group/update/" + group.name } > Update Group</Button>}
+                            {group.owner == localStorage.getItem('user-id') && <Button variant="contained" onClick={() => window.location.href = "/group/update/" + group.name } style={{padding: '2em'}}> Update Group</Button>}
                         </Stack>
                     </Container>
                 </Box>
