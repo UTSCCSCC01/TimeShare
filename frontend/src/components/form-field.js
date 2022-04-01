@@ -14,6 +14,7 @@ class FormField extends React.Component {
                 value={this.props.value}
                 type={this.props.type}
                 handleChange={this.props.handleFieldChange} 
+                opts={this.props.opts}
             />
         </div>
         )

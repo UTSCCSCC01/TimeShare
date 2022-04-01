@@ -10,7 +10,7 @@ require('../models/Comment');
 var Timetable = mongoose.model("Timetable");
 var Course = mongoose.model("Course");
 var Lecture = mongoose.model("Lecture");
-var Tutorial = mongoose.model('Tutorial');
+var Tutorial = mongoose.model("Tutorial");
 var Post = mongoose.model('Post');
 var Comment = mongoose.model('Comment');
 var User = mongoose.model('User');
@@ -528,3 +528,89 @@ exports.get_all_courses = async function (req, res) {
   return res.status(200).send(courses);
 
 };
+
+exports.readIcsFile = async function (req, res) {
+  let ics_file = req.files.timetable;
+  let schedule_raw = (ics_file.data).toString();
+  let classes = [];
+
+  // Parsing data from ics file
+  var startIndex = 0, index;
+  while ((index = schedule_raw.indexOf("SUMMARY:", startIndex)) > -1) {
+    classes.push((schedule_raw.substring(index, schedule_raw.indexOf("STATUS:", index))).split("\r\n"));
+    startIndex = index + "SUMMARY:".length;
+  }
+
+  // Final schedule variable
+  let schedule = [];
+
+  // Iterating through each course description and confirming the course with the database
+  for (let classDescription of classes){
+    // Getting course information (course code, lec/tut/pra sections)
+    let course_info = classDescription[0].split(" ");
+    let course_code = course_info[0].substring("SUMMARY:".length);
+
+    // Get course from the database
+    let course = await Course.findOne({ course_id : course_code });
+
+    if (course){
+      let lec_tut = course_info[1].substring(0, 1) + course_info[1].substring(3);
+      let lecture, tutorial = null;
+
+      // Getting class time
+      let weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      let start_time = new Date(getDate(classDescription[1].substring(classDescription[1].indexOf(":") + 1)));
+      let end_time = new Date(getDate(classDescription[2].substring(classDescription[2].indexOf(":") + 1)));
+      
+      if (lec_tut[0] === "L"){
+        lecture = await Lecture.findOne({ course_id : course_code, lecture_id : lec_tut });
+      } else if (lec_tut === "T" || lec_tut === "P"){
+        tutorial = await Tutorial.findOne({ course_id : course_code, tutorial_id : lec_tut });
+      }
+      
+      if (lecture){
+        let exists = false;
+
+        lecture.time.forEach((date) => {
+          if (date.day === weekdays[start_time.getDay()] && 
+              date.start === weekdays[start_time.getHours()] && 
+              date.end === weekdays[end_time.getHours()]){
+            schedule.push(lecture);
+            exists = true;
+          }
+        });
+
+        if (!exists){
+          console.log("Error: Lecture during the time " + start_time.getHours() + "-" + end_time.getHours() + " does not exist!");
+        }
+      } else if (tutorial) {
+        if (tutorial.time.day === weekdays[start_time.getDay()] && 
+            tutorial.time.start === weekdays[start_time.getHours()] && 
+            tutorial.time.end === weekdays[end_time.getHours()]){
+          schedule.push(tutorial);
+        } else {
+          console.log("Error: Tutorial during the time " + start_time.getHours() + "-" + end_time.getHours() + " does not exist!");
+        }
+      } else {
+        console.log("Error: LEC/TUT " + lec_tut + " for course " + course_code + " does not exist!");
+      }
+    } else {
+      console.log("Error: Course " + course_code + " does not exist!");
+    }
+  }
+  
+  res.status(200).send(schedule);  
+};
+
+const getDate = (date_time) => {
+  let date = "";
+
+  date = date_time.substring(0, 4) + "-" + 
+         date_time.substring(4, 6) + "-" + 
+         date_time.substring(6, 8) + "T" +
+         date_time.substring(9, 11) + ":" +
+         date_time.substring(11, 13) + ":" + 
+         date_time.substring(13);
+
+  return date;
+}

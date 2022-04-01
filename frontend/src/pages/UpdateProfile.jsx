@@ -77,10 +77,9 @@ class UpdateProfileForm extends BasicForm {
             let response = await resp.data
             let errors = response.errors
             let errs = this.state.errors
-            Object.keys(errors).forEach(key => {
-                errs[key] = response.errors[key]
+            Object.keys(errs).forEach(key => {
+                errs[key] = response.errors[key] ? response.errors[key] : ""
             })
-
             this.setState({errors: errs})
             return false;
         }

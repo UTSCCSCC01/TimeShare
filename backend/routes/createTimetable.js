@@ -27,7 +27,9 @@ router.get('/getCourses', TimetableController.get_courses);
 router.post('/createTimetable2', authorize, TimetableController.create_timetable2);
 router.get('/getAllCourses', TimetableController.get_courses);
 
+
 router.post('/createComment', TimetableController.create_comment)
 router.post('/getComment', TimetableController.get_comment)
+router.post('/readIcsFile', TimetableController.readIcsFile);
 
 module.exports = router;
