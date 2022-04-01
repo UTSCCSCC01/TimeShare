@@ -75,7 +75,7 @@ export const CompareTimetables = () => {
         timetable2_id: 501
       }
 
-      Axios.post("http://localhost:5001/api/Timetable/compareTimetables", data)
+      Axios.post("http://localhost:5000/api/Timetable/compareTimetables", data)
       .then((res) => {
         console.log(res)
         console.log("GOOD!")
@@ -273,7 +273,7 @@ export const CompareTimetables = () => {
         id: 501
       }
 
-      Axios.post("http://localhost:5001/api/Timetable/getCourses", data)
+      Axios.post("http://localhost:5000/api/Timetable/getCourses", data)
       .then((res) => {
         console.log("GOOD!")
         console.log(res);
