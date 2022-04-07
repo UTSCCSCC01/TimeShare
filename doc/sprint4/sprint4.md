@@ -70,6 +70,8 @@ As a web user, I want to be able to upload/import (via .ics) my current timetabl
 - WAV-74 Load ICS into timetable object and display on frontend
 
 
+Note: System Design Document is unchanged since sprint 3.
+
 
 
 
